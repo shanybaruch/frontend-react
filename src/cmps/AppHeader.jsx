@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
+import { FaBars } from 'react-icons/fa';
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -35,8 +36,10 @@ export function AppHeader() {
 				</section>
 
 				<section>
-					{user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
-
+					{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
+					<button className="menu-btn">
+						<FaBars />
+					</button>
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
 						<div className="user-info">
