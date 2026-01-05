@@ -9,7 +9,7 @@ function getEmptyStay() {
 	return {
         _id: '',
 		type: makeId(),
-		capacity: getRandomIntInclusive(80, 240),
+		capacity: getRandomIntInclusive(1, 20),
 		msgs: [],
 	}
 }

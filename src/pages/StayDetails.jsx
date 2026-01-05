@@ -32,7 +32,7 @@ export function StayDetails() {
       <h1>Stay Details</h1>
       {stay && <div>
         <h3>{stay.type}</h3>
-        <h4>{stay.capacity} KMH</h4>
+        <h4>{stay.capacity}</h4>
         <pre> {JSON.stringify(stay, null, 2)} </pre>
       </div>
       }
