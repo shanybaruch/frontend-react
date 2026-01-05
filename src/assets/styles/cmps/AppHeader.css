@@ -20,7 +20,7 @@
 
         .logo {
             font-size: 1.4em;
-            font-weight: 500;
+            font-weight: 600;
             margin-inline-start: 1.5em;
             color: var(--clr1);
         }
@@ -126,13 +126,25 @@
         justify-content: space-evenly;
         gap: 0em;
 
+        position: relative;
         border-radius: 50px;
-        box-shadow: 0px 5px 20px 2px var(--gray-light-hover);
+        box-shadow: 0px 5px 20px 0px var(--gray-light-hover);
         border: 1.5px solid var(--gray-light-hover);
 
         .select-where,
         .select-when {
             display: flex;
+        }
+
+        .select-where,
+        .select-when,
+        .select-who {
+            cursor: pointer;
+
+            &:hover {
+                border-radius: 50px;
+                background-color: var(--gray-light-hover);
+            }
         }
 
         .v-line {
@@ -152,15 +164,28 @@
 
             p {
                 font-size: .8rem;
-                font-weight: 500;
+                font-weight: 600;
                 margin-bottom: .2em;
             }
 
             span {
                 color: var(--gray);
-                font-size: .9rem;
-                font-weight: 300;
+                font-size: .85rem;
             }
+        }
+
+        .sec-search {
+            position: absolute;
+            right: 10px;
+            top: 7px;
+            font-size: 1.1rem;
+            color: var(--white);
+            padding-top: .8em;
+            padding-bottom: .6em;
+            padding-inline: .8em;
+            border-radius: 50%;
+            background-color: var(--clr1);
+
         }
     }
 
@@ -180,7 +205,7 @@
 
 
 
-            
+
 
             color: var(--white);
         }

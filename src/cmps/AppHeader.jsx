@@ -5,6 +5,8 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 import { FiMenu } from "react-icons/fi";
 import { useState } from 'react'
+import { IoSearch } from "react-icons/io5";
+
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -26,7 +28,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<nav className='header-nav'>
 				<NavLink to="/stay" className="logo">
-					AYS Stay
+					AYS Nest
 				</NavLink>
 
 				<section className='nav-middle'>
@@ -87,7 +89,9 @@ export function AppHeader() {
 						<p>Who</p>
 						<span>Add guests</span>
 					</section>
-					<span className='search'></span>
+				</section>
+				<section className='sec-search'>
+					<IoSearch />
 				</section>
 			</div>
 		</header>
