@@ -39,7 +39,7 @@
     }
 
     >*:not(.full) {
-        background-color: var(--gray-light);
+        background-color: var(--clr4);
     }
 }
 

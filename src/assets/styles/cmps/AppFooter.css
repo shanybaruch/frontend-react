@@ -9,7 +9,7 @@
     padding: .8rem 1rem;
     background-color: --var(gray-light);
 
-    & p {
+    p {
         margin: 0;
     }
     

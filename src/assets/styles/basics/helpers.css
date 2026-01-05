@@ -7,15 +7,15 @@
         flex: 1;
     }
 
-    &.column {
+    .column {
         flex-direction: column;
     }
 
-    &.justify-center {
+    .justify-center {
         justify-content: center;
     }
 
-    &.align-center {
+    .align-center {
         align-items: center;
     }
 }
