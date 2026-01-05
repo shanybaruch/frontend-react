@@ -26,7 +26,7 @@ export function StayFilter({ filterBy, setFilterBy }) {
     }
 
     function clearFilter() {
-        setFilterToEdit({ ...filterToEdit, txt: '', minSpeed: '', maxPrice: '' })
+        setFilterToEdit({ ...filterToEdit, txt: '', minCapacity: '', maxPrice: '' })
     }
     
     function clearSort() {
@@ -46,9 +46,9 @@ export function StayFilter({ filterBy, setFilterBy }) {
             <input
                 type="number"
                 min="0"
-                name="minSpeed"
-                value={filterToEdit.minSpeed}
-                placeholder="min. speed"
+                name="minCapacity"
+                value={filterToEdit.minCapacity}
+                placeholder="min. capacity"
                 onChange={handleChange}
                 required
             />
@@ -58,22 +58,22 @@ export function StayFilter({ filterBy, setFilterBy }) {
             <h3>Sort:</h3>
             <div className="sort-field">
                 <label>
-                    <span>Speed</span>
+                    <span>Capacity</span>
                     <input
                         type="radio"
                         name="sortField"
-                        value="speed"
-                        checked={filterToEdit.sortField === 'speed'}
+                        value="capacity"
+                        checked={filterToEdit.sortField === 'capacity'}
                         onChange={handleChange}
                     />
                 </label>
                 <label>
-                    <span>Vendor</span>
+                    <span>Type</span>
                     <input
                         type="radio"
                         name="sortField"
-                        value="vendor"
-                        checked={filterToEdit.sortField === 'vendor'}            
+                        value="type"
+                        checked={filterToEdit.sortField === 'type'}            
                         onChange={handleChange}
                     />
                 </label>

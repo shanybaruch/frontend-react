@@ -110,7 +110,7 @@ async function unitTestActions() {
     await addStay(stayService.getEmptyStay())
     await updateStay({
         _id: 'm1oC7',
-        vendor: 'Stay-Good',
+        type: 'Stay-Good',
     })
     await removeStay('m1oC7')
     // TODO unit test addStayMsg
