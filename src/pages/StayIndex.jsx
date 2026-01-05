@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { loadStays, addStay, updateStay, removeStay, addStayMsg } from '../store/actions/stay.actions'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { stayService } from '../services/stay'
+import { getEilatApartments, stayService } from '../services/stay'
 import { userService } from '../services/user'
 
 import { StayList } from '../cmps/StayList'
@@ -13,7 +13,10 @@ import { StayFilter } from '../cmps/StayFilter'
 export function StayIndex() {
 
     const [ filterBy, setFilterBy ] = useState(stayService.getDefaultFilter())
-    const stays = useSelector(storeState => storeState.stayModule.stays)
+    // const stays = useSelector(storeState => storeState.stayModule.stays)
+    const stays = getEilatApartments()
+    console.log('stays: ',stays);
+    
 
     useEffect(() => {
         loadStays(filterBy)
@@ -55,6 +58,7 @@ export function StayIndex() {
     return (
         <section className="stay-index">
             <header>
+                <h2 className='title'>Popular homes in Eilat</h2>
                 {/* <h2 className='title'>Stays</h2> */}
                 {/* {userService.getLoggedinUser() && <button onClick={onAddStay}>Add a Stay</button>} */}
             </header>

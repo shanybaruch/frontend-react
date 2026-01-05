@@ -4,15 +4,15 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
     gap: .8em;
+    margin-top: 0;
 
     li {
-        aspect-ratio: 1 / 1;
+        /* aspect-ratio: 1 / 1; */
 
         display: grid;
         /* grid-template-columns: max-content auto; */
         padding: .5em;
         border-radius: 30px;
-        background-color: var(--clr1);
 
         .actions {
             justify-self: end;
