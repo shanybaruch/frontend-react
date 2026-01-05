@@ -15,6 +15,8 @@ import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
+import "@fontsource/inter"; 
+import "@fontsource/inter/600.css";
 
 
 export function RootCmp() {

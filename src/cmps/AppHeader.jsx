@@ -3,15 +3,18 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
-import { FaBars } from 'react-icons/fa';
+import { FiMenu } from "react-icons/fi";
+import { useState } from 'react'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
 	const navigate = useNavigate()
+	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	async function onLogout() {
 		try {
 			await logout()
+			setIsMenuOpen(false)
 			navigate('/')
 			showSuccessMsg(`Bye now`)
 		} catch (err) {
@@ -35,38 +38,55 @@ export function AppHeader() {
 					{/* <NavLink to="review">Review</NavLink> */}
 				</section>
 
-				<section>
-					{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
-					<button className="menu-btn">
-						<FaBars />
-					</button>
-					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
-					{user && (
-						<div className="user-info">
-							<Link to={`user/${user._id}`}>
-								{user.imgUrl && <img src={user.imgUrl} />}
-								{user.fullname}
-							</Link>
-							<span className="score">{user.score?.toLocaleString()}</span>
-							<button onClick={onLogout}>logout</button>
-						</div>
-					)}
+				<section className='nav-end'>
+					<div className="menu-wrapper">
+						<button
+							className="btn-menu"
+							onClick={() => setIsMenuOpen(!isMenuOpen)}
+						>
+							<FiMenu />
+						</button>
+						{isMenuOpen && (
+							<div className="menu-dropdown" onClick={() => setIsMenuOpen(false)}>
+								{!user ? (
+									<NavLink to="auth/login" className="menu-item">Log in or sign up</NavLink>
+								) : (
+									<>
+										<Link to={`user/${user._id}`} className="menu-item bold">Profile</Link>
+										<hr />
+										<button onClick={onLogout} className="menu-item logout-btn">Logout</button>
+									</>
+								)}
+							</div>
+						)}
+
+						{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
+
+					</div>
 				</section>
 			</nav>
 			<div className='selection'>
-				<section>
-					<p>Where</p>
-					<span>Search destinations</span>
+				<section className='select-where'>
+					<section className='sec'>
+
+						<p>Where</p>
+						<span>Search destinations</span>
+					</section>
+					<div className="v-line"></div>
 				</section>
-				<section>
-					<p>When</p>
-					<span>Add dates</span>
+				<section className='select-when'>
+					<section className='sec'>
+						<p>When</p>
+						<span>Add dates</span>
+
+					</section>
+					<div className="v-line"></div>
 				</section>
 				<section className='select-who'>
-					<div>
+					<section className='sec'>
 						<p>Who</p>
 						<span>Add guests</span>
-					</div>
+					</section>
 					<span className='search'></span>
 				</section>
 			</div>

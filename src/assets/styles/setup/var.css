@@ -4,6 +4,7 @@
   --clr1-light: color-mix(in lab, var(--clr1), white 15%);
 
   --white: #FFFFFF;
+  --white-gray: #F2F2F2;
   --gray-light: #EBEBEB;
   --gray-light-hover: #DDDDDD;
   --gray: #6A6A6A;
