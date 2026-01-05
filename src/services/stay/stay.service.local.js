@@ -15,27 +15,27 @@ export const stayService = {
 window.cs = stayService
 
 
-async function query(filterBy = { txt: '', minSpeed: 0 }) {
+async function query(filterBy = { txt: '', minCapacity: 0 }) {
     var stays = await storageService.query(STORAGE_KEY)
-    const { txt, minSpeed, sortField, sortDir } = filterBy
+    const { txt, minCapacity, sortField, sortDir } = filterBy
 
     if (txt) {
         const regex = new RegExp(filterBy.txt, 'i')
-        stays = stays.filter(stay => regex.test(stay.vendor) || regex.test(stay.description))
+        stays = stays.filter(stay => regex.test(stay.type) || regex.test(stay.description))
     }
-    if (minSpeed) {
-        stays = stays.filter(stay => stay.speed >= minSpeed)
+    if (minCapacity) {
+        stays = stays.filter(stay => stay.capacity >= minCapacity)
     }
-    if(sortField === 'vendor'){
+    if(sortField === 'type'){
         stays.sort((stay1, stay2) => 
             stay1[sortField].localeCompare(stay2[sortField]) * +sortDir)
     }
-    if(sortField === 'speed'){
+    if(sortField === 'capacity'){
         stays.sort((stay1, stay2) => 
             (stay1[sortField] - stay2[sortField]) * +sortDir)
     }
     
-    stays = stays.map(({ _id, vendor, speed, owner }) => ({ _id, vendor, speed, owner }))
+    stays = stays.map(({ _id, type, capacity, owner }) => ({ _id, type, capacity, owner }))
     return stays
 }
 
@@ -53,13 +53,13 @@ async function save(stay) {
     if (stay._id) {
         const stayToSave = {
             _id: stay._id,
-            speed: stay.speed
+            capacity: stay.capacity
         }
         savedStay = await storageService.put(STORAGE_KEY, stayToSave)
     } else {
         const stayToSave = {
-            vendor: stay.vendor,
-            speed: stay.speed,
+            type: stay.type,
+            capacity: stay.capacity,
             // Later, owner is set by the backend
             owner: userService.getLoggedinUser(),
             msgs: []

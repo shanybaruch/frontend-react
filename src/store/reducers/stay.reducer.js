@@ -46,8 +46,8 @@ export function stayReducer(state = initialState, action) {
 
 function unitTestReducer() {
     var state = initialState
-    const stay1 = { _id: 'b101', vendor: 'Stay ' + parseInt('' + Math.random() * 10), speed: 12, owner: null, msgs: [] }
-    const stay2 = { _id: 'b102', vendor: 'Stay ' + parseInt('' + Math.random() * 10), speed: 13, owner: null, msgs: [] }
+    const stay1 = { _id: 'b101', type: 'Stay ' + parseInt('' + Math.random() * 10), capacity: 12, owner: null, msgs: [] }
+    const stay2 = { _id: 'b102', type: 'Stay ' + parseInt('' + Math.random() * 10), capacity: 13, owner: null, msgs: [] }
 
     state = stayReducer(state, { type: SET_STAYS, stays: [stay1] })
     console.log('After SET_STAYS:', state)
@@ -55,7 +55,7 @@ function unitTestReducer() {
     state = stayReducer(state, { type: ADD_STAY, stay: stay2 })
     console.log('After ADD_STAY:', state)
 
-    state = stayReducer(state, { type: UPDATE_STAY, stay: { ...stay2, vendor: 'Good' } })
+    state = stayReducer(state, { type: UPDATE_STAY, stay: { ...stay2, type: 'Good' } })
     console.log('After UPDATE_STAY:', state)
 
     state = stayReducer(state, { type: REMOVE_STAY, stayId: stay2._id })

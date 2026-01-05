@@ -31,8 +31,8 @@ export function StayDetails() {
       <Link to="/stay">Back to list</Link>
       <h1>Stay Details</h1>
       {stay && <div>
-        <h3>{stay.vendor}</h3>
-        <h4>{stay.speed} KMH</h4>
+        <h3>{stay.type}</h3>
+        <h4>{stay.capacity} KMH</h4>
         <pre> {JSON.stringify(stay, null, 2)} </pre>
       </div>
       }

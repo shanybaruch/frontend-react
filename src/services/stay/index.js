@@ -8,8 +8,8 @@ import { stayService as remote } from './stay.service.remote'
 function getEmptyStay() {
 	return {
         _id: '',
-		vendor: makeId(),
-		speed: getRandomIntInclusive(80, 240),
+		type: makeId(),
+		capacity: getRandomIntInclusive(80, 240),
 		msgs: [],
 	}
 }
@@ -17,7 +17,7 @@ function getEmptyStay() {
 function getDefaultFilter() {
     return {
         txt: '',
-        minSpeed: '',
+        minCapacity: '',
         sortField: '',
         sortDir: '',
     }
