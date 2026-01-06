@@ -131,20 +131,36 @@
         box-shadow: 0px 5px 20px 0px var(--gray-light-hover);
         border: 1.5px solid var(--gray-light-hover);
 
-        .select-where {
-            input {
-                border: none;
-                background: transparent;
-                font-size: 14px;
-                outline: none;
-                width: 100%;
-                padding: 0;
-                color: #222;
+        &:focus-within {
+            background-color: var(--gray-light);
+            border-color: var(--gray-light-hover);
 
-                &::placeholder {
-                    color: var(--gray-light-hover);
-                }
+            box-shadow: 0px 5px 20px 0px var(--gray-light-hover);
+
+            .select-where,
+            .select-when,
+            .select-who {
+                background-color: transparent;
+                transition: 0.2s;
             }
+
+            .select-where:focus-within,
+            .select-when:focus-within,
+            .select-who:focus-within {
+                background-color: var(--white);
+                border-radius: 50px;
+                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .v-line {
+                opacity: 0;
+            }
+        }
+
+        .select-where input {
+            border: none;
+            outline: none;
+            background: transparent;
         }
 
         .select-where,
@@ -221,12 +237,6 @@
             background-color: var(--clr1);
             border-radius: 50%;
             margin: 10px;
-
-
-
-
-
-
             color: var(--white);
         }
 
