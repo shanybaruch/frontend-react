@@ -186,10 +186,10 @@
             border-radius: 50%;
             background-color: var(--clr1);
             cursor: pointer;
+        }
 
-            &:hover {
-                background-color: var(--clr1-hover);
-            }
+        .sec-search:hover {
+            background: linear-gradient(to right, var(--clr1), var(--clr1-hover));
         }
     }
 

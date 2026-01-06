@@ -1,8 +1,7 @@
 :root {
   --clr1: #ff385c;
   --clr1-hover:#DB0963;
-
-  --clr1-light: color-mix(in lab, var(--clr1), white 15%);
+  /* background: linear-gradient(to right, var(--clr1), var(--clr1-hover)); */
 
   --white: #FFFFFF;
   --white-gray: #F2F2F2;
