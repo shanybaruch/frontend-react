@@ -1,31 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import { loadStays, addStay, updateStay, removeStay, addStayMsg } from '../store/actions/stay.actions'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { getEilatApartments, stayService } from '../services/stay'
+import { stayService } from '../services/stay'
 import { userService } from '../services/user'
 
 import { StayList } from '../cmps/StayList'
 import { StayFilter } from '../cmps/StayFilter'
 
 export function StayIndex() {
+    const [filterBy, setFilterBy] = useState(stayService.getDefaultFilter())
+    const stays = useSelector(storeState => storeState.stayModule.stays)
+    console.log('stays: ', stays);
+    // const isFirstRender = useRef(true)
 
-    const [ filterBy, setFilterBy ] = useState(stayService.getDefaultFilter())
-    // const stays = useSelector(storeState => storeState.stayModule.stays)
-    const stays = getEilatApartments()
-    console.log('stays: ',stays);
-    
 
     useEffect(() => {
         loadStays(filterBy)
-    }, [filterBy])
+    }, [])
+    // useEffect(() => {
+    // if (isFirstRender.current) {
+    //         isFirstRender.current = false
+    //         return
+    //     }
+    //     loadStays(filterBy)
+    // }, [filterBy])
 
     async function onRemoveStay(stayId) {
         try {
             await removeStay(stayId)
-            showSuccessMsg('Stay removed')            
+            showSuccessMsg('Stay removed')
         } catch (err) {
             showErrorMsg('Cannot remove stay')
         }
@@ -39,12 +45,12 @@ export function StayIndex() {
             showSuccessMsg(`Stay added (id: ${savedStay._id})`)
         } catch (err) {
             showErrorMsg('Cannot add stay')
-        }        
+        }
     }
 
     async function onUpdateStay(stay) {
         const capacity = +prompt('New capacity?', stay.capacity) || 0
-        if(capacity === 0 || capacity === stay.capacity) return
+        if (capacity === 0 || capacity === stay.capacity) return
 
         const stayToSave = { ...stay, capacity }
         try {
@@ -52,7 +58,7 @@ export function StayIndex() {
             showSuccessMsg(`Stay updated, new capacity: ${savedStay.capacity}`)
         } catch (err) {
             showErrorMsg('Cannot update stay')
-        }        
+        }
     }
 
     return (
@@ -63,10 +69,10 @@ export function StayIndex() {
                 {/* {userService.getLoggedinUser() && <button onClick={onAddStay}>Add a Stay</button>} */}
             </header>
             {/* <StayFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
-            <StayList 
+            <StayList
                 stays={stays}
-                onRemoveStay={onRemoveStay} 
-                onUpdateStay={onUpdateStay}/>
+                onRemoveStay={onRemoveStay}
+                onUpdateStay={onUpdateStay} />
         </section>
     )
 }

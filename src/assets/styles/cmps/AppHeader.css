@@ -131,6 +131,22 @@
         box-shadow: 0px 5px 20px 0px var(--gray-light-hover);
         border: 1.5px solid var(--gray-light-hover);
 
+        .select-where {
+            input {
+                border: none;
+                background: transparent;
+                font-size: 14px;
+                outline: none;
+                width: 100%;
+                padding: 0;
+                color: #222;
+
+                &::placeholder {
+                    color: var(--gray-light-hover);
+                }
+            }
+        }
+
         .select-where,
         .select-when {
             display: flex;

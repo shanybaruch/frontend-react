@@ -1,6 +1,6 @@
 
 import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
+import { getRandomIntInclusive, makeId, makeLorem } from '../util.service'
 import { userService } from '../user'
 
 const STORAGE_KEY = 'stay'
@@ -10,32 +10,46 @@ export const stayService = {
     getById,
     save,
     remove,
-    addStayMsg
+    addStayMsg,
+    getDefaultFilter,
+    getEilatApartments
 }
 window.cs = stayService
 
 
 async function query(filterBy = { txt: '', minCapacity: 0 }) {
     var stays = await storageService.query(STORAGE_KEY)
+
+    if (!stays || stays.length === 0) {
+        stays = getEilatApartments()
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stays))
+    }
     const { txt, minCapacity, sortField, sortDir } = filterBy
 
     if (txt) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        stays = stays.filter(stay => regex.test(stay.type) || regex.test(stay.description))
+        const regex = new RegExp(txt, 'i')
+        stays = stays.filter(stay =>
+            regex.test(stay.name) ||
+            regex.test(stay.type) ||
+            regex.test(stay.description) ||
+            regex.test(stay.loc?.city) ||
+            regex.test(stay.loc?.address)
+        )
     }
+
     if (minCapacity) {
-        stays = stays.filter(stay => stay.capacity >= minCapacity)
+        stays = stays.filter(stay => stay.capacity >= +minCapacity)
     }
-    if(sortField === 'type'){
-        stays.sort((stay1, stay2) => 
-            stay1[sortField].localeCompare(stay2[sortField]) * +sortDir)
+
+    if (sortField) {
+        stays.sort((a, b) => {
+            const dir = +sortDir || 1
+            if (sortField === 'capacity') return (a.capacity - b.capacity) * dir
+            const valA = a[sortField] || ''
+            const valB = b[sortField] || ''
+            return valA.localeCompare(valB) * dir
+        })
     }
-    if(sortField === 'capacity'){
-        stays.sort((stay1, stay2) => 
-            (stay1[sortField] - stay2[sortField]) * +sortDir)
-    }
-    
-    stays = stays.map(({ _id, type, capacity, owner }) => ({ _id, type, capacity, owner }))
     return stays
 }
 
@@ -49,24 +63,16 @@ async function remove(stayId) {
 }
 
 async function save(stay) {
-    var savedStay
     if (stay._id) {
-        const stayToSave = {
-            _id: stay._id,
-            capacity: stay.capacity
-        }
-        savedStay = await storageService.put(STORAGE_KEY, stayToSave)
+        return storageService.put(STORAGE_KEY, stay)
     } else {
         const stayToSave = {
-            type: stay.type,
-            capacity: stay.capacity,
-            // Later, owner is set by the backend
+            ...stay,
             owner: userService.getLoggedinUser(),
             msgs: []
         }
-        savedStay = await storageService.post(STORAGE_KEY, stayToSave)
+        return storageService.post(STORAGE_KEY, stayToSave)
     }
-    return savedStay
 }
 
 async function addStayMsg(stayId, txt) {
@@ -82,4 +88,44 @@ async function addStayMsg(stayId, txt) {
     await storageService.put(STORAGE_KEY, stay)
 
     return msg
+}
+
+function getDefaultFilter() {
+    return {
+        txt: '',
+        minCapacity: 0,
+        sortField: '',
+        sortDir: '',
+    }
+}
+
+function getEilatApartments() {
+    const apartments = [
+        { name: 'Red Sea Luxury Suite', address: '6 HaTmarim Blvd', imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800' },
+        { name: 'Eilat Bay View Apartment', address: '12 Argaman St', imgUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800' },
+        { name: 'Coral Beach Studio', address: '24 Mishol Shoshan', imgUrl: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800' },
+        { name: 'The Penthouse Eilat', address: '9 Sheshet HaYamim St', imgUrl: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800' },
+        { name: 'Desert Oasis Flat', address: '18 HaShachmon', imgUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800' }
+    ]
+
+    return apartments.map(apt => ({
+        _id: makeId(),
+        name: apt.name,
+        type: 'Apartment',
+        imgUrl: apt.imgUrl,
+        price: getRandomIntInclusive(250, 1200),
+        capacity: getRandomIntInclusive(1, 10),
+        description: makeLorem(),
+        rate: Number((Math.random() * (5 - 3) + 3).toFixed(1)),
+        loc: {
+            country: 'Israel',
+            countryCode: 'IL',
+            city: 'Eilat',
+            address: apt.address,
+            lat: 29.5577,
+            lng: 34.9519,
+        },
+        amenities: ['Wifi', 'Air conditioning', 'Kitchen', 'TV', 'Balcony'],
+        reviews: []
+    }))
 }

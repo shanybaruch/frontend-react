@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 
 export function StayPreview({ stay }) {
+
+    if (!stay) return
     return <article className="stay-preview">
         <div className="image-container">
                 <img src={stay.imgUrl} alt={stay.name} />
@@ -10,7 +12,7 @@ export function StayPreview({ stay }) {
         </header>
         <div className="stay-info">
                 {/* <h3>{stay.name}</h3> */}
-                <p>{stay.loc.city}, {stay.loc.country}</p>
+                <p>{stay.loc?.city}, {stay.loc?.country}</p>
                 <p>${stay.price} for night ★ {stay.rate}</p>
                 {/* <p>★ {stay.rate}</p> */}
             </div>

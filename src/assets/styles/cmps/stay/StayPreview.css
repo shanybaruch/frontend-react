@@ -11,6 +11,7 @@
 
     .image-container {
         img {
+            max-width: 190px;
             border-radius: 25px;
             object-fit: cover;
             aspect-ratio: 1 / 1;
