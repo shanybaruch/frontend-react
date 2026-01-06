@@ -1,15 +1,18 @@
 .stay-list {
-    --min-column-size: 190px;
+    --min-column-size: 170px;
 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
-    gap: .5em;
+    gap: .8rem;
     margin-top: 0;
+    padding-inline: 18px;
 
     li {
         display: grid;
+        justify-items: stretch;
+
         border-radius: 30px;
-        justify-items: center;
+        width: 100%;
 
         .actions {
             justify-self: end;

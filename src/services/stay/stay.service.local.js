@@ -105,7 +105,8 @@ function getEilatApartments() {
         { name: 'Eilat Bay View Apartment', address: '12 Argaman St', imgUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800' },
         { name: 'Coral Beach Studio', address: '24 Mishol Shoshan', imgUrl: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800' },
         { name: 'The Penthouse Eilat', address: '9 Sheshet HaYamim St', imgUrl: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800' },
-        { name: 'Desert Oasis Flat', address: '18 HaShachmon', imgUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800' }
+        { name: 'Desert Oasis Flat', address: '18 HaShachmon', imgUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800' },
+        { name: 'Modern Marina Loft', address: '15 Kaman St, Eilat', imgUrl: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800' }
     ]
 
     return apartments.map(apt => ({
