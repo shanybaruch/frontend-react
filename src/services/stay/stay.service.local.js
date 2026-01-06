@@ -1,6 +1,6 @@
 
 import { storageService } from '../async-storage.service'
-import { getRandomIntInclusive, makeId, makeLorem } from '../util.service'
+import { getRandomIntInclusive, loadFromStorage, makeId, makeLorem, saveToStorage } from '../util.service'
 import { userService } from '../user'
 
 const STORAGE_KEY = 'stay'
@@ -12,18 +12,15 @@ export const stayService = {
     remove,
     addStayMsg,
     getDefaultFilter,
-    getEilatApartments
+    createStays
 }
 window.cs = stayService
+
+createStays()
 
 
 async function query(filterBy = { txt: '', minCapacity: 0 }) {
     var stays = await storageService.query(STORAGE_KEY)
-
-    if (!stays || stays.length === 0) {
-        stays = getEilatApartments()
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(stays))
-    }
     const { txt, minCapacity, sortField, sortDir } = filterBy
 
     if (txt) {
@@ -99,7 +96,11 @@ function getDefaultFilter() {
     }
 }
 
-function getEilatApartments() {
+function createStays() {
+    let stays = loadFromStorage(STORAGE_KEY)
+    if (stays) return
+    // stays = createStays()
+    
     const apartments = [
         { name: 'Red Sea Luxury Suite', address: '6 HaTmarim Blvd', imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800' },
         { name: 'Eilat Bay View Apartment', address: '12 Argaman St', imgUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800' },
@@ -108,8 +109,8 @@ function getEilatApartments() {
         { name: 'Desert Oasis Flat', address: '18 HaShachmon', imgUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800' },
         { name: 'Modern Marina Loft', address: '15 Kaman St, Eilat', imgUrl: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800' }
     ]
-
-    return apartments.map(apt => ({
+    
+    stays = apartments.map(apt => ({
         _id: makeId(),
         name: apt.name,
         type: 'Apartment',
@@ -129,4 +130,5 @@ function getEilatApartments() {
         amenities: ['Wifi', 'Air conditioning', 'Kitchen', 'TV', 'Balcony'],
         reviews: []
     }))
+    saveToStorage(STORAGE_KEY, JSON.stringify(stays))
 }

@@ -1,0 +1,48 @@
+.calendar {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 32px;
+  display: inline-block;
+}
+
+.rdp-caption_label {
+  font-weight: 600;
+  font-size: 16px;
+  color:  var(--black);
+}
+
+.rdp-head_cell {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+
+.rdp-day {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%; 
+  font-weight: 400;
+}
+
+.rdp-day_selected:not(.rdp-day_range_middle) {
+  background-color: var(--black); 
+  color: var(--white);
+}
+
+.rdp-day_range_middle {
+  background-color: var(--gray-light);
+  color: var(--black);
+  border-radius: 0; 
+}
+
+.rdp-day:hover:not(.rdp-day_selected) {
+  background-color: transparent;
+  border: 1px solid  var(--black);
+}
+
+.rdp-button:focus-visible {
+  outline: none;
+  background-color: var(--white);
+  border: 1px solid  var(--black);
+}

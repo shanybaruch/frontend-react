@@ -9,6 +9,7 @@ import { userService } from '../services/user'
 
 import { StayList } from '../cmps/StayList'
 import { StayFilter } from '../cmps/StayFilter'
+import { Calendar } from '../cmps/Calendar'
 
 export function StayIndex() {
     const [filterBy, setFilterBy] = useState(stayService.getDefaultFilter())
@@ -72,7 +73,9 @@ export function StayIndex() {
             <StayList
                 stays={stays}
                 onRemoveStay={onRemoveStay}
-                onUpdateStay={onUpdateStay} />
+                onUpdateStay={onUpdateStay} 
+            />
+            {/* <Calendar /> */}
         </section>
     )
 }
