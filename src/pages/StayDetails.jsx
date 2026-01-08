@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { RiStarFill, RiTvLine } from "react-icons/ri";
@@ -7,6 +7,9 @@ import { HiOutlineTv } from "react-icons/hi2";
 import { HiOutlineWifi } from "react-icons/hi";
 import { IoIosSnow } from "react-icons/io";
 import { TbToolsKitchen2, TbWindow } from "react-icons/tb";
+import { FaRegHeart } from "react-icons/fa";
+import { FiShare } from "react-icons/fi";
+import { CgMenuGridO } from "react-icons/cg";
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadStay, addStayMsg } from '../store/actions/stay.actions'
@@ -35,6 +38,17 @@ export function StayDetails() {
     } catch (err) {
       showErrorMsg('Cannot add stay msg')
     }
+  }
+
+  
+    const navigate = useNavigate();
+
+    const OnStayDetailsPhotos = () => {
+      navigate(`/stay/${stayId}/photos`, { state: stay }); 
+    };
+
+  function onSaveHeart(stayId) {
+    console.log('save', stayId);
 
   }
 
@@ -45,11 +59,12 @@ export function StayDetails() {
         <div class="heading flex">
           <h1>{stay.name}</h1>
           <div class="right-heading flex">
-            <p>♡ save</p>
-            <p>share</p>
+            <p onClick={() => onSaveHeart(stay._id)}><FaRegHeart /> save</p>
+            <p><FiShare /> share</p>
           </div>
         </div>
         <div className="gallery">
+          <button class="btn-photos" onClick={OnStayDetailsPhotos}><CgMenuGridO /> Show all photos</button>
           <div className="gallery-main">
             <img src={stay.imgUrl} alt={stay.name} class="left-img" />
           </div>

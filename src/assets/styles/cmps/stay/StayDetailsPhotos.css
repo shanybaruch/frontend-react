@@ -1,0 +1,52 @@
+.photos-page {
+  padding: 16px 80px; /* שוליים 80px מצדדים */
+  box-sizing: border-box;
+}
+
+.photos-page h1 {
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Grid של התמונות */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* columns גמישות */
+  grid-auto-rows: 200px; /* גובה בסיסי לכל תמונה */
+  gap: 8px; /* רווח בין התמונות */
+}
+
+/* כל תמונה */
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.photo-0 { grid-row: span 2; grid-column: span 2; }
+
+.photo-3 { grid-row: span 2; grid-column: span 1; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .photos-page {
+    padding: 16px 40px;
+  }
+  .photos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-auto-rows: 150px;
+  }
+}
+
+@media (max-width: 740px) {
+  .photos-page {
+    padding: 16px 16px;
+  }
+  .photos-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+  }
+}
