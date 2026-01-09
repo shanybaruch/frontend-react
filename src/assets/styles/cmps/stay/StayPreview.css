@@ -1,7 +1,11 @@
 .stay-preview {
     color: var(--gray);
 
-    >header {
+    a {
+        text-decoration: none;
+    }
+
+    .name {
         font-size: .8em;
         font-weight: 600;
         padding-top: .5em;
@@ -18,7 +22,7 @@
         }
     }
 
-    & p {
+    p {
         margin-block: 0 0.2rem;
         padding-inline-start: .2em;
         font-size: .7em;
