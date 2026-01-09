@@ -1,11 +1,7 @@
 .login-form,
 .signup-form {
 	display: grid;
-	width: min(80%, 300px);
 	margin: auto;
-
-	padding: 1em;
-	background-color: var(--gray-light);
 }
 
 .signup-form {

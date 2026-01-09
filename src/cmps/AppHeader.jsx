@@ -10,6 +10,7 @@ import { loadStays } from '../store/actions/stay.actions'
 import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
 import { Calendar } from './Calendar'
 import { GuestPicker } from './GuestPicker'
+import { LoginModal } from './LoginModal'
 
 
 export function AppHeader() {
@@ -28,6 +29,8 @@ export function AppHeader() {
 	const [isEditingWho, setIsEditingWho] = useState(false)
 
 	const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
+
+	const [isLoginOpen, setIsLoginOpen] = useState(false)
 
 	function onUpdateGuests(type, diff) {
 		const newVal = Math.max(0, guests[type] + diff)
@@ -126,7 +129,12 @@ export function AppHeader() {
 						{isMenuOpen && (
 							<div className="menu-dropdown" onClick={() => setIsMenuOpen(false)}>
 								{!user ? (
-									<NavLink to="auth/login" className="menu-item">Log in or sign up</NavLink>
+									<section
+										className="menu-item"
+										onClick={() => setIsLoginOpen(true)}
+									>
+										Log in or sign up
+									</section>
 								) : (
 									<>
 										<Link to={`user/${user._id}`} className="menu-item bold">Profile</Link>
@@ -223,6 +231,7 @@ export function AppHeader() {
 					{isAnyActive && <span className="search-text">Search</span>}
 				</section>
 			</div>
+			{isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
 		</header>
 	)
 }
