@@ -30,4 +30,5 @@
 @import "cmps/review/ReviewList";
 @import "cmps/review/ReviewPreview";
 
-@import "cmps/stay/Calendar.css"
+@import "cmps/stay/Calendar.css";
+@import "cmps/stay/GuestPicker.css";

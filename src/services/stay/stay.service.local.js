@@ -19,9 +19,9 @@ window.cs = stayService
 createStays()
 
 
-async function query(filterBy = { txt: '', minCapacity: 0 }) {
+async function query(filterBy = getDefaultFilter()) {
     var stays = await storageService.query(STORAGE_KEY)
-    const { txt, minCapacity, sortField, sortDir } = filterBy
+    const { txt, minCapacity, sortField, sortDir, to, from } = filterBy
 
     if (txt) {
         const regex = new RegExp(txt, 'i')
@@ -38,16 +38,33 @@ async function query(filterBy = { txt: '', minCapacity: 0 }) {
         stays = stays.filter(stay => stay.capacity >= +minCapacity)
     }
 
-    if (sortField) {
-        stays.sort((a, b) => {
-            const dir = +sortDir || 1
-            if (sortField === 'capacity') return (a.capacity - b.capacity) * dir
-            const valA = a[sortField] || ''
-            const valB = b[sortField] || ''
-            return valA.localeCompare(valB) * dir
+    if (from && to) {
+        stays = stays.filter(stay => {
+            return _isStayAvailable(stay, from, to)
         })
     }
+
+    // if (sortField) {
+    //     stays.sort((a, b) => {
+    //         const dir = +sortDir || 1
+    //         if (sortField === 'capacity') return (a.capacity - b.capacity) * dir
+    //         const valA = a[sortField] || ''
+    //         const valB = b[sortField] || ''
+    //         return valA.localeCompare(valB) * dir
+    //     })
+    // }
     return stays
+}
+
+function _isStayAvailable(stay, filterFrom, filterTo) {
+    if (!stay.availableDates || !stay.availableDates.length) return false
+
+    const reqFrom = new Date(filterFrom).getTime()
+    const reqTo = new Date(filterTo).getTime()
+
+    return stay.availableDates.some(range => {
+        return reqFrom >= range.from && reqTo <= range.to
+    })
 }
 
 function getById(stayId) {
@@ -90,9 +107,15 @@ async function addStayMsg(stayId, txt) {
 function getDefaultFilter() {
     return {
         txt: '',
-        minCapacity: 0,
-        sortField: '',
-        sortDir: '',
+        from: null,
+        to: null,
+        guests: {
+            adults: 0,
+            children: 0,
+            infants: 0,
+            pets: 0
+        },
+        minCapacity: 0
     }
 }
 
@@ -100,7 +123,7 @@ function createStays() {
     let stays = loadFromStorage(STORAGE_KEY)
     if (stays) return
     // stays = createStays()
-    
+
     const apartments = [
         { name: 'Red Sea Luxury Suite', address: '6 HaTmarim Blvd', imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800' },
         { name: 'Eilat Bay View Apartment', address: '12 Argaman St', imgUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800' },
@@ -109,7 +132,7 @@ function createStays() {
         { name: 'Desert Oasis Flat', address: '18 HaShachmon', imgUrl: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800' },
         { name: 'Modern Marina Loft', address: '15 Kaman St, Eilat', imgUrl: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800' }
     ]
-    
+
     stays = apartments.map(apt => ({
         _id: makeId(),
         name: apt.name,
@@ -128,6 +151,12 @@ function createStays() {
             lng: 34.9519,
         },
         amenities: ['Wifi', 'Air conditioning', 'Kitchen', 'TV', 'Balcony'],
+        availableDates: [
+            {
+                from: new Date().getTime(),
+                to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 180).getTime() 
+            }
+        ],
         reviews: []
     }))
     saveToStorage(STORAGE_KEY, stays)

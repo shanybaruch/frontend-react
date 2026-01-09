@@ -15,11 +15,17 @@ function getEmptyStay() {
 }
 
 export function getDefaultFilter() {
-    return {
+ return {
         txt: '',
-        minCapacity: 0,
-        sortField: '',
-        sortDir: '',
+        from: null,
+        to: null,
+        guests: {
+            adults: 0,
+            children: 0,
+            infants: 0,
+            pets: 0
+        },
+        minCapacity: 0 
     }
 }
 

@@ -1,0 +1,88 @@
+.guests-dropdown {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: var(--white);
+    border-radius: 32px;
+    padding: 20px 32px 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    z-index: 10;
+
+    .guest-row {
+        position: relative;
+        padding: 10px 0 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        hr {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border: 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        &:last-child hr {
+            display: none;
+        }
+
+        .info {
+            .title {
+                font-size: .95rem;
+                font-weight: 600;
+                color: var(--black);
+                margin-bottom: 5px;
+            }
+
+            .desc {
+                color: var(--gray);
+                font-size: .8rem;
+            }
+
+            a {
+                color: var(--gray);
+                font-size: .8rem;
+                text-decoration: underline;
+                font-weight: 600;
+            }
+        }
+
+        .counts {
+            display: flex;
+            align-items: center;
+            gap: 0;
+
+            button {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 1px solid var(--gray2);
+                background: var(--white);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                cursor: pointer;
+                color: var(--gray);
+
+                &:hover {
+                    border-color: var(--black);
+                    color: var(--black);
+                }
+
+                &.disabled {
+                    opacity: 0.4;
+                    cursor: not-allowed;
+                }
+            }
+
+            span {
+                min-width: 20px;
+                text-align: center;
+                font-size: .9rem;
+            }
+        }
+    }
+}

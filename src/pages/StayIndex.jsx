@@ -12,17 +12,17 @@ import { StayFilter } from '../cmps/StayFilter'
 import { Calendar } from '../cmps/Calendar'
 
 export function StayIndex() {
-    const [filterBy, setFilterBy] = useState(stayService.getDefaultFilter())
     const stays = useSelector(storeState => storeState.stayModule.stays)
-    console.log('stays: ', stays);
-    const [range, setRange] = useState()
+    const filterBy = useSelector(storeState => storeState.stayModule.filterBy)    
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+    const [range, setRange] = useState()
+    console.log('stays: ', stays);
     // const isFirstRender = useRef(true)
 
 
     useEffect(() => {
         loadStays(filterBy)
-    }, [])
+    }, [filterBy])
     // useEffect(() => {
     // if (isFirstRender.current) {
     //         isFirstRender.current = false
@@ -75,7 +75,7 @@ export function StayIndex() {
             <StayList
                 stays={stays}
                 onRemoveStay={onRemoveStay}
-                onUpdateStay={onUpdateStay} 
+                onUpdateStay={onUpdateStay}
             />
         </section>
     )

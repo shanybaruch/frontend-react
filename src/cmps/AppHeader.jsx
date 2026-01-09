@@ -9,6 +9,7 @@ import { IoSearch } from "react-icons/io5";
 import { loadStays } from '../store/actions/stay.actions'
 import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
 import { Calendar } from './Calendar'
+import { GuestPicker } from './GuestPicker'
 
 
 export function AppHeader() {
@@ -17,9 +18,31 @@ export function AppHeader() {
 	const dispatch = useDispatch()
 	const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
 
+	const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
+	const { adults, children, infants, pets } = guests
+	const totalGuests = adults + children
+
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 	const [isEditingWhere, setIsEditingWhere] = useState(false)
 	const [isEditingWhen, setIsEditingWhen] = useState(false)
+	const [isEditingWho, setIsEditingWho] = useState(false)
+
+	function onUpdateGuests(type, diff) {
+		const newVal = Math.max(0, guests[type] + diff)
+		dispatch({
+			type: SET_FILTER_BY,
+			filterBy: { ...filterBy, guests: { ...guests, [type]: newVal } }
+		})
+	}
+
+	function getGuestLabel() {
+		if (!totalGuests && !infants && !pets) return 'Add guests'
+
+		let label = `${totalGuests} guests`
+		if (infants) label += `, ${infants} infants`
+		if (pets) label += `, ${pets} pets`
+		return label
+	}
 
 	function onSetRange(range) {
 		const from = range?.from || null
@@ -33,6 +56,7 @@ export function AppHeader() {
 		//     setIsEditingWhen(false)
 		// }
 	}
+
 	const rangeForCalendar = {
 		from: filterBy.from ? new Date(filterBy.from) : undefined,
 		to: filterBy.to ? new Date(filterBy.to) : undefined
@@ -51,22 +75,28 @@ export function AppHeader() {
 
 	function handleTxtChange({ target }) {
 		const value = target.value
-		dispatch({ type: SET_FILTER_BY, filterBy: { txt: value } })
+		dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: value } })
 	}
 
 	function onSearch() {
-		loadStays(filterBy)
+		const totalGuests = filterBy.guests.adults + filterBy.guests.children
+		const filterToSave = { ...filterBy, minCapacity: totalGuests }
+		dispatch({ type: SET_FILTER_BY, filterBy: filterToSave })
+		loadStays(filterToSave)
+
 		setIsEditingWhere(false)
 		setIsEditingWhen(false)
+		setIsEditingWho(false)
 	}
 
 	return (
 		<header className="app-header full">
-			{(isMenuOpen || isEditingWhen || isEditingWhere) && (
+			{(isMenuOpen || isEditingWhen || isEditingWhere || isEditingWho) && (
 				<div className="main-screen" onClick={() => {
 					setIsMenuOpen(false)
 					setIsEditingWhen(false)
 					setIsEditingWhere(false)
+					setIsEditingWho(false)
 				}}></div>
 			)}
 			<nav className='header-nav'>
@@ -114,8 +144,9 @@ export function AppHeader() {
 				<section
 					className={`select-where ${isEditingWhere ? 'active' : ''}`}
 					onClick={() => {
-						setIsEditingWhere(true)
+						setIsEditingWhere(!isEditingWhere)
 						setIsEditingWhen(false)
+						setIsEditingWho(false)
 					}}
 				>
 					<section className='sec'>
@@ -125,13 +156,12 @@ export function AppHeader() {
 								type="text"
 								autoFocus
 								placeholder="Search destinations"
-								value={filterBy.txt}
+								value={filterBy.txt || ''}
 								onChange={handleTxtChange}
 								onBlur={() => setTimeout(() => setIsEditingWhere(false), 200)}
 							/>
 						) : (
-							<span>{filterBy.txt || 'Search destinations'}</span>
-						)}
+							<span>{filterBy.txt || 'Search destinations'}</span>)}
 					</section>
 					<div className="v-line"></div>
 				</section>
@@ -139,8 +169,9 @@ export function AppHeader() {
 					className={`select-when ${isEditingWhen ? 'active' : ''}`}
 					onClick={(e) => {
 						e.stopPropagation()
-						setIsEditingWhen(!isEditingWhen) 
+						setIsEditingWhen(!isEditingWhen)
 						setIsEditingWhere(false)
+						setIsEditingWho(false)
 					}}
 					tabIndex="0">
 					<section className='sec'>
@@ -161,16 +192,26 @@ export function AppHeader() {
 					)}
 					<div className="v-line"></div>
 				</section>
-				<section className='select-who'
-					onClick={() => {
-						setIsEditingWhen(false)
+				<section className={`select-who ${isEditingWho ? 'active' : ''}`}
+					onClick={(e) => {
+						e.stopPropagation()
 						setIsEditingWhere(false)
+						setIsEditingWhen(false)
+						setIsEditingWho(!isEditingWho)
 					}}
 					tabIndex="0">
 					<section className='sec'>
 						<p>Who</p>
-						<span>Add guests</span>
+						<span>
+							{getGuestLabel()}
+						</span>
 					</section>
+					{isEditingWho && (
+						<GuestPicker
+							guests={guests}
+							onUpdateGuests={onUpdateGuests}
+						/>
+					)}
 				</section>
 				<section
 					className='sec-search'
