@@ -2,7 +2,7 @@
     --min-column-size: 170px;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--min-column-size), 1fr));
     gap: .8rem;
     margin-top: 0;
     padding-inline: 18px;
