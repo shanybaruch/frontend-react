@@ -5,7 +5,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 22px 0 20px;
-    
+
         .title {
             margin: 0;
             font-size: 1.6rem;
@@ -87,8 +87,11 @@
         }
     }
 
-
-
+    .description-p {
+        padding: 20px 0;
+        word-spacing: 1px;
+        font-weight: 300;
+    }
 
     .title-place-offers {
         margin: 1.3em 0 .8em;
@@ -96,16 +99,15 @@
         font-size: 1.3rem;
     }
 
+    .divider {
+        border-bottom: 0.8px solid var(--gray2);
+        margin: 5px 0;
+    }
 }
 
 
 
 
-.description-p {
-    padding: 20px 0;
-    word-spacing: 2px;
-    font-weight: 300;
-}
 
 
 .gallery {
@@ -163,11 +165,6 @@
 
 .bottom-right {
     border-bottom-right-radius: 16px;
-}
-
-.divider {
-    border-bottom: 0.8px solid var(--gray2);
-    margin: 5px 0;
 }
 
 

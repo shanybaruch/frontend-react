@@ -24,10 +24,10 @@
     max-width: 568px;
     max-height: 90vh;
     border-radius: 30px;
-    overflow: hidden;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
 
     .modal-header {
+        /* overflow: scroll; */
         display: flex;
         align-items: center;
         padding: 0 5px;
@@ -71,10 +71,9 @@
             .input-box {
                 padding: 10px 12px;
                 display: flex;
-                flex-direction: column;
 
                 label {
-                    font-size: 10px;
+                    font-size: .8rem;
                     color: var(--gray);
                     font-weight: 400;
                 }
@@ -83,13 +82,14 @@
                 input {
                     border: none;
                     outline: none;
-                    font-size: 15px;
+                    font-size: .95rem;
                     padding-top: 4px;
                     width: 100%;
                 }
 
                 &.top {
                     border-bottom: 1px solid var(--gray2);
+                    flex-direction: column;
 
                     &:has(input[type="email"]) {
                         padding: 14px 12px;
@@ -98,7 +98,27 @@
                 }
 
                 &.bottom {
-                    padding-block: 16px;
+                    padding-block: 10px;
+                    flex-direction: column;
+
+                    section {
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+
+                        margin-top: .2em;
+                        font-weight: 400;
+
+                        span {
+                            font-size: .9rem;
+                            margin-top: 0;
+                        }
+
+                        input {
+                            padding: 0;
+                        }
+                    }
+
                 }
             }
         }
@@ -188,5 +208,104 @@
                 }
             }
         }
+    }
+}
+
+.signup-modal {
+    display: flex;
+    flex-direction: column;
+
+    width: 568px;
+    margin: auto;
+
+    height: 80vh;
+    border-radius: 0 0 30px 30px;
+    overflow: hidden;
+    background-color: var(--white);
+
+    .modal-body {
+        overflow-y: auto;
+        flex-grow: 1;
+        padding: 10px 24px 30px;
+        /* padding: 0 24px 24px; */
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--gray2);
+            border-radius: 10px;
+        }
+
+        .sec-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            color: var(--gray);
+            font-size: .7rem;
+            font-weight: 400;
+        }
+
+        .p-notification {
+            margin-top: 1.8rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .divider {
+            margin-top: 1.2em;
+            margin-bottom: 2.9em;
+        }
+    }
+
+    .sec-name {
+        display: flex;
+        flex-direction: column;
+
+        border: 1px solid var(--gray2);
+        border-radius: 10px;
+        overflow: hidden;
+
+        .input-first-name {
+            border-bottom: 1px solid var(--gray2);
+        }
+    }
+
+    p {
+        font-size: .7rem;
+        color: var(--gray);
+        font-weight: 400;
+        margin-block: .6em;
+    }
+
+    input {
+        font-size: 1rem;
+        outline: none;
+        padding-block: 1.1em;
+        border: 0;
+        font-weight: 300;
+        padding-inline-start: 10px;
+        background-color: transparent;
+    }
+
+    label {
+        display: block;
+        font-weight: 500;
+        margin-block: 1em;
+    }
+
+    .input-date {
+        border: 1px solid var(--gray2);
+        border-radius: 10px;
+        width: 100%;
+        padding-inline: 10px;
+        font-family: "Inter", sans-serif;
+        padding-block: 1rem;
+    }
+
+    .input-email {
+        border: 1px solid var(--gray2);
+        border-radius: 10px;
     }
 }

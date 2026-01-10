@@ -132,6 +132,7 @@
             }
 
             .menu-item {
+                cursor: pointer;
                 padding: 12px 20px;
                 text-decoration: none;
                 color: var(--black);
@@ -140,6 +141,7 @@
                 background: none;
                 border: none;
                 width: 100%;
+                font-weight: 400;
 
                 &:hover {
                     background-color: var(--white-gray);
