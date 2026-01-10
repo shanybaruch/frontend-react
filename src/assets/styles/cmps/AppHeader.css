@@ -238,6 +238,7 @@
             span {
                 color: var(--gray);
                 font-size: .85rem;
+                font-weight: 400;
             }
         }
 

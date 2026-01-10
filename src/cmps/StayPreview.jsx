@@ -14,7 +14,7 @@ export function StayPreview({ stay }) {
             <div className="stay-info">
                 {/* <h3>{stay.name}</h3> */}
                 <p>{stay.loc?.city}, {stay.loc?.country}</p>
-                <p>${stay.price} for night ★ {stay.rate}</p>
+                <p>₪{stay.price} for night ★ {stay.rate}</p>
                 {/* <p>★ {stay.rate}</p> */}
             </div>
 

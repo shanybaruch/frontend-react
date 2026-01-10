@@ -39,6 +39,7 @@
             .desc {
                 color: var(--gray);
                 font-size: .8rem;
+                font-weight: 400;
             }
 
             a {
