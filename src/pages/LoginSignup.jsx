@@ -21,7 +21,7 @@ export function LoginSignup() {
 
 export function Login() {
     const [users, setUsers] = useState([])
-    const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
+    const [credentials, setCredentials] = useState({ phone: '', email: '', firstName: '', lastName: '' })
 
     const navigate = useNavigate()
 
@@ -37,7 +37,7 @@ export function Login() {
     async function onLogin(ev = null) {
         if (ev) ev.preventDefault()
 
-        if (!credentials.username) return
+        if (!credentials.phone) return
         await login(credentials)
         navigate('/')
     }

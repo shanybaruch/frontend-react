@@ -24,9 +24,9 @@ export function LoginModal({ onClose }) {
         <div className="modal-overlay" onClick={onClose}>
             <div className="login-modal" onClick={(e) => e.stopPropagation()}>
                 <header className="modal-header">
-                    { isNextStep ?  
-                    <button className="btn-back" onClick={onBack} style={{fontSize: '1.2rem', backgroundColor: 'transparent', margin: 0}}><IoIosArrowBack /> </button>
-                    : <button className="btn-close" onClick={onClose}><IoClose /></button>
+                    {isNextStep ?
+                        <button className="btn-back" onClick={onBack} style={{ fontSize: '1.2rem', backgroundColor: 'transparent', margin: 0 }}><IoIosArrowBack /> </button>
+                        : <button className="btn-close" onClick={onClose}><IoClose /></button>
                     }
                     {isNextStep ? <span>Finish signing up</span> : <span>Log in or sign up</span>}
                 </header>
@@ -35,7 +35,7 @@ export function LoginModal({ onClose }) {
                     <main className="modal-body">
                         <h2>Welcome to AYS Nest</h2>
 
-                        <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+                        <form className="login-form" onSubmit={onContinue}>
                             <div className="inputs-container">
                                 {isPhoneOption ?
                                     <section>
@@ -51,14 +51,13 @@ export function LoginModal({ onClose }) {
                                             <label>Phone number</label>
                                             <section>
                                                 <span>+{countryCode}</span>
-                                                <input type="tel" />
+                                                <input type="tel" required name="phone" />
                                             </section>
                                         </div>
                                     </section>
                                     : <section>
                                         <div className="input-box top">
-                                            <label>Email</label>
-                                            <input type="email" placeholder="Email" />
+                                            <input type="email" placeholder="Email" required name="email" />
                                         </div>
                                     </section>
                                 }
@@ -70,8 +69,8 @@ export function LoginModal({ onClose }) {
                             </p>
 
                             <button
+                                type="submit"
                                 className="btn-continue"
-                                onClick={(ev) => onContinue(ev)}
                             >Continue</button>
                         </form>
 

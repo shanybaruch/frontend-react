@@ -137,6 +137,7 @@
         }
 
         .btn-continue {
+            margin: auto;
             width: 100%;
             background: linear-gradient(to right, var(--clr1), var(--clr1-hover));
             color: var(--white);
@@ -280,7 +281,8 @@
     }
 
     input {
-        font-size: 1rem;
+        font-size: .9rem;
+        letter-spacing: .4px;
         outline: none;
         padding-block: 1.1em;
         border: 0;
@@ -292,19 +294,21 @@
     label {
         display: block;
         font-weight: 500;
-        margin-block: 1em;
+        margin-top: 1.2em;
+        margin-bottom: 1em;
     }
 
     .input-date {
         border: 1px solid var(--gray2);
         border-radius: 10px;
         width: 100%;
-        padding-inline: 10px;
+        padding-inline-end: 15px;
         font-family: "Inter", sans-serif;
         padding-block: 1rem;
     }
 
     .input-email {
+        margin: 0;
         border: 1px solid var(--gray2);
         border-radius: 10px;
     }

@@ -1,15 +1,19 @@
 const { DEV, VITE_LOCAL } = import.meta.env
 
+import { makeId } from '../util.service'
 import { userService as local } from './user.service.local'
 import { userService as remote } from './user.service.remote'
 
 function getEmptyUser() {
     return {
-        username: '', 
-        password: '', 
+        _id: makeId(),
+        imgUrl: '',
         fullname: '',
-        isAdmin: false,
-        score: 100,
+        phone: '',
+        birthDate: '',
+        email: '',
+        isHost: false,
+        reviews: [],
     }
 }
 
