@@ -66,7 +66,7 @@ export function Signup() {
     const navigate = useNavigate()
 
     function clearState() {
-        setCredentials(userService.getEmptyUser())
+        setCredentials( userService.getEmptyUser())
     }
 
     function handleChange(ev) {

@@ -120,6 +120,9 @@ export function AppHeader() {
 
 				<section className='nav-end'>
 					<div className="menu-wrapper">
+						{user && <section>
+								<img src={user.imgUrl} alt="" />
+							</section>}
 						<button
 							className="btn-menu"
 							onClick={() => setIsMenuOpen(!isMenuOpen)}

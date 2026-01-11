@@ -5,23 +5,45 @@ import { IoIosArrowBack } from "react-icons/io";
 
 import { useState } from "react"
 import { SignupModal } from "./SignupModal";
+import { userService } from "../services/user";
+import { login } from "../store/actions/user.actions";
+import { storageService } from "../services/async-storage.service";
 
 export function LoginModal({ onClose }) {
     const [countryCode, setCountryCode] = useState('972')
     const [isPhoneOption, setIsPhoneOption] = useState(true)
     const [isNextStep, setIsNextStep] = useState(false)
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleChange({ target }) {
         const { name, value } = target
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
-    function onContinue(ev) {
+    async function onContinue(ev) {
         ev.preventDefault()
-        setIsNextStep(true)
+        setIsLoading(true)
+        try {
+            const users = await storageService.query('user')
+            const user = users.find(u =>
+                (credentials.email && u.email === credentials.email) ||
+                (credentials.phone && u.phone === credentials.phone)
+            )
+            if (user) {
+                console.log('User exists, logging in...', user)
+                await login(user)
+                onClose()
+            } else {
+                setIsNextStep(true)
+            }
+        } catch (err) {
+            console.error('Had issues checking user', err)
+        } finally {
+            setIsLoading(false)
+        }
     }
-    
+
     function onBack(ev) {
         ev.preventDefault()
         setIsNextStep(false)
@@ -99,7 +121,7 @@ export function LoginModal({ onClose }) {
                             <button
                                 type="submit"
                                 className="btn-continue"
-                            >Continue</button>
+                            >{isLoading ? 'Checking...' : 'Continue'}</button>
                         </form>
 
                         <div className="divider">

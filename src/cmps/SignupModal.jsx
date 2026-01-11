@@ -19,13 +19,18 @@ export function SignupModal({ credentials, setCredentials, onBack }) {
         }))
     }
 
-    async function onSignup(ev = null) {
+    async function onSignup(ev) {
         if (ev) ev.preventDefault()
-
-        if (!credentials.email || !credentials.firstName || !credentials.lastName) return
-        await signup(credentials)
-        clearState()
-        navigate('/')
+        if (!credentials.email || !credentials.firstName || !credentials.lastName) {
+            console.error('Missing required fields')
+            return
+        }
+        try {
+            await signup(credentials)
+            navigate('/')
+        } catch (err) {
+            console.error('Signup failed:', err)
+        }
     }
 
     const maxDate = new Date()
@@ -61,10 +66,11 @@ export function SignupModal({ credentials, setCredentials, onBack }) {
                         <label>Date of birth</label>
                         <input
                             name="birthday"
-                            // max={maxDateString}
+                            max={maxDateString}
                             value={credentials.birthDate || ''}
-                            // onChange={handleChange}
-                            onChange={(e) => setCredentials(prev => ({ ...prev, birthDate: e.target.value }))}
+                            type="date"
+                            onChange={handleChange}
+                            // onChange={(e) => setCredentials(prev => ({ ...prev, birthDate: e.target.value }))}
                             className="input-date"
                             placeholder="Birthdate"
                             required
