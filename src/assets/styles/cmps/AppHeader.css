@@ -1,7 +1,7 @@
 .app-header {
     display: grid;
     justify-items: center;
-    gap: 1.4em;
+    gap: 1em;
     /* min-height: 3.5rem; */
 
     background-color: var(--white);
@@ -117,7 +117,7 @@
 
             .menu-dropdown {
                 position: absolute;
-                top: 50px;
+                top: 70px;
                 right: 0;
 
                 background-color: var(--white);
