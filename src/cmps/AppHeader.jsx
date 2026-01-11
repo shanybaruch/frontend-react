@@ -120,7 +120,9 @@ export function AppHeader() {
 				<section className='nav-end'>
 					<div className="menu-wrapper">
 						{user && <section>
+							<Link to={`user/${user._id}`} className="menu-item bold">
 								<img src={user.imgUrl} alt="user-photo" onClick={() => navigate('/')}/>
+							</Link>
 							</section>}
 						<button
 							className="btn-menu"
@@ -139,7 +141,7 @@ export function AppHeader() {
 									</section>
 								) : (
 									<>
-										<Link to={`user/${user._id}`} className="menu-item bold">Profile</Link>
+										{/* <Link to={`user/${user._id}`} className="menu-item bold">Profile</Link> */}
 										<hr />
 										<button onClick={onLogout} className="menu-item logout-btn">Logout</button>
 									</>

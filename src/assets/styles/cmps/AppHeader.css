@@ -80,6 +80,9 @@
                 display: flex;
                 align-items: center;
                 
+                a {
+                    
+                }
                 img {
                     width: 40px;
                     height: 40px;
@@ -153,7 +156,7 @@
                 font-weight: 400;
 
                 &:hover {
-                    background-color: var(--white-gray);
+                    /* background-color: var(--white-gray); */
                 }
             }
         }

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router"
 import { userService } from "../services/user"
 import { signup } from "../store/actions/user.actions"
 
-export function SignupModal({ credentials, setCredentials, onBack }) {
+export function SignupModal({ credentials, setCredentials, onBack, onClose }) {
     const navigate = useNavigate()
 
     function clearState() {
