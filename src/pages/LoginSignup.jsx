@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useState, useEffect } from 'react'
 
-import { userService } from '../services/user'
+import { getEmptyUser, userService } from '../services/user'
 import { login, signup } from '../store/actions/user.actions'
 import { ImgUploader } from '../cmps/ImgUploader'
 
@@ -21,8 +21,7 @@ export function LoginSignup() {
 
 export function Login() {
     const [users, setUsers] = useState([])
-    const [credentials, setCredentials] = useState({ phone: '', email: '', firstName: '', lastName: '' })
-
+    const [credentials, setCredentials] = useState(userService.getEmptyUser())
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -37,7 +36,7 @@ export function Login() {
     async function onLogin(ev = null) {
         if (ev) ev.preventDefault()
 
-        if (!credentials.phone) return
+        if (!credentials.email || !credentials.phone) return
         await login(credentials)
         navigate('/')
     }
@@ -67,12 +66,11 @@ export function Signup() {
     const navigate = useNavigate()
 
     function clearState() {
-        setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
+        setCredentials(userService.getEmptyUser())
     }
 
     function handleChange(ev) {
         const type = ev.target.type
-
         const field = ev.target.name
         const value = ev.target.value
         setCredentials({ ...credentials, [field]: value })
@@ -81,7 +79,7 @@ export function Signup() {
     async function onSignup(ev = null) {
         if (ev) ev.preventDefault()
 
-        if (!credentials.username || !credentials.password || !credentials.fullname) return
+        if (!credentials.email || !credentials.firstName || !credentials.lastName) return
         await signup(credentials)
         clearState()
         navigate('/')

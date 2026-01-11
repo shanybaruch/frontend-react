@@ -10,14 +10,26 @@ export function LoginModal({ onClose }) {
     const [countryCode, setCountryCode] = useState('972')
     const [isPhoneOption, setIsPhoneOption] = useState(true)
     const [isNextStep, setIsNextStep] = useState(false)
+    const [credentials, setCredentials] = useState(userService.getEmptyUser())
+
+    function handleChange({ target }) {
+        const { name, value } = target
+        setCredentials(prev => ({ ...prev, [name]: value }))
+    }
 
     function onContinue(ev) {
         ev.preventDefault()
         setIsNextStep(true)
     }
+    
     function onBack(ev) {
         ev.preventDefault()
         setIsNextStep(false)
+    }
+
+    function toggleOption() {
+        setIsPhoneOption(prev => !prev)
+        setCredentials(prev => ({ ...prev, email: '', phone: '' }))
     }
 
     return (
@@ -31,7 +43,12 @@ export function LoginModal({ onClose }) {
                     {isNextStep ? <span>Finish signing up</span> : <span>Log in or sign up</span>}
                 </header>
 
-                {isNextStep ? <SignupModal /> :
+                {isNextStep ?
+                    <SignupModal
+                        credentials={credentials}
+                        setCredentials={setCredentials}
+                        onBack={onBack}
+                    /> :
                     <main className="modal-body">
                         <h2>Welcome to AYS Nest</h2>
 
@@ -51,13 +68,24 @@ export function LoginModal({ onClose }) {
                                             <label>Phone number</label>
                                             <section>
                                                 <span>+{countryCode}</span>
-                                                <input type="tel" required name="phone" />
+                                                <input
+                                                    type="tel"
+                                                    required
+                                                    name="phone"
+                                                    onChange={handleChange}
+                                                    value={credentials.phone || ''} />
                                             </section>
                                         </div>
                                     </section>
                                     : <section>
                                         <div className="input-box top">
-                                            <input type="email" placeholder="Email" required name="email" />
+                                            <input
+                                                type="email"
+                                                placeholder="Email"
+                                                required
+                                                name="email"
+                                                value={credentials.email || ''}
+                                                onChange={handleChange} />
                                         </div>
                                     </section>
                                 }
@@ -81,12 +109,12 @@ export function LoginModal({ onClose }) {
                         <div className="social-logins">
                             <button className="social-btn">
                                 {isPhoneOption ?
-                                    <span onClick={() => setIsPhoneOption(false)}>
+                                    <span onClick={toggleOption}>
                                         <HiOutlineMail className="icon" />
                                         Continue with email
                                     </span>
                                     :
-                                    <span onClick={() => setIsPhoneOption(true)}>
+                                    <span onClick={toggleOption}>
                                         <CgSmartphone className="icon" />
                                         Continue with Phone
                                     </span>

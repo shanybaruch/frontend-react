@@ -17,7 +17,7 @@ export const userService = {
 async function getUsers() {
     const users = await storageService.query('user')
     return users.map(user => {
-        delete user.password
+        // delete user.password
         return user
     })
 }
@@ -44,7 +44,7 @@ async function update({ _id, imgUrl }) {
 
 async function login(userCred) {
     const users = await storageService.query('user')
-    const user = users.find(user => user.username === userCred.username)
+    const user = users.find(user => user.email === userCred.email)
 
     if (user) return saveLoggedinUser(user)
 }
@@ -67,9 +67,11 @@ function getLoggedinUser() {
 function saveLoggedinUser(user) {
 	user = { 
         _id: user._id, 
-        fullname: user.fullname, 
+        firstName: user.firstName, 
+        lastName: user.lastName, 
         imgUrl: user.imgUrl, 
-        isHost: user.isHost
+        isHost: user.isHost,
+        reviews: user.reviews
     }
 	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user
