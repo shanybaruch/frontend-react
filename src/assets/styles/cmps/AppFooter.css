@@ -3,11 +3,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    border-top: 1px solid var(--gray-light-hover);
     min-height: 3.5rem;
 
     padding: .8rem 1rem;
-    background-color: --var(gray-light);
+    background-color: var(--gray-light);
 
     p {
         margin: 0;
@@ -17,11 +17,22 @@
         font-size: .8em;
         
         &.local-services {
-            color: --var(clr1);
+            color: var(--clr1);
         }
         
         &.remote-services {
-            color: --var(gray-light);
+            color: var(--gray-light);
         }
     }
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-footer svg:hover{
+    background-color: var(--gray-light-hover);
 }
