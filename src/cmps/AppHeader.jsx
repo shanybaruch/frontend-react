@@ -20,6 +20,8 @@ export function AppHeader() {
 	const dispatch = useDispatch()
 	const location = useLocation()
 
+	const isUserPage = location.pathname.startsWith('/user')
+
 	const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
 	const { adults, children, infants, pets } = guests
 	const totalGuests = adults + children
@@ -29,20 +31,7 @@ export function AppHeader() {
 	const [isEditingWhen, setIsEditingWhen] = useState(false)
 	const [isEditingWho, setIsEditingWho] = useState(false)
 	const [isLoginOpen, setIsLoginOpen] = useState(false)
-	const [inUserPage, setInUserPage] = useState(false)
 	const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
-
-	useEffect(() => {
-		const loc = user?._id
-		const userPage = '/user/' + loc
-
-		if (location.pathname === userPage) {
-			setInUserPage(true)
-		} else {
-			setInUserPage(false)
-		}
-	}, [location])
-
 
 	function onUpdateGuests(type, diff) {
 		const newVal = Math.max(0, guests[type] + diff)
@@ -107,155 +96,137 @@ export function AppHeader() {
 	}
 
 	return (
-		<header className="app-header full">
-			{(isMenuOpen || isEditingWhen || isEditingWhere || isEditingWho) && (
-				<div className="main-screen" onClick={() => {
-					setIsMenuOpen(false)
-					setIsEditingWhen(false)
-					setIsEditingWhere(false)
-					setIsEditingWho(false)
-				}}></div>
-			)}
-			<nav className='header-nav'>
-				<NavLink to="/stay" className="logo">
-					<img src="/img/logo-ays.png" alt="logo" />
-					AYS Nest
-				</NavLink>
+        <header className={`app-header full`}>
+            {(isMenuOpen || isAnyActive) && (
+                <div className="main-screen" onClick={() => {
+                    setIsMenuOpen(false)
+                    setIsEditingWhen(false)
+                    setIsEditingWhere(false)
+                    setIsEditingWho(false)
+                }}></div>
+            )}
+            
+            <nav className='header-nav'>
+                <NavLink to="/stay" className="logo">
+                    <img src="/img/logo-ays.png" alt="logo" />
+                    AYS Nest
+                </NavLink>
 
-				{!inUserPage &&
-					<div>
-						<section className='nav-middle'>
-							<NavLink to="stay">Homes</NavLink>
-							<NavLink to="/review">Experiences</NavLink>
-							<NavLink to="chat">Services</NavLink>
-							{/* <NavLink to="chat">Chat</NavLink> */}
-							{/* <NavLink to="review">Review</NavLink> */}
-						</section>
-					</div>
-				}
+                {!isUserPage && (
+                    <section className='nav-middle'>
+                        <NavLink to="stay">Homes</NavLink>
+                        <NavLink to="/review">Experiences</NavLink>
+                        <NavLink to="chat">Services</NavLink>
+                    </section>
+                )}
 
-				<section className='nav-end'>
-					<div className="menu-wrapper">
-						
-						{user && <section>
-							<Link to={`user/${user._id}`} className="menu-item">
-								<img src={user.imgUrl} alt="user-photo" />
-							</Link>
-						</section>}
-						<button
-							className="btn-menu"
-							onClick={() => setIsMenuOpen(!isMenuOpen)}
-						>
-							<FiMenu />
-						</button>
-						{isMenuOpen && (
-							<div className="menu-dropdown" onClick={() => setIsMenuOpen(false)}>
-								{!user ? (
-									<section
-										className="menu-item"
-										onClick={() => setIsLoginOpen(true)}
-									>
-										Log in or sign up
-									</section>
-								) : (
-									<>
-										{/* <Link to={`user/${user._id}`} className="menu-item bold">Profile</Link> */}
-										{/* <hr /> */}
-										<button onClick={onLogout} className="menu-item logout-btn">Logout</button>
-									</>
-								)}
-							</div>
-						)}
+                <section className='nav-end'>
+                    <div className="menu-wrapper">
+                        {user && (
+                            <Link to={`/user/${user._id}/about`} className="menu-item user-img-link">
+                                <img src={user.imgUrl} alt="user" className="user-nav-img" />
+                            </Link>
+                        )}
+                        <button className="btn-menu" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                            <FiMenu />
+                        </button>
+                        {isMenuOpen && (
+                            <div className="menu-dropdown" onClick={() => setIsMenuOpen(false)}>
+                                {!user ? (
+                                    <section className="menu-item" onClick={() => setIsLoginOpen(true)}>
+                                        Log in or sign up
+                                    </section>
+                                ) : (
+                                    <>
+                                        <Link to={`/user/${user._id}/about`} className="menu-item bold">Profile</Link>
+                                        <div className='divider'></div>
+                                        <button onClick={onLogout} className="menu-item logout-btn">Logout</button>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            </nav>
 
-						{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
+            {!isUserPage && (
+                <div className='selection'>
+                    <section
+                        className={`select-where ${isEditingWhere ? 'active' : ''}`}
+                        onClick={() => {
+                            setIsEditingWhere(!isEditingWhere)
+                            setIsEditingWhen(false)
+                            setIsEditingWho(false)
+                        }}
+                    >
+                        <section className='sec'>
+                            <p>Where</p>
+                            {isEditingWhere ? (
+                                <input
+                                    type="text"
+                                    autoFocus
+                                    placeholder="Search destinations"
+                                    value={filterBy.txt || ''}
+                                    onChange={(e) => dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: e.target.value } })}
+                                    onBlur={() => setTimeout(() => setIsEditingWhere(false), 200)}
+                                />
+                            ) : (
+                                <span>{filterBy.txt || 'Search destinations'}</span>
+                            )}
+                        </section>
+                        <div className="v-line"></div>
+                    </section>
 
-					</div>
-				</section>
-			</nav>
-			{!inUserPage &&
-				<div className='selection'>
-					<section
-						className={`select-where ${isEditingWhere ? 'active' : ''}`}
-						onClick={() => {
-							setIsEditingWhere(!isEditingWhere)
-							setIsEditingWhen(false)
-							setIsEditingWho(false)
-						}}
-					>
-						<section className='sec'>
-							<p>Where</p>
-							{isEditingWhere ? (
-								<input
-									type="text"
-									autoFocus
-									placeholder="Search destinations"
-									value={filterBy.txt || ''}
-									onChange={handleTxtChange}
-									onBlur={() => setTimeout(() => setIsEditingWhere(false), 200)}
-								/>
-							) : (
-								<span>{filterBy.txt || 'Search destinations'}</span>)}
-						</section>
-						<div className="v-line"></div>
-					</section>
-					<section
-						className={`select-when ${isEditingWhen ? 'active' : ''}`}
-						onClick={(e) => {
-							e.stopPropagation()
-							setIsEditingWhen(!isEditingWhen)
-							setIsEditingWhere(false)
-							setIsEditingWho(false)
-						}}
-						tabIndex="0">
-						<section className='sec'>
-							<p>When</p>
-							<span>
-								{filterBy.from ?
-									`${filterBy.from.toLocaleDateString()} - ${filterBy.to?.toLocaleDateString() || ''}`
-									: 'Add dates'}
-							</span>
-						</section>
-						{isEditingWhen && (
-							<div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
-								<Calendar
-									range={rangeForCalendar}
-									setRange={onSetRange}
-								/>
-							</div>
-						)}
-						<div className="v-line"></div>
-					</section>
-					<section className={`select-who ${isEditingWho ? 'active' : ''}`}
-						onClick={(e) => {
-							e.stopPropagation()
-							setIsEditingWhere(false)
-							setIsEditingWhen(false)
-							setIsEditingWho(!isEditingWho)
-						}}
-						tabIndex="0">
-						<section className='sec'>
-							<p>Who</p>
-							<span>
-								{getGuestLabel()}
-							</span>
-						</section>
-						{isEditingWho && (
-							<GuestPicker
-								guests={guests}
-								onUpdateGuests={onUpdateGuests}
-							/>
-						)}
-					</section>
-					<section
-						className={`sec-search ${isAnyActive ? 'expanded' : ''}`}
-						onClick={onSearch}
-					>
-						<IoSearch />
-						{isAnyActive && <span className="search-text">Search</span>}
-					</section>
-				</div>
-			}
-			{isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
-		</header>
-	)
+                    <section
+                        className={`select-when ${isEditingWhen ? 'active' : ''}`}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsEditingWhen(!isEditingWhen)
+                            setIsEditingWhere(false)
+                            setIsEditingWho(false)
+                        }}
+                    >
+                        <section className='sec'>
+                            <p>When</p>
+                            <span>
+                                {filterBy.from ? 
+                                    `${new Date(filterBy.from).toLocaleDateString()} - ${filterBy.to ? new Date(filterBy.to).toLocaleDateString() : ''}` 
+                                    : 'Add dates'}
+                            </span>
+                        </section>
+                        {isEditingWhen && (
+                            <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
+                                <Calendar range={rangeForCalendar} setRange={onSetRange} />
+                            </div>
+                        )}
+                        <div className="v-line"></div>
+                    </section>
+
+                    <section 
+                        className={`select-who ${isEditingWho ? 'active' : ''}`}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsEditingWhere(false)
+                            setIsEditingWhen(false)
+                            setIsEditingWho(!isEditingWho)
+                        }}
+                    >
+                        <section className='sec'>
+                            <p>Who</p>
+                            <span>{getGuestLabel()}</span>
+                        </section>
+                        {isEditingWho && (
+                            <GuestPicker guests={guests} onUpdateGuests={onUpdateGuests} />
+                        )}
+                    </section>
+
+                    <section className={`sec-search ${isAnyActive ? 'expanded' : ''}`} onClick={onSearch}>
+                        <IoSearch />
+                        {isAnyActive && <span className="search-text">Search</span>}
+                    </section>
+                </div>
+            )}
+            {isLoginOpen && <LoginModal onClose={() => setIsLoginOpen(false)} />}
+        </header>
+    )
 }

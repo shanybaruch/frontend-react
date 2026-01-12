@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 
 import { loadUser, updateUser } from '../store/actions/user.actions'
 import { showSuccessMsg } from '../services/event-bus.service'
 import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from '../services/socket.service'
 import { ImgUploader } from '../cmps/ImgUploader'
+import { UserAbout } from '../cmps/UserAbout'
 
 export function UserDetails() {
   const dispatch = useDispatch()
@@ -30,42 +31,24 @@ export function UserDetails() {
     dispatch({ type: SET_WATCHED_USER, user })
   }
 
-  async function onUploaded(imgUrl) {
-    const userToUpdate = { ...user, imgUrl }
-    try {
-      await updateUser(userToUpdate)
-      showSuccessMsg('Profile updated and saved!')
-    } catch (err) {
-      showErrorMsg('Could not save image to database')
-    }
-  }
-
   return (
     <section className="user-details">
       <section className='section profile'>
         <h1 className='title'>Profile</h1>
         <div className='nav-links'>
-          <NavLink>
+          <NavLink to={`/user/${params.id}/about`}>
             <img src={user?.imgUrl} alt="img-profile" className='img-profile' />
             <span>About me</span>
           </NavLink>
-          <NavLink>
+          <NavLink to={`/user/${params.id}/trips`}>
             <div className='img-trip'>🧳</div>
-            {/* <img src="" alt="" /> */}
             <span>Past trips</span>
           </NavLink>
         </div>
       </section>
       <div className='divider'></div>
-      <section className='section details'>
-        <section className='top'>
-          <h1 className='title'>About me</h1>
-          <ImgUploader onUploaded={onUploaded} />
-        </section>
-        <section className='main'>
-          <img src={user?.imgUrl} alt="img-profile" className='img-profile' />
-          <h1 className='name'>{user?.firstName}</h1>
-        </section>
+      <section className="tab-content">
+        <Outlet context={{ user }} />
       </section>
     </section>
   )
