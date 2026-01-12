@@ -16,23 +16,23 @@ export function AppFooter() {
 				<span>·</span>
 			</div>
 			
+			{count}
+			
             {import.meta.env.VITE_LOCAL ? 
                 <span className="local-services">Local Services</span> : 
                 <span className="remote-services">Remote Services</span>
 			}
 
             <div className="footer-right">
-				<p> <SvgIcon iconName="shekel" />  ILS </p>
+				<p> ₪ ILS </p>
 				<span>·</span>
 				<p> <SvgIcon iconName="globe" /> English</p>
 				<span>·</span>
-				<p> <SvgIcon iconName="instagram" /> </p>
+		        <a href='https://www.instagram.com/airbnb/'><SvgIcon iconName="instagram" /></a>
 				<span>·</span>
-				<p> <SvgIcon iconName="git" /> </p>
+		        <a href="https://github.com/shanybaruch/frontend-react.git "><SvgIcon iconName="git" /></a>
 				<span>·</span>
 			</div>
-
-
 		</footer>
 	)
 }

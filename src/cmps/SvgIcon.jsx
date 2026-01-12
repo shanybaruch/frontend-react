@@ -102,13 +102,6 @@ function _getIcon(iconName) {
             </svg>
         ),
         
-        shekel: (
-            <svg aria-label="Shekel" fill="none" height="16" width="16" viewBox="0 0 24 24" role="img">
-                <title>Shekel</title>
-                <path d="M7 3v18M7 12h8a4 4 0 0 0 0-8H9 M7 12h8a4 4 0 1 1 0 8H9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-        ),
-        
         git: (
             <svg aria-label="GitHub" fill="currentColor" height="16" width="16" viewBox="0 0 24 24" role="img">
                 <title>Git</title>
