@@ -15,6 +15,71 @@ function _getIcon(iconName) {
         search: <svg aria-label="Search" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Search</title><path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path><line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="16.511" x2="22" y1="16.511" y2="22"></line></svg>,
         explore: <svg aria-label="Explore" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Explore</title><polygon fill="none" points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></polygon><polygon fillRule="evenodd" points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"></polygon><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></circle></svg>,
         exploreBold: <svg aria-label="Explore" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Explore</title><path d="m13.173 13.164 1.491-3.829-3.83 1.49ZM12.001.5a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12.001.5Zm5.35 7.443-2.478 6.369a1 1 0 0 1-.57.569l-6.36 2.47a1 1 0 0 1-1.294-1.294l2.48-6.369a1 1 0 0 1 .57-.569l6.359-2.47a1 1 0 0 1 1.294 1.294Z"></path></svg>,
+        globe: (
+            <svg aria-label="Language" fill="none" height="16" width="16" viewBox="0 0 24 24" role="img">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                <path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+        ),
+
+        menu: (
+            <svg
+                aria-label="Menu"
+                fill="none"
+                height="16"
+                width="16"
+                viewBox="0 0 24 24"
+                role="img"
+            >
+                <line x1="3" y1="6" x2="21" y2="6"
+                    stroke="currentColor" strokeWidth="2" />
+                <line x1="3" y1="12" x2="21" y2="12"
+                    stroke="currentColor" strokeWidth="2" />
+                <line x1="3" y1="18" x2="21" y2="18"
+                    stroke="currentColor" strokeWidth="2" />
+            </svg>
+        ),
+
+        user: (
+            <svg
+                aria-label="User"
+                fill="none"
+                height="16"
+                width="16"
+                viewBox="0 0 24 24"
+                role="img"
+            >
+                <circle
+                    cx="12"
+                    cy="8"
+                    r="4"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                />
+                <path
+                    d="M4 20c0-4 4-6 8-6s8 2 8 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                />
+            </svg>
+        ),
+
+        heart: (
+            <svg
+                aria-label="Favorite"
+                fill="none"
+                height="16"
+                width="16"
+                viewBox="0 0 24 24"
+                role="img"
+            >
+                <path
+                    d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                />
+            </svg>
+        ),
     }
     return icons[iconName]
 }
