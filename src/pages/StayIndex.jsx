@@ -23,13 +23,6 @@ export function StayIndex() {
     useEffect(() => {
         loadStays(filterBy)
     }, [filterBy])
-    // useEffect(() => {
-    // if (isFirstRender.current) {
-    //         isFirstRender.current = false
-    //         return
-    //     }
-    //     loadStays(filterBy)
-    // }, [filterBy])
 
     async function onRemoveStay(stayId) {
         try {
@@ -72,6 +65,11 @@ export function StayIndex() {
                 {/* {userService.getLoggedinUser() && <button onClick={onAddStay}>Add a Stay</button>} */}
             </header>
             {/* <StayFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
+            <StayList
+                stays={stays}
+                onRemoveStay={onRemoveStay}
+                onUpdateStay={onUpdateStay}
+            />
             <StayList
                 stays={stays}
                 onRemoveStay={onRemoveStay}

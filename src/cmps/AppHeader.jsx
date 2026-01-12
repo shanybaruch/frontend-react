@@ -12,91 +12,79 @@ import { Calendar } from './Calendar'
 import { GuestPicker } from './GuestPicker'
 import { LoginModal } from './LoginModal'
 
+export function AppHeader({ isAtTop }) {
+    const user = useSelector(storeState => storeState.userModule.user)
+    const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const location = useLocation()
 
-export function AppHeader() {
-	const user = useSelector(storeState => storeState.userModule.user)
-	const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
-	const location = useLocation()
+    const isUserPage = location.pathname.startsWith('/user')
+    const isStayDetails = location.pathname.startsWith('/stay/') && location.pathname !== '/stay'
+    const isCompact = !isAtTop || isStayDetails || isUserPage
 
-	const isUserPage = location.pathname.startsWith('/user')
+    const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
+    const { adults, children, infants, pets } = guests
+    const totalGuests = adults + children
 
-	const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
-	const { adults, children, infants, pets } = guests
-	const totalGuests = adults + children
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isEditingWhere, setIsEditingWhere] = useState(false)
+    const [isEditingWhen, setIsEditingWhen] = useState(false)
+    const [isEditingWho, setIsEditingWho] = useState(false)
+    const [isLoginOpen, setIsLoginOpen] = useState(false)
+    const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
 
-	const [isMenuOpen, setIsMenuOpen] = useState(false)
-	const [isEditingWhere, setIsEditingWhere] = useState(false)
-	const [isEditingWhen, setIsEditingWhen] = useState(false)
-	const [isEditingWho, setIsEditingWho] = useState(false)
-	const [isLoginOpen, setIsLoginOpen] = useState(false)
-	const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
+    function onUpdateGuests(type, diff) {
+        const newVal = Math.max(0, guests[type] + diff)
+        dispatch({
+            type: SET_FILTER_BY,
+            filterBy: { ...filterBy, guests: { ...guests, [type]: newVal } }
+        })
+    }
 
-	function onUpdateGuests(type, diff) {
-		const newVal = Math.max(0, guests[type] + diff)
-		dispatch({
-			type: SET_FILTER_BY,
-			filterBy: { ...filterBy, guests: { ...guests, [type]: newVal } }
-		})
-	}
+    function getGuestLabel() {
+        if (!totalGuests && !infants && !pets) return 'Add guests'
+        let label = `${totalGuests} guests`
+        if (infants) label += `, ${infants} infants`
+        if (pets) label += `, ${pets} pets`
+        return label
+    }
 
-	function getGuestLabel() {
-		if (!totalGuests && !infants && !pets) return 'Add guests'
+    function onSetRange(range) {
+        dispatch({
+            type: SET_FILTER_BY,
+            filterBy: { ...filterBy, from: range?.from || null, to: range?.to || null }
+        })
+    }
 
-		let label = `${totalGuests} guests`
-		if (infants) label += `, ${infants} infants`
-		if (pets) label += `, ${pets} pets`
-		return label
-	}
+    const rangeForCalendar = {
+        from: filterBy.from ? new Date(filterBy.from) : undefined,
+        to: filterBy.to ? new Date(filterBy.to) : undefined
+    }
 
-	function onSetRange(range) {
-		const from = range?.from || null
-		const to = range?.to || null
+    async function onLogout() {
+        try {
+            await logout()
+            setIsMenuOpen(false)
+            navigate('/')
+            showSuccessMsg(`Bye now`)
+        } catch (err) {
+            showErrorMsg('Cannot logout')
+        }
+    }
 
-		dispatch({
-			type: SET_FILTER_BY,
-			filterBy: { ...filterBy, from, to }
-		})
-		// if (from && to && from.getTime() !== to.getTime()) {
-		//     setIsEditingWhen(false)
-		// }
-	}
+    function onSearch() {
+        const totalGuests = filterBy.guests.adults + filterBy.guests.children
+        const filterToSave = { ...filterBy, minCapacity: totalGuests }
+        dispatch({ type: SET_FILTER_BY, filterBy: filterToSave })
+        loadStays(filterToSave)
+        setIsEditingWhere(false)
+        setIsEditingWhen(false)
+        setIsEditingWho(false)
+    }
 
-	const rangeForCalendar = {
-		from: filterBy.from ? new Date(filterBy.from) : undefined,
-		to: filterBy.to ? new Date(filterBy.to) : undefined
-	}
-
-	async function onLogout() {
-		try {
-			await logout()
-			setIsMenuOpen(false)
-			navigate('/')
-			showSuccessMsg(`Bye now`)
-		} catch (err) {
-			showErrorMsg('Cannot logout')
-		}
-	}
-
-	function handleTxtChange({ target }) {
-		const value = target.value
-		dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: value } })
-	}
-
-	function onSearch() {
-		const totalGuests = filterBy.guests.adults + filterBy.guests.children
-		const filterToSave = { ...filterBy, minCapacity: totalGuests }
-		dispatch({ type: SET_FILTER_BY, filterBy: filterToSave })
-		loadStays(filterToSave)
-
-		setIsEditingWhere(false)
-		setIsEditingWhen(false)
-		setIsEditingWho(false)
-	}
-
-	return (
-        <header className={`app-header full`}>
+    return (
+        <header className={`app-header full ${isCompact ? 'compact' : ''}`}>
             {(isMenuOpen || isAnyActive) && (
                 <div className="main-screen" onClick={() => {
                     setIsMenuOpen(false)
@@ -114,9 +102,22 @@ export function AppHeader() {
 
                 {!isUserPage && (
                     <section className='nav-middle'>
-                        <NavLink to="stay">Homes</NavLink>
-                        <NavLink to="/review">Experiences</NavLink>
-                        <NavLink to="chat">Services</NavLink>
+                        {isCompact ? (
+                            <button className="search-bar-mini" onClick={() => navigate('/stay')}>
+                                <span className="label">Anywhere</span>
+                                <div className="v-line"></div>
+                                <span className="label">Any week</span>
+                                <div className="v-line"></div>
+                                <span className="label guests">Add guests</span>
+                                <div className="search-icon"><IoSearch /></div>
+                            </button>
+                        ) : (
+                            <div className="nav-links-wrapper">
+                                <NavLink to="stay">Homes</NavLink>
+                                <NavLink to="/review">Experiences</NavLink>
+                                <NavLink to="chat">Services</NavLink>
+                            </div>
+                        )}
                     </section>
                 )}
 

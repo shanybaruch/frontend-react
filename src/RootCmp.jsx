@@ -16,19 +16,27 @@ import { AppHeader } from './cmps/AppHeader'
 import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
+import { UserAbout } from './cmps/UserAbout.jsx'
+import { UserTrips } from './cmps/UserTrips.jsx'
+
 import "@fontsource/inter/200.css"; //thin
 import "@fontsource/inter/300.css";
 import "@fontsource/inter"; //400
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css"; //bold
-import { UserAbout } from './cmps/UserAbout.jsx'
-import { UserTrips } from './cmps/UserTrips.jsx'
 
+import { useInView } from 'react-intersection-observer'
 
 export function RootCmp() {
+    const { ref, inView } = useInView({
+        threshold: 0,
+        initialInView: true,
+    })
+
     return (
         <div className="main-container">
-            <AppHeader />
+            <div ref={ref} className="scroll-sentinel"></div>
+            <AppHeader isAtTop={inView} />
             <UserMsg />
 
             <main>
