@@ -10,15 +10,21 @@ import { TbToolsKitchen2, TbWindow } from "react-icons/tb";
 import { FaRegHeart } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import { CgMenuGridO } from "react-icons/cg";
+import { useLocation } from 'react-router-dom'
+
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadStay, addStayMsg } from '../store/actions/stay.actions'
+import { Calendar } from '../cmps/Calendar';
 
 
 export function StayDetails() {
   const { stayId } = useParams()
   const navigate = useNavigate()
   const stay = useSelector(storeState => storeState.stayModule.stay)
+  const location = useLocation()
+  const order = location.state?.order
+
 
   const iconMap = {
     "Wifi": <HiOutlineWifi />,
@@ -132,17 +138,20 @@ export function StayDetails() {
               <div className="order-dates">
                 <div className="date-box">
                   <span className="label">CHECK-IN</span>
-                  <span className="value">Add date</span>
+                  <span className="value">{order?.checkIn || 'Add date'}</span>
                 </div>
                 <div className="date-box">
                   <span className="label">CHECK-OUT</span>
-                  <span className="value">Add date</span>
+                  <span className="value">{order?.checkOut || 'Add date'}</span>
                 </div>
               </div>
               
               <div className="order-guests">
                 <span className="label">GUESTS</span>
-                <span className="value">{stay.capacity} guests</span>
+                <span className="value">{order
+                ? `${order.guests.adults + order.guests.children} guests`
+                : 'Add guests'} 
+                </span>
               </div>
               
               <button className="reserve-btn"> Reserve </button>
@@ -152,7 +161,7 @@ export function StayDetails() {
           </section>
 
         </section>
-        
+
       </div>
       }
       <button onClick={() => { onAddStayMsg(stay._id) }}>Add stay msg</button>

@@ -153,20 +153,21 @@
                     font-weight: bold;
                 }
 
-
-                
                 .reserve-btn {
                     width: 100%;
                     padding: 14px;
-                    background-color: var(--clr1);
+                    background: linear-gradient(to right, var(--clr1-hover), var(--clr1));
+                    background-size: 200% 100%; 
+                    background-position: left; 
                     color: var(--white);
                     font-size: 16px;
                     border: none;
                     border-radius: 8px;
                     cursor: pointer;
-
+                    transition: background-position 0.5s ease; 
+                    
                     &:hover {
-                        background: linear-gradient(to right, var(--clr1), var(--clr1-hover));
+                        background-position: right; 
                     }
                 }
 
