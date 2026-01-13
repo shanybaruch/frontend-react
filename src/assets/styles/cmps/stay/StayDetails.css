@@ -32,6 +32,7 @@
     .sides {
         display: grid;
         grid-template-columns: 2fr 1fr;
+        gap: 80px;
 
         .big-side {
             .description {
@@ -83,6 +84,100 @@
                         width: 1.8em;
                     }
                 }
+            }
+        }
+
+        .small-side {
+            position: relative;
+
+            .order-card {
+                position: sticky;
+                top: 90px; 
+                border: 1px solid var(--gray-light-hover);
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+                background-color: var(--white);
+
+                .order-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 16px;
+
+                    .price {
+                        font-size: 22px;
+                        font-weight: bold;
+                    }
+
+                    .per-night {
+                        font-size: 14px;
+                        font-weight: normal;
+                    }
+
+                    .order-rating {
+                        display: flex;
+                        align-items: center;
+                        gap: 4px;
+                        font-size: 14px;
+                    }
+                }
+                
+                .order-dates {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    border: 1px solid var(--gray-light);
+                    border-radius: 8px;
+                    margin-bottom: 12px;
+
+                    .date-box {
+                        padding: 10px;
+                        border-right: 1px solid var(--gray-light);
+                    }
+                    .date-box:last-child {
+                        border-right: none;
+                    }
+
+                }
+                
+                .order-guests {
+                    border: 1px solid var(--gray-light);
+                    border-radius: 8px;
+                    padding: 10px;
+                    margin-bottom: 16px;
+                }
+                
+                .label {
+                    display: block;
+                    font-size: 10px;
+                    font-weight: bold;
+                }
+
+                .reserve-btn {
+                    width: 100%;
+                    padding: 14px;
+                    background: linear-gradient(to right, var(--clr1-hover), var(--clr1));
+                    background-size: 200% 100%; 
+                    background-position: left; 
+                    color: var(--white);
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: background-position 0.5s ease; 
+                    
+                    &:hover {
+                        background-position: right; 
+                    }
+                }
+
+                .order-note {
+                    margin-top: 10px;
+                    font-size: 13px;
+                    text-align: center;
+                    color: var(--gray);
+                }
+
             }
         }
     }

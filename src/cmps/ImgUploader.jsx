@@ -7,9 +7,9 @@ export function ImgUploader({ onUploaded = null }) {
   async function uploadImg(ev) {
     setIsUploading(true)
     try {
-      const { secure_url } = await uploadService.uploadImg(ev)
+      const url = await uploadService.uploadImg(ev)
       setIsUploading(false)
-      if (onUploaded) onUploaded(secure_url)
+      if (onUploaded) onUploaded(url)
     } catch (err) {
       console.error('Failed to upload', err)
       setIsUploading(false)

@@ -24,6 +24,7 @@
 @import "cmps/stay/StayPreview";
 @import "cmps/stay/StayDetails.css";
 @import "cmps/stay/StayDetailsPhotos.css";
+@import "cmps/stay/StayDetailsHeader.css";
 @import "cmps/ShareModal.css";
 @import "cmps/stay/StayFilter";
 

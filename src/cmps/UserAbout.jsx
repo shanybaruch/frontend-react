@@ -1,5 +1,7 @@
-import { useSelector } from "react-redux";
-import { ImgUploader } from "./ImgUploader";
+import { useSelector } from "react-redux"
+import { ImgUploader } from "./ImgUploader"
+import { updateUser } from '../store/actions/user.actions'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export function UserAbout() {
     const user = useSelector(storeState => storeState.userModule.watchedUser)
