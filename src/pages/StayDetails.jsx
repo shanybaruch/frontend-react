@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ShareModal } from './ShareModal.jsx'
+import { StayDetailsHeader } from './StayDetailsHeader.jsx'
+import { useInView } from 'react-intersection-observer'
 
 import { RiStarFill, RiTvLine } from "react-icons/ri";
 import { HiOutlineTv } from "react-icons/hi2";
@@ -25,10 +27,19 @@ export function StayDetails() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const photosRef = useRef(null)
+  const amenitiesRef = useRef(null)
+
   const stay = useSelector(storeState => storeState.stayModule.stay)
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
 
   const [isShareOpen, setIsShareOpen] = useState(false)
+
+  const { ref: photosInViewRef, inView: isPhotosInView } = useInView({
+    threshold: 0.1,
+  })
+
+
 
   const iconMap = {
     "Wifi": <HiOutlineWifi />,
@@ -77,86 +88,97 @@ export function StayDetails() {
   }
 
   return (
-    <section className="stay-details">
-      {stay && <div>
-        <div className="heading flex">
-          <h1 className='title'>{stay.name}</h1>
-          <div className="right-heading flex">
-            <button
-              className='share'
-              onClick={() => setIsShareOpen(true)}>
-              <FiShare />
-              <span>Share</span>
-            </button>
-            {isShareOpen && (
-              <ShareModal 
-              stayId={stayId}
-              onClose={() => setIsShareOpen(false)} />
-            )}
-            <button
-              className='save'
-              onClick={() => onSaveHeart(stay._id)}>
-              {loggedInUser?.saved?.includes(stay._id) ? <FaHeart /> : <FaRegHeart />}
-              <span>Save</span>
-            </button>
-          </div>
-        </div>
+    <section>
+      <StayDetailsHeader
+        hidden={isPhotosInView}
+        amenitiesRef={amenitiesRef}
+      />
 
-        <div className="gallery">
-          <button className="btn-photos" onClick={OnStayDetailsPhotos}><CgMenuGridO /> Show all photos</button>
-          <div className="gallery-main">
-            <img src={stay.imgUrl} alt={stay.name} className="left-img" />
-          </div>
+      <div className="stay-details">
+        {stay && (
+          <div>
+            <div className="heading flex">
+              <h1 className='title'>{stay.name}</h1>
+              <div className="right-heading flex">
+                <button
+                  className='share'
+                  onClick={() => setIsShareOpen(true)}>
+                  <FiShare />
+                  <span>Share</span>
+                </button>
 
-          <div className="gallery-side">
-            <div><img src={stay.imgUrl} alt={stay.name} /></div>
-            <div><img src={stay.imgUrl} alt={stay.name} className="top-right" /></div>
-            <div><img src={stay.imgUrl} alt={stay.name} /></div>
-            <div><img src={stay.imgUrl} alt={stay.name} className="bottom-right" /></div>
-          </div>
-        </div>
+                {isShareOpen && (
+                  <ShareModal
+                    stayId={stayId}
+                    onClose={() => setIsShareOpen(false)}
+                  />
+                )}
 
-        <section className='sides'>
-
-          <section className='big-side'>
-            <div className="description">
-              <h2> {stay.type} {stay.name} </h2>
-              <p className="guests">{stay.capacity} guests · {stay.capacity / 2} bedroom</p>
-              <div className="meta-item">
-                <RiStarFill size={10} />
-                <span className='rate'> {stay.rate} · </span>
-                <span className='reviews'>{stay.reviews.length} reviews </span>
+                <button
+                  className='save'
+                  onClick={() => onSaveHeart(stay._id)}>
+                  {loggedInUser?.saved?.includes(stay._id) ? <FaHeart /> : <FaRegHeart />}
+                  <span>Save</span>
+                </button>
               </div>
             </div>
 
-            <div className="">
-              <div className="divider"></div>
-              <p className="description-p">{stay.description}</p>
-            </div>
+            <section ref={photosInViewRef} className="gallery">
+              <button className="btn-photos" onClick={OnStayDetailsPhotos}>
+                <CgMenuGridO /> Show all photos
+              </button>
+              <div className="gallery-main">
+                <img src={stay.imgUrl} alt={stay.name} className="left-img" />
+              </div>
 
-            <div className="amenities">
-              <div className="divider"></div>
-              <h2 className='title-place-offers'>What this place offers</h2>
-              {stay.amenities && (
-                <ul className="amenities">
-                  {stay.amenities.map((item, idx) => (
-                    <li key={idx} className='amenity-item'>
-                      {iconMap[item] || null}
-                      <span> {item} </span>
-                    </li>)
-                  )}
-                </ul>)}
-            </div>
+              <div className="gallery-side">
+                <div><img src={stay.imgUrl} alt={stay.name} /></div>
+                <div><img src={stay.imgUrl} alt={stay.name} className="top-right" /></div>
+                <div><img src={stay.imgUrl} alt={stay.name} /></div>
+                <div><img src={stay.imgUrl} alt={stay.name} className="bottom-right" /></div>
+              </div>
+            </section>
 
-          </section>
+            <section className='sides'>
+              <section className='big-side'>
+                <div className="description">
+                  <h2>{stay.type} {stay.name}</h2>
+                  <p className="guests">{stay.capacity} guests · {stay.capacity / 2} bedroom</p>
+                  <div className="meta-item">
+                    <RiStarFill size={10} />
+                    <span className='rate'>{stay.rate} · </span>
+                    <span className='reviews'>{stay.reviews.length} reviews</span>
+                  </div>
+                </div>
 
-          <section className='small-side'>
-          </section>
+                <div className="">
+                  <div className="divider"></div>
+                  <p className="description-p">{stay.description}</p>
+                </div>
 
-        </section>
+                <section ref={amenitiesRef}>
+                  <div className="amenities">
+                    <div className="divider"></div>
+                    <h2 className='title-place-offers'>What this place offers</h2>
+                    {stay.amenities && (
+                      <ul className="amenities">
+                        {stay.amenities.map((item, idx) => (
+                          <li key={idx} className='amenity-item'>
+                            {iconMap[item] || null}
+                            <span> {item} </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </section>
+              </section>
+            </section>
+          </div>
+        )}
+
+        <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button>
       </div>
-      }
-      <button onClick={() => { onAddStayMsg(stay._id) }}>Add stay msg</button>
-    </section >
+    </section>
   )
 }
