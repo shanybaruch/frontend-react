@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 export function OrderPage() {
     const navigate = useNavigate()
     const [expiry, setExpiry] = useState("")
+    const [isConfirm, setIsConfirm] = useState(false)
 
     function handleExpiryChange(e) {
         let value = e.target.value.replace(/\D/g, "")
@@ -21,7 +22,9 @@ export function OrderPage() {
         setExpiry(value)
     }
 
-    function onNext() { 
+    function onConfirm(e) { 
+        e.preventDefault()
+        setIsConfirm(true)
     }
 
     return (
@@ -30,7 +33,7 @@ export function OrderPage() {
                 <button onClick={() => navigate(-1)}><FaArrowLeft /></button>
                 <h1>Confirm and pay</h1>
             </header>
-            <section className="form-pay" onSubmit={onNext}>
+            <form className="form-pay" onSubmit={onConfirm}>
                 <section className="card">
                     <h3>Add a payment method</h3>
                     <p>
@@ -54,12 +57,14 @@ export function OrderPage() {
                         <option value="israel" default>Israel</option>
                         <option value="USA">USA</option>
                     </select>
-                    <button>Next</button>
+                    <img src="" alt="" />
+                    <button type="submit">Confirm</button>
                 </section>
-            </section>
+            </form>
             <section className="order-details">
-                <h2></h2>
-
+                {isConfirm && 
+                <h2>Reservation success!</h2>
+                }
             </section>
         </section>
     )

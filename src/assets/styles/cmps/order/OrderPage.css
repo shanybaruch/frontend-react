@@ -97,4 +97,17 @@
             }
         }
     }
+
+    .order-details {
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+
+        h2 {
+            padding: 0 60px;
+            color: var(--success);
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 100;
+        }
+    }
 }

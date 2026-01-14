@@ -16,7 +16,7 @@ import { StayFilter } from './StayFilter'
 export function AppHeader({ isAtTop }) {
     const user = useSelector(storeState => storeState.userModule.user)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
-    
+
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -53,7 +53,7 @@ export function AppHeader({ isAtTop }) {
     }
 
     return (
-        <header className={`app-header full ${isCompact ? 'compact' : ''}`}>
+        <header className={`app-header full ${isCompact ? 'compact' : ''} ${isStayDetails ? 'static-header' : ''}`}>
             {(isMenuOpen || isAnyActive) && (
                 <div className="main-screen" onClick={() => {
                     setIsMenuOpen(false)
@@ -66,7 +66,7 @@ export function AppHeader({ isAtTop }) {
             <nav className='header-nav'>
                 <NavLink to="/stay" className="logo">
                     <img src="/img/logo-ays.png" alt="logo" />
-                    AYS Nest
+                    <span>AYS Nest</span>
                 </NavLink>
 
                 {!isUserPage && (
@@ -83,8 +83,8 @@ export function AppHeader({ isAtTop }) {
                         ) : (
                             <div className="nav-links-wrapper">
                                 <NavLink to="stay">Homes</NavLink>
-                                <NavLink to="/review">Experiences</NavLink>
-                                <NavLink to="chat">Services</NavLink>
+                                {/* <NavLink to="/review">Experiences</NavLink>
+                                <NavLink to="chat">Services</NavLink> */}
                             </div>
                         )}
                     </section>

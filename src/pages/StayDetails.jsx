@@ -19,7 +19,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadStay, addStayMsg } from '../store/actions/stay.actions'
 import { saveToStorage } from '../services/util.service'
 import { Calendar } from '../cmps/Calendar';
-import { OrderCard } from '../cmps/OrderCard.jsx'
+import { Loader } from '../cmps/Loader.jsx'
 
 
 export function StayDetails() {
@@ -54,6 +54,10 @@ export function StayDetails() {
 
   useEffect(() => {
     loadStay(stayId)
+
+    return () => {
+      dispatch({ type: 'SET_STAY', stay: null })
+    }
   }, [stayId])
 
   async function onAddStayMsg(stayId) {
@@ -90,7 +94,7 @@ export function StayDetails() {
     dispatch({ type: 'SET_USER', user: updatedUser })
   }
 
-  if (!stayId) return
+  if (!stay) return <Loader />
   return (
     <section>
       <StayDetailsHeader
@@ -181,11 +185,12 @@ export function StayDetails() {
                 <section className="small-side">
                   <OrderCard />
                 </section>
+              </section>
             </section>
           </div>
         )}
 
-        <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button>
+        {/* <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button> */}
 
       </div>
     </section>
