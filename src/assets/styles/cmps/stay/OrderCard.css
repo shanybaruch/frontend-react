@@ -1,0 +1,126 @@
+.small-side {
+    position: relative;
+    
+    .order-card {
+        position: sticky;
+        margin-top: 25px;
+        top: 90px; 
+        border: 1px solid var(--gray-light-hover);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        background-color: var(--white);
+        
+        .order-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            width: 100%;
+            
+            .price {
+               margin: 0;
+            }
+            
+            .order-rating {
+                display: flex;
+                /* align-items: center;
+                font-size: 14px; */
+                gap: .3125em;
+
+                .reviews{
+                    color: var(--gray);
+                }
+            }
+        }
+
+        .order-summary{
+            border: 1px solid var(--gray-light);
+            border-radius: 5px;
+        }
+        
+        .order-dates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            
+            .date-box {
+                padding: 10px;
+                border-right: 1px solid var(--gray-light);
+            }
+            
+            .date-box:last-child {
+                border-right: none;
+            }
+        }
+        
+        .order-guests {
+            border-top: 1px solid var(--gray-light);
+            padding: 10px;
+        }
+        
+        .label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        
+        .value{
+            color: var(--gray);
+            font-size: 13px;
+        }
+        
+        .reserve-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, var(--clr1-hover), var(--clr1));
+            background-size: 200% 100%; 
+            margin: 16px 0; 
+            color: var(--white);
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-position 0.5s ease; 
+            
+            &:hover {
+                background-position: right; 
+            }
+        }
+        
+        .order-note {
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .order-payment{
+            margin-top: 16px;
+
+            .payment-row{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+
+            }
+            .total{
+                color: var(--black);
+                font-weight: bold;
+            }
+
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    .small-side {
+        position: static;
+
+        .order-card {
+            position: static;
+            top: auto;
+            margin-top: 0;
+        }
+    }
+}

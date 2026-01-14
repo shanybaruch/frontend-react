@@ -1,36 +1,38 @@
 
-@import "setup/var";
-@import "setup/typography";
+@import "setup/var.css";
+@import "setup/typography.css";
 
-@import "basics/helpers";
-@import "basics/layout";
-@import "basics/base";
-@import "basics/forms";
+@import "basics/helpers.css";
+@import "basics/layout.css";
+@import "basics/base.css";
+@import "basics/forms.css";
 
-@import "RootCmp";
+@import "RootCmp.css";
 
-@import "cmps/AboutUs";
-@import "cmps/HomePage";
-@import "cmps/LoginSignup";
-@import "cmps/Chat";
+@import "cmps/AboutUs.css";
+@import "cmps/HomePage.css";
+@import "cmps/LoginSignup.css";
+@import "cmps/Chat.css";
 
-@import "cmps/user/UserDetails";
-@import "cmps/user/UserMsg";
+@import "cmps/user/UserDetails.css";
+@import "cmps/user/UserMsg.css";
 
-@import "cmps/AppHeader";
-@import "cmps/AppFooter";
+@import "cmps/AppHeader.css";
+@import "cmps/AppFooter.css";
 
-@import "cmps/stay/StayIndex";
-@import "cmps/stay/StayList";
-@import "cmps/stay/StayPreview";
+@import "cmps/stay/StayIndex.css";
+@import "cmps/stay/StayList.css";
+@import "cmps/stay/StayPreview.css";
 @import "cmps/stay/StayDetails.css";
 @import "cmps/stay/StayDetailsPhotos.css";
 @import "cmps/stay/StayDetailsHeader.css";
-@import "cmps/stay/StayFilter";
+@import "cmps/stay/StayFilter.css";
+@import "cmps/stay/OrderCard.css";
 
-@import "cmps/review/ReviewEdit";
-@import "cmps/review/ReviewList";
-@import "cmps/review/ReviewPreview";
+
+@import "cmps/review/ReviewEdit.css";
+@import "cmps/review/ReviewList.css";
+@import "cmps/review/ReviewPreview.css";
 
 @import "cmps/ShareModal.css";
 @import "cmps/Calendar.css";
