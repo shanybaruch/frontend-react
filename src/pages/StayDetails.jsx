@@ -230,7 +230,7 @@ export function StayDetails() {
           </div>
         )}
 
-        <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button>
+        {/* <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button> */}
 
       </div>
     </section>

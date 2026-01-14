@@ -54,6 +54,7 @@ export function OrderPage() {
                         <option value="israel" default>Israel</option>
                         <option value="USA">USA</option>
                     </select>
+                    <img src="" alt="" />
                     <button>Next</button>
                 </section>
             </section>
