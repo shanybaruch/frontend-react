@@ -6,8 +6,11 @@ import { useNavigate } from "react-router";
 
 export function OrderPage() {
     const navigate = useNavigate()
-    const [expiry, setExpiry] = useState("")
     const [isConfirm, setIsConfirm] = useState(false)
+    const [cardNumber, setCardNumber] = useState("1111111111111111");
+    const [expiry, setExpiry] = useState("11/35")
+    const [cvv, setCvv] = useState("111");
+    const [zipCode, setZipCode] = useState("1234567");
 
     function handleExpiryChange(e) {
         let value = e.target.value.replace(/\D/g, "")
@@ -22,7 +25,7 @@ export function OrderPage() {
         setExpiry(value)
     }
 
-    function onConfirm(e) { 
+    function onConfirm(e) {
         e.preventDefault()
         setIsConfirm(true)
     }
@@ -30,7 +33,9 @@ export function OrderPage() {
     return (
         <section className="order-page">
             <header>
-                <button onClick={() => navigate(-1)}><FaArrowLeft /></button>
+                <button onClick={() => navigate(-1)}>
+                    <FaArrowLeft />
+                </button>
                 <h1>Confirm and pay</h1>
             </header>
             <form className="form-pay" onSubmit={onConfirm}>
@@ -44,16 +49,51 @@ export function OrderPage() {
                     </p>
                 </section>
                 <div className="card-details">
-                    <input type="tel" className="card-name" placeholder="Card number" inputMode="numeric" maxLength="19" required />
+                    <input
+                        type="tel"
+                        className="card-name"
+                        placeholder="Card number"
+                        value={cardNumber}
+                        inputMode="numeric"
+                        maxLength="19"
+                        required
+                    />
                     <div>
-                        <input type="text" className="validity" value={expiry} onChange={handleExpiryChange} placeholder="MM / YY" pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
-                            maxLength="5" required />
-                        <input type="number" min={100} max={999} placeholder="CVV" maxLength="4" required />
+                        <input
+                            type="text"
+                            className="validity"
+                            value={expiry}
+                            onChange={handleExpiryChange}
+                            placeholder="MM / YY"
+                            pattern="(0[1-9]|1[0-2])\/[0-9]{2}"
+                            maxLength="5"
+                            required
+                        />
+                        <input
+                            type="number"
+                            min={100}
+                            max={999}
+                            placeholder="CVV"
+                            value={cvv}
+                            maxLength="4"
+                            required
+                        />
                     </div>
                 </div>
-                <input type="text" className="zip-code" placeholder="Zip code" inputMode="numeric" required />
+                <input
+                    type="text"
+                    className="zip-code"
+                    placeholder="Zip code"
+                    value={zipCode}
+                    inputMode="numeric"
+                    required
+                />
                 <section className="bottom">
-                    <select name="country" placeholder="Country/region" id="">
+                    <select
+                        name="country"
+                        placeholder="Country/region"
+                        id=""
+                    >
                         <option value="israel" default>Israel</option>
                         <option value="USA">USA</option>
                     </select>
@@ -62,8 +102,8 @@ export function OrderPage() {
                 </section>
             </form>
             <section className="order-details">
-                {isConfirm && 
-                <h2>Reservation success!</h2>
+                {isConfirm &&
+                    <h2>Reservation success!</h2>
                 }
             </section>
         </section>
