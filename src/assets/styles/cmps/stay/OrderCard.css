@@ -26,6 +26,7 @@
 
                 .span1 {
                     font-weight: 500;
+                    text-decoration: underline;
                     font-size: 1.3rem;
                 }
 
@@ -49,7 +50,7 @@
         }
 
         .order-summary {
-            border: 1px solid var(--gray);
+            border: 1px solid var(--gray2);
             border-radius: 10px;
         }
 
@@ -59,7 +60,7 @@
 
             .date-box {
                 padding: 10px;
-                border-right: 1px solid var(--gray);
+                border-right: 1px solid var(--gray2);
             }
 
             .date-box:last-child {
@@ -68,13 +69,13 @@
         }
 
         .order-guests {
-            border-top: 1px solid var(--gray);
+            border-top: 1px solid var(--gray2);
             padding: 10px;
         }
 
         .label {
             display: block;
-            font-size: .65rem;
+            font-size: .63rem;
             font-weight: 600;
         }
 
@@ -89,7 +90,7 @@
             padding: 14px;
             background: linear-gradient(to right, var(--clr1-hover), var(--clr1));
             background-size: 200% 100%;
-            margin: 16px 0;
+            margin: 20px 0 16px;
             color: var(--white);
             font-size: 16px;
             border: none;
@@ -111,13 +112,16 @@
         }
 
         .order-payment {
-            margin-top: 16px;
+            margin-top: 12px;
 
             .payment-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 8px 0;
+
+                font-weight: 300;
+                font-size: .9rem;
+                padding: 10px 10px 0;
 
             }
 

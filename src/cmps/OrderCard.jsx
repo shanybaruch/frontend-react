@@ -4,18 +4,47 @@ import { useNavigate } from 'react-router'
 
 export function OrderCard() {
     const stay = useSelector(storeState => storeState.stayModule.stay)
+    const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
     const navigate = useNavigate()
+
+    function formatDate(dateStr) {
+        if (!dateStr) return 'Add date'
+        return new Date(dateStr).toLocaleDateString()
+    }
+
+    function getGuestsLabel() {
+        const { adults = 0, children = 0, infants = 0 } = filterBy.guests || {}
+        const total = adults + children + infants
+        if (!total) return 'Add guests'
+        return `${total} guest${total > 1 ? 's' : ''}`
+    }
+
+    function calculateNights() {
+        if (!filterBy.from || !filterBy.to) return 0
+        const diffTime = Math.abs(new Date(filterBy.to) - new Date(filterBy.from))
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    }
+
+    const nights = calculateNights()
+    const serviceFee = 10
+    const staysPrice = nights * stay.price
+    const totalPrice = staysPrice + serviceFee
 
     return (
         <section className="order-card">
             <div className="order-header">
                 <p className="price">
-                    <span className="span1">
-                        ₪{stay.price}
-                    </span>
-                    <span className="span2">
-                        for 2 nights
-                    </span>
+                    {nights > 0 ? (
+                        <>
+                            <span className="span1">₪{totalPrice}</span>
+                            <span className="span2"> total for {nights} nights</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className="span1">₪{stay.price}</span>
+                            <span className="span2"> night</span>
+                        </>
+                    )}
                 </p>
 
                 {/* <div className="order-rating">
@@ -28,17 +57,20 @@ export function OrderCard() {
                 <div className="order-dates">
                     <div className="date-box">
                         <span className="label">CHECK-IN</span>
-                        <span className="value">Add date</span>
+                        {/* <span className="value">Add date</span> */}
+                        <span className="value">{formatDate(filterBy.from)}</span>
                     </div>
                     <div className="date-box">
                         <span className="label">CHECK-OUT</span>
-                        <span className="value">Add date</span>
+                        {/* <span className="value">Add date</span> */}
+                        <span className="value">{formatDate(filterBy.to)}</span>
                     </div>
                 </div>
 
                 <div className="order-guests">
                     <span className="label">GUESTS</span>
-                    <span className="value">Add guests</span>
+                    {/* <span className="value">Add guests</span> */}
+                    <span className="value">{getGuestsLabel()}</span>
                 </div>
             </div>
 
@@ -60,7 +92,27 @@ export function OrderCard() {
                     <span>₪260</span>
                 </div>
             </div> */}
+         
+            {nights > 0 && (
+                <div className="order-payment">
+                    <div className="payment-row">
+                        <span>₪{stay.price} × {nights} nights</span>
+                        <span>₪{staysPrice}</span>
+                    </div>
 
+                    <div className="payment-row">
+                        <span>Service fee</span>
+                        <span>₪{serviceFee}</span>
+                    </div>
+
+                    <hr />
+
+                    <div className="payment-row total">
+                        <span>Total</span>
+                        <span>₪{totalPrice}</span>
+                    </div>
+                </div>
+            )}
 
             <button className="reserve-btn" onClick={() => navigate('order')}> Reserve </button>
             <p className="order-note"> You won’t be charged yet </p>
