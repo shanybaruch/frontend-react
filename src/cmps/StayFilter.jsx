@@ -75,7 +75,7 @@ export function StayFilter(
                         setIsEditingWho(false)
                     }}
                 >
-                    <section className='sec'>
+                    <section className='sec first-sec'>
                         <p>Where</p>
                         {isEditingWhere && (
                             <div className="suggestions-modal" onClick={(e) => e.stopPropagation()}>

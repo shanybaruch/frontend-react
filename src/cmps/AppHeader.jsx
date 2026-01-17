@@ -80,7 +80,13 @@ export function AppHeader({ isAtTop }) {
                             </button>
                         ) : (
                             <div className="nav-links-wrapper">
-                                <NavLink to="stay">Homes</NavLink>
+                                <NavLink to="stay">
+                                    <img src="public/img/home-logo.png" alt="home-logo" />
+                                    <span>
+                                        Homes
+                                    </span>
+                                    <hr />
+                                </NavLink>
                                 {/* <NavLink to="/review">Experiences</NavLink>
                                 <NavLink to="chat">Services</NavLink> */}
                             </div>
