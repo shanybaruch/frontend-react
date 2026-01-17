@@ -8,11 +8,13 @@ export const ADD_STAY = 'ADD_STAY'
 export const UPDATE_STAY = 'UPDATE_STAY'
 export const ADD_STAY_MSG = 'ADD_STAY_MSG'
 export const SET_FILTER_BY = 'SET_FILTER_BY'
+export const SET_ORDER = 'SET_ORDER'
 
 const initialState = {
     stays: [],
     filterBy: getDefaultFilter(),
-    stay: null
+    stay: null,
+    currentOrder: null
 }
 
 export function stayReducer(state = initialState, action) {
@@ -44,7 +46,9 @@ export function stayReducer(state = initialState, action) {
             }
         case SET_FILTER_BY:
             return { ...state, filterBy: { ...state.filterBy, ...action.filterBy } }
-        default:
+      case 'SET_ORDER':
+    return { ...state, currentOrder: action.order }
+            default:
     }
     return newState
 }

@@ -22,8 +22,6 @@ import { Calendar } from '../cmps/Calendar';
 import { Loader } from '../cmps/Loader.jsx'
 import { OrderCard } from '../cmps/OrderCard.jsx'
 
-
-
 export function StayDetails() {
   const { stayId } = useParams()
   const navigate = useNavigate()
@@ -43,8 +41,6 @@ export function StayDetails() {
   const { ref: photosInViewRef, inView: isPhotosInView } = useInView({
     threshold: 0.1,
   })
-
-
 
   const iconMap = {
     "Wifi": <HiOutlineWifi />,

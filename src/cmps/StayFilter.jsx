@@ -4,6 +4,7 @@ import { Calendar } from './Calendar'
 import { GuestPicker } from './GuestPicker'
 import { IoSearch } from 'react-icons/io5'
 import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
+import { loadStays } from '../store/actions/stay.actions'
 
 export function StayFilter(
     { isEditingWhere, isEditingWhen, isEditingWho,

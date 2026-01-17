@@ -1,11 +1,15 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { SET_ORDER } from '../store/reducers/stay.reducer'
 
 
 export function OrderCard() {
     const stay = useSelector(storeState => storeState.stayModule.stay)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    if (!stay) return <Loader />
 
     function formatDate(dateStr) {
         if (!dateStr) return 'Add date'
@@ -25,8 +29,28 @@ export function OrderCard() {
         return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     }
 
+    function onReserve() {
+    const order = {
+        hostId: stay.host._id,
+        buyer: { _id: 'u101', fullname: 'Guest' },
+        totalPrice: totalPrice,
+        startDate: filterBy.from,
+        endDate: filterBy.to,
+        guests: filterBy.guests,
+        stay: {
+            _id: stay._id,
+            name: stay.name,
+            price: stay.price
+        },
+        status: 'pending'
+    }
+    
+    useDispatch({ type: SET_ORDER, order })
+    navigate('/order')
+}
+
     const nights = calculateNights()
-    const serviceFee = 10
+    const serviceFee = 0
     const staysPrice = nights * stay.price
     const totalPrice = staysPrice + serviceFee
 
@@ -37,12 +61,12 @@ export function OrderCard() {
                     {nights > 0 ? (
                         <>
                             <span className="span1">₪{totalPrice}</span>
-                            <span className="span2"> total for {nights} nights</span>
+                            <span className="span2"> for {nights} nights</span>
                         </>
                     ) : (
                         <>
                             <span className="span1">₪{stay.price}</span>
-                            <span className="span2"> night</span>
+                            <span className="span2"> for night</span>
                         </>
                     )}
                 </p>
@@ -74,26 +98,7 @@ export function OrderCard() {
                 </div>
             </div>
 
-            {/* <div className="order-payment">
-                <div className="payment-row">
-                    <span >₪26 × 7 nights</span>
-                    <span>₪182</span>
-                </div>
-
-                <div className="payment-row">
-                    <span >Service fee</span>
-                    <span>₪78</span>
-                </div>
-
-                <hr></hr>
-
-                <div className="payment-row total">
-                    <span>Total</span>
-                    <span>₪260</span>
-                </div>
-            </div> */}
-         
-            {nights > 0 && (
+            {/* {nights > 0 && (
                 <div className="order-payment">
                     <div className="payment-row">
                         <span>₪{stay.price} × {nights} nights</span>
@@ -112,9 +117,9 @@ export function OrderCard() {
                         <span>₪{totalPrice}</span>
                     </div>
                 </div>
-            )}
+            )} */}
 
-            <button className="reserve-btn" onClick={() => navigate('order')}> Reserve </button>
+            <button className="reserve-btn" onClick={onReserve}> Reserve </button>
             <p className="order-note"> You won’t be charged yet </p>
         </section>
     )
