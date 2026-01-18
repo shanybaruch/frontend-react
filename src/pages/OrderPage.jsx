@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Loader } from '../cmps/Loader.jsx'
 import { SET_ORDER } from '../store/reducers/stay.reducer'
-import { orderService } from '../services/order.service.js' 
+import { orderService } from '../services/order.service.js'
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaCreditCard } from "react-icons/fa6";
@@ -12,7 +12,7 @@ import { loadStay } from "../store/actions/stay.actions.js";
 
 export function OrderPage() {
     const navigate = useNavigate()
-    const { orderId } = useParams() 
+    const { orderId } = useParams()
     const dispatch = useDispatch()
 
     const stay = useSelector(storeState => storeState.stayModule.stay)
@@ -26,10 +26,10 @@ export function OrderPage() {
     const [zipCode, setZipCode] = useState("1234567")
 
     useEffect(() => {
-        if (!stay && orderId) {
+        if (orderId && (!stay || stay._id !== orderId)) {
             loadStay(orderId)
         }
-    }, [orderId])
+    }, [orderId, stay])
 
     if (!stay) return <Loader />
 
@@ -43,6 +43,28 @@ export function OrderPage() {
     const nights = calculateNights()
     const serviceFee = 0
     const totalPrice = (nights * stay?.price) + serviceFee
+
+    function formatDatesRange(from, to) {
+        if (!from || !to) return 'Add dates'
+        const d1 = new Date(from)
+        const d2 = new Date(to)
+        const options = { month: 'short', day: 'numeric' }
+        const part1 = d1.toLocaleDateString('en-US', options)
+
+        if (d1.getMonth() === d2.getMonth()) {
+            return `${part1} – ${d2.getDate()}, ${d1.getFullYear()}`
+        } else {
+            const part2 = d2.toLocaleDateString('en-US', options)
+            return `${part1} – ${part2}, ${d1.getFullYear()}`
+        }
+    }
+
+    function getGuestsLabel() {
+        const { adults = 0, children = 0, infants = 0 } = filterBy.guests || {}
+        const total = adults + children + infants
+        if (!total) return 'Add guests'
+        return `${total} guest${total > 1 ? 's' : ''}`
+    }
 
     function handleExpiryChange(e) {
         let value = e.target.value.replace(/\D/g, "")
@@ -63,7 +85,7 @@ export function OrderPage() {
         const orderToSave = {
             ...order,
             totalPrice,
-            paymentDetails: { cardNum: cardNumber }, 
+            paymentDetails: { cardNum: cardNumber },
             status: 'pending'
         }
 
@@ -156,6 +178,20 @@ export function OrderPage() {
                             <p style={{ fontWeight: 'bold', margin: 0 }}>{stay.name}</p>
                             <p style={{ fontSize: '.7rem', fontWeight: 'bold' }}>★ {stay.rate}</p>
                         </div>
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <h5>Dates</h5>
+                        <span className="value">{formatDatesRange(filterBy.from, filterBy.to)}</span>
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <h5>Guests</h5>
+                        <span className="value">{getGuestsLabel()}</span>
                     </div>
 
                     <hr />

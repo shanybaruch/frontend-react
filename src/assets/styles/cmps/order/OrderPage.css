@@ -128,7 +128,7 @@
             }
 
             .stay-preview-info {
-                display: flex; 
+                display: flex;
                 align-items: center;
                 gap: 20px;
 
@@ -138,27 +138,39 @@
                     width: 100px;
                     height: 100px;
                     aspect-ratio: 1 / 1;
-                    object-fit: cover ;
+                    object-fit: cover;
                     border-radius: 10px;
                 }
             }
+
             h5 {
-                font-size: .9rem;
+                font-size: .875rem;
+                margin-bottom: .4em;
+            }
+
+            span {
+                font-weight: 300;
+                font-size: .8rem;
             }
 
             .payment-row {
-                display: flex; 
+                display: flex;
                 justify-content: space-between;
 
-                font-weight: 400;
+                font-weight: 300;
                 font-size: .85rem;
             }
 
             .total {
                 display: flex;
-                justify-content: space-between; 
-                font-weight: 600;
-                font-size: .875rem;
+                justify-content: space-between;
+
+                padding-block: .4em;
+
+                span {
+                    font-weight: 600;
+                    font-size: .875rem;
+                }
             }
 
             h2 {
