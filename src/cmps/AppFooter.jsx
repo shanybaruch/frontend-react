@@ -16,7 +16,6 @@ export function AppFooter() {
 				<a href='https://he.airbnb.com/help/article/2908'>Terms</a> */}
 			</div>
 			
-		
 
             <div className="footer-right">
 				<ul>

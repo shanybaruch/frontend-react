@@ -126,16 +126,45 @@ function createStays() {
     if (stays && stays.length > 0) return
 
     const allAmenities = [
-        "TV", "Cable TV", "Internet", "Wifi", "Air conditioning", "Wheelchair accessible", "Pool", "Kitchen",
-        "Free parking on premises", "Doorman", "Gym", "Elevator", "Hot tub", "Heating", "Family/kid friendly",
-        "Suitable for events", "Washer", "Dryer", "Smoke detector", "Carbon monoxide detector", "First aid kit",
-        "Safety card", "Fire extinguisher", "Essentials", "Shampoo", "24-hour check-in", "Hangers", "Hair dryer",
-        "Iron", "Laptop friendly workspace", "Self check-in", "Building staff", "Private entrance",
-        "Room-darkening shades", "Hot water", "Bed linens", "Extra pillows and blankets", "Ethernet connection",
-        "Luggage dropoff allowed", "Long term stays allowed", "Ground floor access", "Wide hallway clearance",
-        "Step-free access", "Wide doorway", "Flat path to front door", "Well-lit path to entrance",
-        "Disabled parking spot", "Wide clearance to bed", "Wide entryway", "Waterfront", "Beachfront"
+        //Scenic Views
+        "BayView" , "GardenView" ,
+        //Bathroom 
+        "HotWater" , "Bathtub" , "Essentials" , "Shampoo" , "ShowerGel" , "HairDryer" ,
+        //Bedroom and laundry
+        "Washer" , "Dryer" , "Hangers" , "Iron" , "ExtraPillowsAndBlankets" ,
+        //Entertainment
+        "TV" , "SoundSystem" , "PoolTable" , 
+        //Family
+        "Crib" , "BoardGames" , 
+        //Heating and cooling
+        "AirConditioning" , "Heating" , "HotTub",
+        //Home safety
+        "SmokeDetector" , "CarbonMonoxideDetector" , "FirstAidKit" , "FireExtinguisher" , "SafetyCard" , "SecurityCameras" ,
+        //Internet and office
+        "Wifi" , "Internet" , "Workspace" , 
+        //Kitchen and dining
+        "Kitchen" , "Refrigerator" , "Microwave" , "Toaster" , "Blender" , "DiningTable" ,
+        //Location features
+        "PrivateEntrance",
+        //Outdoor
+        "Pool" , "BBQGrill" , "SunLoungers" ,
+        //Parking and facilities
+        "parking" , "Gym" , "Elevator" , 
+        //Services
+        "SelfCheckIn" , "RoomDarkeningShades", "LongTermStaysAllowed" ,
     ]
+
+    // const allAmenities = [
+    //     "TV", "Cable TV", "Internet", "Wifi", "Air conditioning", "Wheelchair accessible", "Pool", "Kitchen",
+    //     "Free parking on premises", "Doorman", "Gym", "Elevator", "Hot tub", "Heating", "Family/kid friendly",
+    //     "Suitable for events", "Washer", "Dryer", "Smoke detector", "Carbon monoxide detector", "First aid kit",
+    //     "Safety card", "Fire extinguisher", "Essentials", "Shampoo", "24-hour check-in", "Hangers", "Hair dryer",
+    //     "Iron", "Laptop friendly workspace", "Self check-in", "Building staff", "Private entrance",
+    //     "Room-darkening shades", "Hot water", "Bed linens", "Extra pillows and blankets", "Ethernet connection",
+    //     "Luggage dropoff allowed", "Long term stays allowed", "Ground floor access", "Wide hallway clearance",
+    //     "Step-free access", "Wide doorway", "Flat path to front door", "Well-lit path to entrance",
+    //     "Disabled parking spot", "Wide clearance to bed", "Wide entryway", "Waterfront", "Beachfront"
+    // ]
 
     const locations = [
         { city: 'Eilat', country: 'Israel', countryCode: 'IL', lat: 29.5577, lng: 34.9519 },
