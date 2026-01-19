@@ -3,10 +3,10 @@ import { IoMdStar } from "react-icons/io";
 
 export function Reviews({ reviews }) {
     console.log(reviews);
-    const [visibleCount, setVisibleCount] = useState(6); // מראה 6 ראשונות
+    const [visibleCount, setVisibleCount] = useState(6);
 
     const handleLoadMore = () => {
-        setVisibleCount(prev => prev + 6); // מראה עוד 6 בכל לחיצה
+        setVisibleCount(prev => prev + 6); 
     };
 
     const visibleReviews = reviews.slice(0, visibleCount);
@@ -82,7 +82,6 @@ export function Reviews({ reviews }) {
                 </div>
             ))}
 
-            {/* כפתור Load More אם יש עוד */}
             {visibleCount < reviews.length && (
                 <button className="btn-reviews-more" onClick={handleLoadMore}>
                     Show all {reviews.length} reviews

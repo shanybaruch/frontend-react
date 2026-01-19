@@ -3,6 +3,10 @@
         border-bottom: 0.8px solid var(--gray2);
         margin: 5px 0;
     }
+
+    .reviews {
+        padding: 40px;
+    }
 }
 
 .stay-details {
@@ -108,12 +112,13 @@
         font-weight: 500;
     }
 
-    .btn-amenities-more:hover{
+    .btn-amenities-more:hover {
         background-color: var(--gray-light);
     }
 
     .description-p {
         padding: 20px 0;
+        margin: 0;
         word-spacing: 1px;
         font-weight: 300;
     }
@@ -180,6 +185,10 @@
     border: solid 1px var(--black);
     border-radius: 8px;
     z-index: 10;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .top-right {
@@ -211,16 +220,9 @@
     width: 316px;
 }
 
-.reviews {
-    padding: 40px 80px;
-
-}
-
-
 @media (max-width: 1120px) {
 
-    .stay-details,
-    .reviews:not(.gallery) {
+    .stay-details:not(.gallery) {
         padding: 0 40px;
     }
 }

@@ -142,7 +142,7 @@ export function StayDetails() {
 
             <section ref={photosInViewRef} className="gallery">
               <button className="btn-photos" onClick={OnStayDetailsPhotos}>
-                <CgMenuGridO /> Show all photos
+                <CgMenuGridO size={16}/> Show all photos
               </button>
               <div className="gallery-main">
                 <img src={stay.imgUrl} alt={stay.name} className="left-img" />
@@ -164,7 +164,7 @@ export function StayDetails() {
                   <div className="meta-item">
                     <RiStarFill size={10} />
                     <span className='rate'>{stay.rate} · </span>
-                    <span className='reviews'>{stay.reviews.length} reviews</span>
+                    <span className='reviews-txt'>{stay.reviews.length} reviews</span>
                   </div>
                 </div>
 
@@ -200,7 +200,7 @@ export function StayDetails() {
 
       </div>
       <div className="divider"></div>
-      <section ref={reviewsRef}>
+      <section className='reviews' ref={reviewsRef}>
         <div className="reviews">
           {stay.reviews && (
             <Reviews
