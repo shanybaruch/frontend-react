@@ -29,6 +29,10 @@ export function OrderPage() {
     const [zipCode, setZipCode] = useState("1234567")
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+    useEffect(() => {
         if (orderId && (!stay || stay._id !== orderId)) {
             loadStay(orderId)
         }
