@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { SET_ORDER } from '../store/reducers/stay.reducer'
+import { Loader } from './Loader'
 
 
 export function OrderCard() {
@@ -30,24 +31,25 @@ export function OrderCard() {
     }
 
     function onReserve() {
-    const order = {
-        hostId: stay.host._id,
-        buyer: { _id: 'u101', fullname: 'Guest' },
-        totalPrice: totalPrice,
-        startDate: filterBy.from,
-        endDate: filterBy.to,
-        guests: filterBy.guests,
-        stay: {
-            _id: stay._id,
-            name: stay.name,
-            price: stay.price
-        },
-        status: 'pending'
+        const order = {
+            hostId: stay.host._id,
+            buyer: { _id: 'u101', fullname: 'Guest' },
+            totalPrice: totalPrice,
+            startDate: filterBy.from,
+            endDate: filterBy.to,
+            guests: filterBy.guests,
+            stay: {
+                _id: stay._id,
+                name: stay.name,
+                price: stay.price,
+                imgUrl: stay.imgUrl 
+            },
+            status: 'pending'
+        }
+        
+        dispatch({ type: SET_ORDER, order })
+        navigate(`/order/${stay._id}`)
     }
-    
-    useDispatch({ type: SET_ORDER, order })
-    navigate('/order')
-}
 
     const nights = calculateNights()
     const serviceFee = 0
@@ -70,30 +72,22 @@ export function OrderCard() {
                         </>
                     )}
                 </p>
-
-                {/* <div className="order-rating">
-                    <span className="rate">{stay.rate}</span>
-                    <span className="reviews">· {stay.reviews.length} reviews</span>
-                </div> */}
             </div>
 
             <div className="order-summary">
                 <div className="order-dates">
                     <div className="date-box">
                         <span className="label">CHECK-IN</span>
-                        {/* <span className="value">Add date</span> */}
                         <span className="value">{formatDate(filterBy.from)}</span>
                     </div>
                     <div className="date-box">
                         <span className="label">CHECK-OUT</span>
-                        {/* <span className="value">Add date</span> */}
                         <span className="value">{formatDate(filterBy.to)}</span>
                     </div>
                 </div>
 
                 <div className="order-guests">
                     <span className="label">GUESTS</span>
-                    {/* <span className="value">Add guests</span> */}
                     <span className="value">{getGuestsLabel()}</span>
                 </div>
             </div>

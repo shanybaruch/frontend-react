@@ -23,10 +23,19 @@ export function AppHeader({ isAtTop }) {
     const [isEditingWhen, setIsEditingWhen] = useState(false)
     const [isEditingWho, setIsEditingWho] = useState(false)
     const [isLoginOpen, setIsLoginOpen] = useState(false)
+    
     const isUserPage = location.pathname.startsWith('/user')
-    const isStayDetails = location.pathname.startsWith('/stay/') && location.pathname !== '/stay'
+    const isOrderPage = location.pathname.startsWith('/order')
+    const shouldHideFilter = isUserPage || isOrderPage
+
+    const isHomePage = location.pathname === '/' || location.pathname === '/stay'
+    
+
     const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
-    const isCompact = (!isAtTop || isStayDetails || isUserPage) && !isAnyActive
+    const isCompact = (!isAtTop || !isHomePage) && !isAnyActive
+    
+    const isStayDetails = location.pathname.startsWith('/stay/') && location.pathname !== '/stay' && !isOrderPage
+
     const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
     const { adults, children, infants, pets } = guests
     const totalGuests = adults + children
@@ -67,7 +76,7 @@ export function AppHeader({ isAtTop }) {
                     <span>AYS Nest</span>
                 </NavLink>
 
-                {!isUserPage && (
+                {!shouldHideFilter && (
                     <section className='nav-middle'>
                         {isCompact ? (
                             <button className="search-bar-mini" onClick={() => setIsEditingWhere(true)}>
@@ -81,14 +90,12 @@ export function AppHeader({ isAtTop }) {
                         ) : (
                             <div className="nav-links-wrapper">
                                 <NavLink to="stay">
-                                    <img src="public/img/home-logo.png" alt="home-logo" />
+                                    <img src="/img/home-logo.png" alt="home-logo" />
                                     <span>
                                         Homes
                                     </span>
                                     <hr />
                                 </NavLink>
-                                {/* <NavLink to="/review">Experiences</NavLink>
-                                <NavLink to="chat">Services</NavLink> */}
                             </div>
                         )}
                     </section>
@@ -123,7 +130,8 @@ export function AppHeader({ isAtTop }) {
                     </div>
                 </section>
             </nav>
-            {!isUserPage &&
+            
+            {!shouldHideFilter &&
                 <StayFilter
                     isEditingWhere={isEditingWhere}
                     isEditingWhen={isEditingWhen}

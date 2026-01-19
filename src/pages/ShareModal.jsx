@@ -35,7 +35,7 @@ export function ShareModal({ onClose, stayId }) {
                         className="share-modal-img"
                     />
                     <p>
-                        {stay.name} <RiStarFill size={10} /> {stay.rate} · {stay.capacity / 2} bedroom · {stay.capacity} beds
+                        {stay.name} <RiStarFill size={10} /> {stay.rate} · {stay.capacity / 2} bedroom{stay.capacity / 2 > 1 ? 's' : ''} · {stay.capacity} beds{stay.capacity > 1 ? 's' : ''}
                     </p>
                 </div>
                 <button

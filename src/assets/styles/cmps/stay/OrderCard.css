@@ -5,13 +5,16 @@
         position: sticky;
         margin-top: 25px;
         top: 90px;
-        /* border: 1px solid var(--gray-light-hover); */
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
         background-color: var(--white);
         max-width: 300px;
         min-width: 200px;
+
+        .order-summary {
+            border: 1px solid var(--gray-light-hover); 
+        }
 
         .order-header {
             display: flex;
@@ -41,8 +44,6 @@
 
             .order-rating {
                 display: flex;
-                /* align-items: center;
-                font-size: 14px; */
                 gap: .3125em;
 
                 .reviews {
@@ -111,7 +112,7 @@
             font-size: .85rem;
             text-align: center;
             font-weight: 400;
-            color: var(--balck);
+            color: var(--black);
         }
 
         .order-payment {

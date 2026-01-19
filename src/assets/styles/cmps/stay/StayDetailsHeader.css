@@ -24,7 +24,7 @@
 .stay-header-nav li::after {
     content: "";
     position: absolute;
-    bottom: -32px;
+    bottom: -30px;
     left: 0;
     width: 100%;
     height: 4px;
@@ -53,4 +53,10 @@
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
+}
+
+@media (max-width: 1120px) {
+    .stay-header-nav {
+        padding: 30px 40px;
+    }
 }

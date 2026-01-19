@@ -1,14 +1,40 @@
 .review-list {
-    --min-column-size: 220px;
+    --min-column-size: 430px;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--min-column-size), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: .5em;
+
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    gap: 32px;
+    font-weight: 400;
 
     .actions {
         & button {
             padding: .3em .5em;
             float: right;
         }
+    }
+}
+
+.btn-reviews-more {
+    background-color: var(--white-gray);
+    width: 207px;
+    height: 48px;
+    padding: 14px 24px;
+    margin: 10px 0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn-reviews-more:hover {
+    background-color: var(--gray-light);
+}
+
+@media (max-width: 950px) {
+    .review-list {
+        grid-template-columns: 1fr;
     }
 }

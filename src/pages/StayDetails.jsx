@@ -3,7 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ShareModal } from './ShareModal.jsx'
+
 import { StayDetailsHeader } from './StayDetailsHeader.jsx'
+import { Amenities } from "./Amenities.jsx";
+import { Reviews } from "./Reviews.jsx";
+
+
 import { useInView } from 'react-intersection-observer'
 import { RiStarFill, RiTvLine } from "react-icons/ri";
 import { HiOutlineTv } from "react-icons/hi2";
@@ -17,10 +22,11 @@ import { CgMenuGridO } from "react-icons/cg";
 import { useLocation } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadStay, addStayMsg } from '../store/actions/stay.actions'
-import { saveToStorage } from '../services/util.service'
+import { saveToStorage, loadFromStorage } from '../services/util.service'
 import { Calendar } from '../cmps/Calendar';
 import { Loader } from '../cmps/Loader.jsx'
 import { OrderCard } from '../cmps/OrderCard.jsx'
+import { BiColor } from 'react-icons/bi'
 
 export function StayDetails() {
   const { stayId } = useParams()
@@ -29,13 +35,15 @@ export function StayDetails() {
 
   const photosRef = useRef(null)
   const amenitiesRef = useRef(null)
+  const reviewsRef = useRef(null)
+
 
   const stay = useSelector(storeState => storeState.stayModule.stay)
   const location = useLocation()
   const order = location.state?.order
 
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
-
+  const [, forceRender] = useState(0)
   const [isShareOpen, setIsShareOpen] = useState(false)
 
   const { ref: photosInViewRef, inView: isPhotosInView } = useInView({
@@ -71,33 +79,33 @@ export function StayDetails() {
     navigate(`/stay/${stayId}/photos`, { state: stay });
   };
 
+
   function onSaveHeart(stayId) {
-    if (!loggedInUser) {
+    forceRender(prev => prev + 1)
+    const user = loadFromStorage('loggedinUser')
+
+    if (!user) {
       showErrorMsg('Please log in to save')
       return
     }
 
-    const saved = loggedInUser.saved || []
+    const saved = user.saved || []
     const isSaved = saved.includes(stayId)
 
-    const updatedUser = {
-      ...loggedInUser,
-      saved: isSaved
-        ? saved.filter(id => id !== stayId)
-        : [...saved, stayId]
-    }
+    user.saved = isSaved
+      ? saved.filter(id => id !== stayId)
+      : [...saved, stayId]
 
-    saveToStorage('users', updatedUser)
-
-    dispatch({ type: 'SET_USER', user: updatedUser })
+    saveToStorage('loggedinUser', user)
   }
 
   if (!stay) return <Loader />
   return (
-    <section>
+    <section className='all-stay-details'>
       <StayDetailsHeader
         hidden={isPhotosInView}
         amenitiesRef={amenitiesRef}
+        reviewsRef={reviewsRef}
       />
 
       <div className="stay-details">
@@ -121,9 +129,12 @@ export function StayDetails() {
                 )}
 
                 <button
-                  className='save'
-                  onClick={() => onSaveHeart(stay._id)}>
-                  {loggedInUser?.saved?.includes(stay._id) ? <FaHeart /> : <FaRegHeart />}
+                  className="save"
+                  onClick={() => onSaveHeart(stay._id)}
+                >
+                  {loadFromStorage('loggedinUser')?.saved?.includes(stay._id)
+                    ? <FaHeart  style={{ color: '#ff385c' }} />
+                    : <FaRegHeart />}
                   <span>Save</span>
                 </button>
               </div>
@@ -131,7 +142,7 @@ export function StayDetails() {
 
             <section ref={photosInViewRef} className="gallery">
               <button className="btn-photos" onClick={OnStayDetailsPhotos}>
-                <CgMenuGridO /> Show all photos
+                <CgMenuGridO size={16}/> Show all photos
               </button>
               <div className="gallery-main">
                 <img src={stay.imgUrl} alt={stay.name} className="left-img" />
@@ -149,11 +160,11 @@ export function StayDetails() {
               <section className='big-side'>
                 <div className="description">
                   <h2>{stay.type} {stay.name}</h2>
-                  <p className="guests">{stay.capacity} guests · {stay.capacity / 2} bedroom</p>
+                  <p className="guests">{stay.capacity} guest{stay.capacity > 1 ? 's' : ''} · {stay.capacity / 2} bedroom{stay.capacity / 2 > 1 ? 's' : ''}</p>
                   <div className="meta-item">
                     <RiStarFill size={10} />
                     <span className='rate'>{stay.rate} · </span>
-                    <span className='reviews'>{stay.reviews.length} reviews</span>
+                    <span className='reviews-txt'>{stay.reviews.length} reviews</span>
                   </div>
                 </div>
 
@@ -165,30 +176,39 @@ export function StayDetails() {
                 <section ref={amenitiesRef}>
                   <div className="amenities">
                     <div className="divider"></div>
-                    <h2 className='title-place-offers'>What this place offers</h2>
+                    <h2 className="title-place-offers">What this place offers</h2>
+
                     {stay.amenities && (
-                      <ul className="amenities">
-                        {stay.amenities.map((item, idx) => (
-                          <li key={idx} className='amenity-item'>
-                            {iconMap[item] || null}
-                            <span> {item} </span>
-                          </li>
-                        ))}
-                      </ul>
+                      <Amenities
+                        amenities={stay.amenities}
+                        iconMap={iconMap}
+                      />
                     )}
                   </div>
                 </section>
+
               </section>
-                <section className="small-side">
-                  <OrderCard />
-                </section>
+
+              <section className="small-side">
+                <OrderCard />
               </section>
+            </section>
           </div>
         )}
 
         {/* <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button> */}
 
       </div>
+      <div className="divider"></div>
+      <section className='reviews' ref={reviewsRef}>
+        <div className="reviews">
+          {stay.reviews && (
+            <Reviews
+              reviews={stay.reviews}
+            />
+          )}
+        </div>
+      </section>
     </section>
   )
 }

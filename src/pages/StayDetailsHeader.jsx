@@ -16,6 +16,7 @@ export function StayDetailsHeader({ photosRef, amenitiesRef, hidden }) {
             <ul className="stay-header-nav">
                 <li onClick={scrollToTop}>Photos</li>
                 <li onClick={() => scrollTo(amenitiesRef)}>Amenities</li>
+                <li onClick={() => scrollTo(reviewsRef)}>Reviews</li>
             </ul>
         </nav>
     )

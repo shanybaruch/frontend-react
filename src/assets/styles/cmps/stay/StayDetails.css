@@ -1,5 +1,16 @@
+.all-stay-details {
+    .divider {
+        border-bottom: 0.8px solid var(--gray2);
+        margin: 5px 0;
+    }
+
+    .reviews {
+        padding: 40px;
+    }
+}
+
 .stay-details {
-    padding: 0 70px;
+    padding: 0 80px;
 
     .heading {
         justify-content: space-between;
@@ -69,10 +80,10 @@
 
             .amenities {
                 list-style: none;
+                margin-bottom: 48px;
 
                 .amenity-item {
                     display: flex;
-                    gap: 15px;
                     align-items: center;
 
                     font-weight: 400;
@@ -83,13 +94,31 @@
                         height: 1.8em;
                         width: 1.8em;
                     }
+
+
                 }
             }
         }
     }
 
+    .btn-amenities-more {
+        background-color: var(--white-gray);
+        width: 207px;
+        height: 48px;
+        padding: 14px 24px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .btn-amenities-more:hover {
+        background-color: var(--gray-light);
+    }
+
     .description-p {
         padding: 20px 0;
+        margin: 0;
         word-spacing: 1px;
         font-weight: 300;
     }
@@ -112,6 +141,7 @@
     grid-template-columns: 1fr 1fr;
     border-radius: 16px;
     gap: 8px;
+    height: 353px;
 }
 
 .gallery-side {
@@ -119,11 +149,13 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 8px;
+    height: 353px;
 }
 
 .left-img {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
+    height: 353px;
 }
 
 
@@ -153,6 +185,10 @@
     border: solid 1px var(--black);
     border-radius: 8px;
     z-index: 10;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .top-right {
@@ -163,10 +199,29 @@
     border-bottom-right-radius: 16px;
 }
 
+.amenities-columns {
+    display: flex;
+}
 
+.amenities-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 
+}
+
+.amenity-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 316px;
+}
 
 @media (max-width: 1120px) {
+
     .stay-details:not(.gallery) {
         padding: 0 40px;
     }
@@ -209,4 +264,5 @@
     .stay-details {
         padding-bottom: 90px;
     }
+}
 }
