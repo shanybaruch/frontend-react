@@ -101,7 +101,7 @@ export function StayDetails() {
 
   if (!stay) return <Loader />
   return (
-    <section>
+    <section className='all-stay-details'>
       <StayDetailsHeader
         hidden={isPhotosInView}
         amenitiesRef={amenitiesRef}
@@ -183,9 +183,9 @@ export function StayDetails() {
                     )}
                   </div>
                 </section>
-                 
+
               </section>
-              
+
               <section className="small-side">
                 <OrderCard />
               </section>
@@ -196,17 +196,16 @@ export function StayDetails() {
         {/* <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button> */}
 
       </div>
+      <div className="divider"></div>
       <section ref={reviewsRef}>
-                  <div className="reviews">
-                    <div className="divider"></div>
-
-                    {stay.reviews && (
-                      <Reviews
-                        reviews={stay.reviews}
-                      />
-                    )}
-                  </div>
-                </section>
+        <div className="reviews">
+          {stay.reviews && (
+            <Reviews
+              reviews={stay.reviews}
+            />
+          )}
+        </div>
+      </section>
     </section>
   )
 }

@@ -1,10 +1,11 @@
-import { useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
 export function StayDetailsPhotos() {
   const { stayId } = useParams();
-  const stay = useSelector(storeState => storeState.stayModule.stay);
 
+  const location = useLocation()
+  const stay = location.state
   if (!stay) return <p>Loading...</p>;
 
   const photos = stay.imgUrls?.length ? stay.imgUrls : Array(10).fill(stay.imgUrl);

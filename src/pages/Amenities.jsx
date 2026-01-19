@@ -36,7 +36,7 @@ export function Amenities({ amenities, iconMap }) {
           className="btn-amenities-more"
           onClick={() => setIsModalOpen(true)}
         >
-          Show all amenities
+          Show all {amenities.length} amenities
         </button>
       )}
 

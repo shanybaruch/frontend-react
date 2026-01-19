@@ -1,7 +1,16 @@
+import { useState } from 'react';
 import { IoMdStar } from "react-icons/io";
 
 export function Reviews({ reviews }) {
     console.log(reviews);
+    const [visibleCount, setVisibleCount] = useState(6); // מראה 6 ראשונות
+
+    const handleLoadMore = () => {
+        setVisibleCount(prev => prev + 6); // מראה עוד 6 בכל לחיצה
+    };
+
+    const visibleReviews = reviews.slice(0, visibleCount);
+
 
     function getTimeAgo(timestamp) {
         const now = Date.now()
@@ -12,7 +21,7 @@ export function Reviews({ reviews }) {
         const day = hour * 24
         const week = day * 7
         const month = day * 30
-        const year = day * 365 
+        const year = day * 365
 
         if (diffMs >= year) {
             const years = Math.floor(diffMs / year)
@@ -47,34 +56,38 @@ export function Reviews({ reviews }) {
         return 'just now'
     }
 
-
-        return (
-            <section className="review-list">
-                {reviews.map((review, idx) => (
-                    <div key={idx}>
+    return (
+        <section className="review-list">
+            {visibleReviews.map((review, idx) => (
+                <div className="review-item" key={idx}>
+                    <div className="review-header">
                         <img
                             src={review.by.imgUrl}
                             alt={review.by.fullname}
                             className="review-avatar"
                         />
-                        <span>- {review.by.fullname}</span>
-                        <div className="wrap"></div>
+                        <span className="review-name">{review.by.fullname}</span>
+                    </div>
+
+                    <div className="review-meta">
                         <div className="rating">
-                            {Array.from({ length: Math.floor(review.rate) }).map((_, idx) => (
-                                <IoMdStar key={idx} />
+                            {Array.from({ length: Math.floor(review.rate) }).map((_, i) => (
+                                <IoMdStar key={i} />
                             ))}
                         </div>
-                        <div className="review-meta">
-                            <span className="review-date">
-                                · {getTimeAgo(review.at)}
-
-                            </span>
-                        </div>
-                        <p>{review.txt}</p>
-
-
+                        <span className="review-date">· {getTimeAgo(review.at)}</span>
                     </div>
-                ))}
-            </section>
-        )
-    }
+
+                    <p className="review-text">{review.txt}</p>
+                </div>
+            ))}
+
+            {/* כפתור Load More אם יש עוד */}
+            {visibleCount < reviews.length && (
+                <button className="btn-reviews-more" onClick={handleLoadMore}>
+                    Show all {reviews.length} reviews
+                </button>
+            )}
+        </section>
+    )
+}
