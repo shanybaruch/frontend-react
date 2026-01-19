@@ -178,6 +178,26 @@
     border-bottom-right-radius: 16px;
 }
 
+.amenities-columns {
+  display: flex;
+}
+
+.amenities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 316px;
+}
 
 
 
