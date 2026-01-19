@@ -112,6 +112,7 @@
     grid-template-columns: 1fr 1fr;
     border-radius: 16px;
     gap: 8px;
+    height: 353px;
 }
 
 .gallery-side {
@@ -119,11 +120,13 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 8px;
+    height: 353px;
 }
 
 .left-img {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
+    height: 353px;
 }
 
 
