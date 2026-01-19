@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from '../cmps/Loader.jsx'
 import { SET_ORDER } from '../store/reducers/stay.reducer'
 import { orderService } from '../services/order.service.js'
+import { updateUser } from '../store/actions/user.actions.js'
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaCreditCard } from "react-icons/fa6";
 import { loadStay } from "../store/actions/stay.actions.js";
+import { showSuccessMsg } from "../services/event-bus.service.js";
 
 export function OrderPage() {
     const navigate = useNavigate()
@@ -18,6 +20,7 @@ export function OrderPage() {
     const stay = useSelector(storeState => storeState.stayModule.stay)
     const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
     const order = useSelector(storeState => storeState.stayModule.currentOrder)
+    const user = useSelector(storeState => storeState.userModule.user)
 
     const [isConfirm, setIsConfirm] = useState(false)
     const [cardNumber, setCardNumber] = useState("1111111111111111")
@@ -82,17 +85,30 @@ export function OrderPage() {
     async function onConfirm(e) {
         e.preventDefault()
 
+        const buyer = user ? {
+            _id: user._id,
+            fullname: user.fullname,
+            imgUrl: user.imgUrl
+        } : { _id: 'guest', fullname: 'Guest' }
+
         const orderToSave = {
             ...order,
+            buyer,
             totalPrice,
             paymentDetails: { cardNum: cardNumber },
             status: 'pending'
         }
 
         try {
-            await orderService.save(orderToSave)
+            const savedOrder = await orderService.save(orderToSave)
+            if (user) {
+                const userTrips = user.trips ? [...user.trips, savedOrder] : [savedOrder]
+                const userToUpdate = { ...user, trips: userTrips }
+                await updateUser(userToUpdate)
+            }
             setIsConfirm(true)
             dispatch({ type: SET_ORDER, order: null })
+            showSuccessMsg('Order confirmed!')
         } catch (err) {
             console.error('Failed to save order', err)
         }
