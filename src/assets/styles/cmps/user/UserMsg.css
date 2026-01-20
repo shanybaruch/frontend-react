@@ -1,17 +1,20 @@
 .user-msg {
     position: fixed;
-    bottom: 70px;
+    bottom: 50px;
     right: 0;
 
     display: flex;
     align-items: center;
 
-    padding: .2em;
-    padding-inline-end: 1.5em;
-    background-color: var(--gray);
+    padding: 1em 1.5em;
+    padding-inline-end: .5em;
+    border-radius: 15px;
+    background-color: var(--white);
+    border: 1.2px solid var(--gray-light-hover);
 
-    color: var(--white);
+    color: var(--black);
     font-size: .9em;
+    font-weight: 600;
 
     opacity: 0;
     translate: 150%;
@@ -24,19 +27,23 @@
     }
 
     &.success {
-        background-color: var(--success);
+        color: var(--success);
+        /* border: 1.5px solid var(--success); */
+
     }
 
     &.error {
-        background-color: var(--error);
+        color: var(--error);
+        /* border: 1.5px solid var(--error); */
     }
 
     & button {
         background-color: var(--white);
-        padding: 1px 6px;
+        padding: 1px 4px;
         border: 0;
+        font-size: .8rem;
         border-radius: 50%;
-        color: var(--black);
+        color: var(--gray2);
     }
 
 }
