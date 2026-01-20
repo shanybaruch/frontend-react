@@ -9,6 +9,7 @@ import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from
 import { ImgUploader } from '../cmps/ImgUploader'
 import { UserAbout } from '../cmps/UserAbout'
 import { UserImg } from '../cmps/UserImg'
+import { Loader } from '../cmps/Loader'
 
 export function UserDetails() {
   const dispatch = useDispatch()
@@ -31,6 +32,8 @@ export function UserDetails() {
     showSuccessMsg(`User updated`)
     dispatch({ type: SET_WATCHED_USER, user })
   }
+
+  if (!user) return <Loader />
 
   return (
     <section className="user-details">
