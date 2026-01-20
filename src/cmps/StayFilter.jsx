@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
+
 import { Calendar } from './Calendar'
 import { GuestPicker } from './GuestPicker'
 import { IoSearch } from 'react-icons/io5'
@@ -17,6 +19,7 @@ export function StayFilter(
     const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
     const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
     const [searchTerm, setSearchTerm] = useState('')
+    const [searchParams, setSearchParams] = useSearchParams()
 
     function onUpdateGuests(type, diff) {
         const newVal = Math.max(0, guests[type] + diff)
@@ -26,11 +29,27 @@ export function StayFilter(
         })
     }
 
-    function onSearch() {
+function onSearch() {
         const totalGuests = filterBy.guests.adults + filterBy.guests.children
         const filterToSave = { ...filterBy, minCapacity: totalGuests }
+        
         dispatch({ type: SET_FILTER_BY, filterBy: filterToSave })
         loadStays(filterToSave)
+
+        const params = {}
+        
+        if (filterToSave.txt) params.txt = filterToSave.txt
+        if (filterToSave.from) params.from = new Date(filterToSave.from).toISOString().split('T')[0] // פורמט תאריך נקי
+        if (filterToSave.to) params.to = new Date(filterToSave.to).toISOString().split('T')[0]
+        
+        if (filterToSave.guests.adults) params.adults = filterToSave.guests.adults
+        if (filterToSave.guests.children) params.children = filterToSave.guests.children
+        if (filterToSave.guests.infants) params.infants = filterToSave.guests.infants
+        if (filterToSave.guests.pets) params.pets = filterToSave.guests.pets
+        if (totalGuests > 0) params.minCapacity = totalGuests
+
+        setSearchParams(params)
+
         setIsEditingWhere(false)
         setIsEditingWhen(false)
         setIsEditingWho(false)

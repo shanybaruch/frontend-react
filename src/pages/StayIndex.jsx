@@ -1,17 +1,40 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
 import { loadStays, addStay, updateStay, removeStay, addStayMsg } from '../store/actions/stay.actions'
-
+import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { stayService } from '../services/stay'
 
 import { StayList } from '../cmps/StayList'
 
 export function StayIndex() {
+    const dispatch = useDispatch()
+    const [searchParams] = useSearchParams()
+
     const stays = useSelector(storeState => storeState.stayModule.stays)
-    const filterBy = useSelector(storeState => storeState.stayModule.filterBy)    
+    const filterBy = useSelector(storeState => storeState.stayModule.filterBy)
     console.log('stays: ', stays)
+
+    useEffect(() => {
+        if (searchParams.size === 0) return
+
+        const filterFromUrl = {
+            txt: searchParams.get('txt') || '',
+            from: searchParams.get('from') || '',
+            to: searchParams.get('to') || '',
+            minCapacity: +searchParams.get('minCapacity') || 0,
+            guests: {
+                adults: +searchParams.get('adults') || 0,
+                children: +searchParams.get('children') || 0,
+                infants: +searchParams.get('infants') || 0,
+                pets: +searchParams.get('pets') || 0,
+            }
+        }
+        dispatch({ type: SET_FILTER_BY, filterBy: filterFromUrl })
+
+    }, [])
 
     useEffect(() => {
         loadStays(filterBy)
@@ -53,11 +76,8 @@ export function StayIndex() {
     return (
         <section className="stay-index">
             <header>
-                {/* <h2 className='title'>Popular homes in Eilat</h2> */}
-                {/* <h2 className='title'>Stays</h2> */}
                 {/* {userService.getLoggedinUser() && <button onClick={onAddStay}>Add a Stay</button>} */}
             </header>
-            {/* <StayFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
             <StayList
                 stays={stays}
                 onRemoveStay={onRemoveStay}

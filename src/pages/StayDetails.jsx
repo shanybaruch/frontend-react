@@ -8,6 +8,8 @@ import { StayDetailsHeader } from './StayDetailsHeader.jsx'
 import { Amenities } from "./Amenities.jsx";
 import { Reviews } from "./Reviews.jsx";
 
+import { useSearchParams } from 'react-router-dom'
+import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
 
 import { useInView } from 'react-intersection-observer'
 import { RiStarFill, RiTvLine } from "react-icons/ri";
@@ -32,6 +34,7 @@ export function StayDetails() {
   const { stayId } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [searchParams] = useSearchParams()
 
   const photosRef = useRef(null)
   const amenitiesRef = useRef(null)
@@ -59,8 +62,23 @@ export function StayDetails() {
   }
 
   useEffect(() => {
-    loadStay(stayId)
+    if (searchParams.size === 0) return
 
+    const filterFromUrl = {
+        from: searchParams.get('from') || '',
+        to: searchParams.get('to') || '',
+        guests: {
+            adults: +searchParams.get('adults') || 0,
+            children: +searchParams.get('children') || 0,
+            infants: +searchParams.get('infants') || 0,
+            pets: +searchParams.get('pets') || 0,
+        }
+    }
+    dispatch({ type: SET_FILTER_BY, filterBy: filterFromUrl })
+  }, [])
+
+  useEffect(() => {
+    loadStay(stayId)
     return () => {
       dispatch({ type: 'SET_STAY', stay: null })
     }
