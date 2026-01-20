@@ -18,75 +18,21 @@
         margin-top: 1rem;
         margin-bottom: 0.5rem;
 
+        background-color: transparent;
         opacity: 1;
         width: 100%;
         max-height: 210px;
         transform: scale(1) translateY(0);
         transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
 
-        .select-when {
-            position: relative;
-        }
-
-        &:focus-within {
-            background-color: var(--gray-light);
-            border-color: var(--gray-light-hover);
-            box-shadow: 0px 5px 20px 0px var(--gray-light-hover);
-
-
-            .select-where,
-            .select-when,
-            .select-who {
-                background-color: transparent;
-                transition: 0.2s;
-            }
-
-        }
-
-        &:has(.active),
-        &:focus-within {
-            background-color: var(--gray-light);
-            border-color: transparent;
-        }
-
-        .select-where.active,
-        .select-when.active,
-        .select-who.active,
-        .select-where:focus-within,
-        .select-when:focus-within,
-        .select-who:focus-within {
-            background-color: var(--white);
-            border-radius: 50px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        &:has(.select-where:hover),
-        &:has(.select-when:hover),
-        &:has(.select-who:hover),
-        &:has(.active),
-        &:focus-within {
-            .v-line {
-                opacity: 0;
-            }
-        }
-
         .v-line {
             border-right: 1px solid var(--gray-light-hover);
             height: 32px;
-            margin-block: 16px;
             transition: opacity 0.2s ease;
             opacity: 1;
-        }
 
-        .select-where input {
-            border: none;
-            outline: none;
-            background: transparent;
-        }
-
-        .select-where,
-        .select-when {
-            display: flex;
+            flex: 0 0 1px;
+            align-self: center;
         }
 
         .select-where,
@@ -97,25 +43,43 @@
             flex-basis: 0;
             min-width: 0;
 
+            padding-block: 14px;
+
             display: flex;
             align-items: center;
             height: 100%;
 
             &:hover {
                 border-radius: 50px;
-                background-color: var(--white-gray);
+                background-color: var(--gray-light);
+            }
+
+        }
+
+
+        .select-where,
+        .select-when {
+            display: flex;
+        }
+
+        .select-when {
+            position: relative;
+        }
+
+        .select-where {
+            input {
+                border: none;
+                outline: none;
+                background: transparent;
             }
         }
 
-        .sec.first-sec {
-            padding-inline-start: 30px;
-        }
-
-        .select-who .sec {
-            padding-inline-end: 60px;
-        }
         .select-who {
             height: auto;
+
+            .sec {
+                padding-inline-end: 60px;
+            }
         }
 
         .sec {
@@ -129,6 +93,10 @@
             min-width: 0;
             height: 100%;
             position: relative;
+
+            &.first-sec {
+                padding-inline-start: 30px;
+            }
 
             .suggestions-modal {
                 position: absolute;
@@ -241,6 +209,56 @@
                     opacity: 1;
                     margin-inline-start: 8px;
                 }
+            }
+        }
+
+
+        &:has(.active),
+        &:focus-within {
+            background-color: var(--gray-light);
+            box-shadow: 0;
+
+            .select-where,
+            .select-when,
+            .select-who {
+                background-color: transparent;
+                border-radius: 2rem;
+                transition: 0.2s;
+
+                &:hover:not(.active) {
+                    background-color: var(--gray-light-hover);
+                }
+
+                /* &:hover:not(.active) {
+                    background-color: var(--gray-light-hover); 
+                } */
+            }
+        }
+
+        &:has(.active),
+        &:focus-within {
+            background-color: var(--gray-light);
+            box-shadow: none;
+        }
+
+        .select-where.active,
+        .select-when.active,
+        .select-who.active,
+        .select-where:focus-within,
+        .select-when:focus-within,
+        .select-who:focus-within {
+            background-color: var(--white);
+            border-radius: 50px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        &:has(.select-where:hover),
+        &:has(.select-when:hover),
+        &:has(.select-who:hover),
+        &:has(.active),
+        &:focus-within {
+            .v-line {
+                opacity: 0;
             }
         }
     }
