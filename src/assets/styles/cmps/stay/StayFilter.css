@@ -1,8 +1,11 @@
 .stay-filter {
+    width: 100%;
+    max-width: 850px;
+    margin-inline: auto;
 
     .selection {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: stretch;
         gap: 0em;
         padding: 0;
 
@@ -16,6 +19,7 @@
         margin-bottom: 0.5rem;
 
         opacity: 1;
+        width: 100%;
         max-height: 210px;
         transform: scale(1) translateY(0);
         transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
@@ -89,6 +93,13 @@
         .select-when,
         .select-who {
             cursor: pointer;
+            flex: 1;
+            flex-basis: 0;
+            min-width: 0;
+
+            display: flex;
+            align-items: center;
+            height: 100%;
 
             &:hover {
                 border-radius: 50px;
@@ -100,13 +111,22 @@
             padding-inline-start: 30px;
         }
 
+        .select-who .sec {
+            padding-inline-end: 60px;
+        }
+        .select-who {
+            height: auto;
+        }
+
         .sec {
             display: flex;
             flex-direction: column;
             justify-content: center;
 
             padding-inline-start: 27px;
-            width: 282px;
+            flex: 1;
+            width: 100%;
+            min-width: 0;
             height: 100%;
             position: relative;
 
@@ -230,9 +250,9 @@
     }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 745px) {
     .stay-filter {
-        width: 500px;
+        width: 400px;
 
         .selection {
             flex-direction: column;
