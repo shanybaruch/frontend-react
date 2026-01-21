@@ -1,7 +1,7 @@
 
 .main-container {
     display: grid;
-    grid-template-columns: minmax(1rem, 1fr) minmax(auto, 1120px) minmax(1rem, 1fr);
+    grid-template-columns: minmax(auto, 1fr) minmax(auto, 1280px) minmax(auto, 1fr);
 
     >* {
         grid-column: 2;
