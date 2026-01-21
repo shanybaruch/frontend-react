@@ -97,10 +97,10 @@ export function StayDetails() {
   function OnStayDetailsPhotos() {
     navigate(`/stay/${stayId}/photos`, { state: stay });
   };
-
+  const user = userService.getLoggedinUser()
 
   async function onSaveHeart(stayId) {
-    const user = userService.getLoggedinUser()
+
     console.log(user);
 
     if (!user) {
@@ -161,7 +161,7 @@ export function StayDetails() {
                   className="save"
                   onClick={() => onSaveHeart(stay._id)}
                 >
-                  {loadFromStorage('loggedinUser')?.saved?.includes(stay._id)
+                  {user?.saved?.includes(stay._id)
                     ? <FaHeart style={{ color: '#ff385c' }} />
                     : <FaRegHeart />}
                   <span>Save</span>
