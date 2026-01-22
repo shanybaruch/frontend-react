@@ -130,6 +130,10 @@ export function AppHeader({ isAtTop }) {
                                             <FaRegHeart className='wishlist-icon' />
                                             <span className='wishlist-span'>Wishlists</span>
                                         </Link>
+                                        <Link to={`/user/${user._id}/trip`} className='menu-item trip-link'>
+                                            <img src='/img/logo-black.png' alt='' className='trip-icon' />
+                                            <span className='trip-span'>Trips</span>
+                                        </Link>
                                         <Link to={`/user/${user._id}/about`} className="menu-item profile-link">
                                             <CgProfile className='profile-icon' />
                                             <span className='profile-span'>Profile</span>

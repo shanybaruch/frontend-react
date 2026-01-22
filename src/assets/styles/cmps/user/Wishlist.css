@@ -28,6 +28,9 @@
         li {
             position: relative;
 
+            .stay-info p {
+                padding-inline-start: 2px;
+            }
             img {
                 transition: .2s;
             }

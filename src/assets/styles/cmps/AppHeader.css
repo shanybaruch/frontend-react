@@ -250,6 +250,22 @@
 
                 }
 
+                .trip-link {
+                    gap: 1px;
+                    padding-top: 0;
+                    padding-inline-start: 17px;
+                    
+                    .trip-icon {
+                        object-fit: cover;
+                        height: 22px;
+                        width: auto;
+                    }
+
+                    .trip-span {
+                        font-weight: 500;
+                    }
+                }
+
                 .profile-link {
 
                     .profile-icon {
