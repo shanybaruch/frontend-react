@@ -22,7 +22,7 @@ export function AppFooter() {
 					{/* <li> ₪ ILS </li>
 					<li> <SvgIcon iconName="globe" /> English </li>
 					<li> <a href='https://www.instagram.com/airbnb/'><SvgIcon iconName="instagram" /></a> </li> */}
-					<li> <a href="https://github.com/shanybaruch/frontend-react.git "><SvgIcon iconName="git" /></a> </li>
+					<li> <a href="https://github.com/shanybaruch/frontend-react.git "><SvgIcon iconName="Git" /></a> </li>
 				</ul>
 			</div>
 			</section>

@@ -126,9 +126,9 @@ function _getIcon(iconName) {
         ),
         
         Communication: (
-            <svg viewBox="0 0 32 32" role="img" height="24" width="24" fill="currentColor">
+            <svg viewBox="0 0 32 32" role="img" height="24" width="24" fill="none" stroke="currentColor" strokeWidth="2">
                 <title>Communication</title>
-                <path d="m25.5 3.5c2.2091 0 4 1.79086 4 4v13.8333c0 2.2092-1.7909 4-4 4h-5.8192l-3.6808 4.5-3.6832-4.5h-5.8168c-2.20914 0-4-1.7908-4-4v-13.8333c0-2.20914 1.79086-4 4-4z" fill="none"></path>
+                <path d="m25.5 3.5c2.2091 0 4 1.79086 4 4v13.8333c0 2.2092-1.7909 4-4 4h-5.8192l-3.6808 4.5-3.6832-4.5h-5.8168c-2.20914 0-4-1.7908-4-4v-13.8333c0-2.20914 1.79086-4 4-4z" ></path>
             </svg>
         ),
 
