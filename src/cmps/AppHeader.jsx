@@ -34,7 +34,6 @@ export function AppHeader({ isAtTop }) {
 
     const isHomePage = location.pathname === '/' || location.pathname === '/stay'
 
-
     const isAnyActive = isEditingWhere || isEditingWhen || isEditingWho
     const isCompact = (!isAtTop || !isHomePage) && !isAnyActive
 
