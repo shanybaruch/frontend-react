@@ -105,6 +105,54 @@
 
             .booking-section {
                 padding-top: 40px;
+
+                h3 {
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                }
+
+                p {
+                    font-size: .825rem;
+                    font-weight: 400;
+                    color: var(--gray);
+                }
+
+                .calendar-dropdown {
+                    margin-bottom: 1rem;
+
+                    .rdp-nav {
+
+                        .rdp-chevron {
+                            fill: var(--gray);
+
+                            polygon {
+                                transform: scaleX(0.8);
+                                transform-origin: center;
+                            }
+                        }
+
+                        button {
+                            font-weight: 100;
+                        }
+                    }
+
+                    .rdp-month {
+                        .rdp-month_grid {
+                            thead .rdp-weekdays th {
+                                padding: 3em;
+                            }
+
+                            .rdp-week td {
+                                padding: .5em;
+
+                            }
+                        }
+
+                        button {
+                            padding: 1.4em;
+                        }
+                    }
+                }
             }
         }
 
@@ -237,7 +285,7 @@
     display: flex;
     gap: 16px;
     padding: 40px 80px;
-    border-bottom: 1px solid var(--gray-light);
+    border-block: 1px solid var(--gray-light);
 
 
     .info-bar svg {

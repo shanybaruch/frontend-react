@@ -11,7 +11,7 @@ import { Reviews } from "./Reviews.jsx";
 import { Calendar } from '../cmps/Calendar.jsx'
 import { Loader } from '../cmps/Loader.jsx'
 import { OrderCard } from '../cmps/OrderCard.jsx'
-import{InfoBar} from '../cmps/InfoBar.jsx'
+import { InfoBar } from '../cmps/InfoBar.jsx'
 
 import { useSearchParams } from 'react-router-dom'
 import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
@@ -131,6 +131,12 @@ export function StayDetails() {
     }
   }
 
+  //calendar
+  const nightsCount = (filterBy.from && filterBy.to)
+    ? Math.round((new Date(filterBy.to) - new Date(filterBy.from)) / (1000 * 60 * 60 * 24)) + 1
+    : 0
+
+  const nightLabel = nightsCount === 1 ? 'night' : 'nights'
 
 
   if (!stay) return <Loader />
@@ -221,30 +227,29 @@ export function StayDetails() {
                   <div className='divider'></div>
                 </section>
                 <section className="booking-section">
-                <h3>
-                  {Math.round((new Date(filterBy.to) - new Date(filterBy.from)) / (1000 * 60 * 60 * 24)) + 1} night in {stay.loc.city}
-                </h3>
-                <p>
-                  {
-                    filterBy.from
-                      ? `${new Date(filterBy.from).toLocaleDateString('en-US', {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })} - ${filterBy.to
-                        ? new Date(filterBy.to).toLocaleDateString('en-US', {
+                  <h3>
+                    {nightsCount} {nightLabel} in {stay.loc.city}                  </h3>
+                  <p>
+                    {
+                      filterBy.from
+                        ? `${new Date(filterBy.from).toLocaleDateString('en-US', {
                           day: 'numeric',
                           month: 'short',
                           year: 'numeric',
-                        })
-                        : ''
-                      }`
-                      : 'Add dates'
-                  }
-                </p>
-                <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
-                  <Calendar range={rangeForCalendar} setRange={onSetRange} />
-                </div>
+                        })} - ${filterBy.to
+                          ? new Date(filterBy.to).toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric',
+                          })
+                          : ''
+                        }`
+                        : 'Add dates'
+                    }
+                  </p>
+                  <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
+                    <Calendar months={1} range={rangeForCalendar} setRange={onSetRange} />
+                  </div>
                 </section>
               </section>
 
@@ -258,7 +263,7 @@ export function StayDetails() {
         {/* <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button> */}
 
       </div>
-      <InfoBar className='info-bar'/>
+      <InfoBar className='info-bar' />
       <section className='reviews' ref={reviewsRef}>
         {stay.reviews && (
           <Reviews
