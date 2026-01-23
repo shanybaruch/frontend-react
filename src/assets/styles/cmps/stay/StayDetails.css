@@ -103,9 +103,8 @@
                 }
             }
 
-            .booking-section{
+            .booking-section {
                 padding-top: 40px;
-
             }
         }
 
@@ -237,19 +236,28 @@
 .info-bar-list {
     display: flex;
     gap: 16px;
-    padding: 0 80px;
+    padding: 40px 80px;
+    border-bottom: 1px solid var(--gray-light);
 
-    li {
-        padding: 0 24px;
-        font-size: 14px;
-        font-weight: 500;
-        border-right: solid 1px var(--gray-light);
-    }
 
     .info-bar svg {
         width: 16px !important;
         height: 16px !important;
+
         display: block;
+    }
+
+    .info-bar-item {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        gap: 8px;
+        padding: 0 16px 4px;
+        border-left: solid 1px var(--gray-light);
+
+        font-weight: 400 !important;
+        font-size: 0.8rem !important;
     }
 }
 

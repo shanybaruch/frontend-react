@@ -9,27 +9,24 @@ import { StayDetailsHeader } from './StayDetailsHeader.jsx'
 import { Amenities } from "./Amenities.jsx";
 import { Reviews } from "./Reviews.jsx";
 import { Calendar } from '../cmps/Calendar.jsx'
+import { Loader } from '../cmps/Loader.jsx'
+import { OrderCard } from '../cmps/OrderCard.jsx'
+import{InfoBar} from '../cmps/InfoBar.jsx'
 
 import { useSearchParams } from 'react-router-dom'
 import { SET_FILTER_BY } from '../store/reducers/stay.reducer'
 
 import { useInView } from 'react-intersection-observer'
 import { RiStarFill, RiTvLine } from "react-icons/ri";
-import { HiOutlineTv } from "react-icons/hi2";
-import { HiOutlineWifi } from "react-icons/hi";
-import { IoIosSnow } from "react-icons/io";
-import { TbToolsKitchen2, TbWindow } from "react-icons/tb";
+
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { FiShare } from "react-icons/fi";
 import { CgMenuGridO } from "react-icons/cg";
+
 import { useLocation } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadStay, addStayMsg } from '../store/actions/stay.actions'
-import { saveToStorage, loadFromStorage } from '../services/util.service'
-import { Loader } from '../cmps/Loader.jsx'
-import { OrderCard } from '../cmps/OrderCard.jsx'
-import { BiColor } from 'react-icons/bi'
 
 
 export function StayDetails() {
@@ -261,17 +258,7 @@ export function StayDetails() {
         {/* <button onClick={() => onAddStayMsg(stay._id)}>Add stay msg</button> */}
 
       </div>
-      <section className='info-bar'>
-        <ul className='info-bar-list'>
-          <li>Cleanliness</li>
-          <li>Accuracy</li>
-          <li>Communication</li>
-          <li>Location</li>
-          <li>Check-in</li>
-          <li>Value</li>
-        </ul>
-      </section>
-      <div className="divider"></div>
+      <InfoBar className='info-bar'/>
       <section className='reviews' ref={reviewsRef}>
         {stay.reviews && (
           <Reviews
