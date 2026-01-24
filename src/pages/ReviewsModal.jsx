@@ -88,7 +88,7 @@ export function ReviewsModal({ reviews, onClose }) {
                             </div>
 
                             <p className="review-text">{review.txt}</p>
-                            <div className="divider"></div>
+                            {/* <div className="divider"></div> */}
                         </div>
                     ))}
                 </div>
