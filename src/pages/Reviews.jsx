@@ -32,18 +32,18 @@ export function Reviews({ reviews }) {
     return (
         <section className="review-list">
             {visibleReviews.map((review, idx) => {
-                const isLong = review.txt.length > maxLength
+                const isLong = review.txt?.length > maxLength
                 const displayText = isLong ? review.txt.slice(0, maxLength) + '...' : review.txt
 
                 return (
                     <div className="review-item" key={idx}>
                         <div className="review-header">
                             <img
-                                src={review.by.imgUrl}
-                                alt={review.by.fullname}
+                                src={review.by?.imgUrl}
+                                alt={review.by?.fullname}
                                 className="review-avatar"
                             />
-                            <span className="review-name">{review.by.fullname}</span>
+                            <span className="review-name">{review.by?.fullname}</span>
                         </div>
 
                         <div className="review-meta">

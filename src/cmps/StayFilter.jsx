@@ -29,19 +29,19 @@ export function StayFilter(
         })
     }
 
-function onSearch() {
+    function onSearch() {
         const totalGuests = filterBy.guests.adults + filterBy.guests.children
         const filterToSave = { ...filterBy, minCapacity: totalGuests }
-        
+
         dispatch({ type: SET_FILTER_BY, filterBy: filterToSave })
         loadStays(filterToSave)
 
         const params = {}
-        
+
         if (filterToSave.txt) params.txt = filterToSave.txt
         if (filterToSave.from) params.from = new Date(filterToSave.from).toISOString().split('T')[0] // פורמט תאריך נקי
         if (filterToSave.to) params.to = new Date(filterToSave.to).toISOString().split('T')[0]
-        
+
         if (filterToSave.guests.adults) params.adults = filterToSave.guests.adults
         if (filterToSave.guests.children) params.children = filterToSave.guests.children
         if (filterToSave.guests.infants) params.infants = filterToSave.guests.infants
@@ -73,114 +73,129 @@ function onSearch() {
         { id: '3', name: 'Paris, France', desc: 'Because you wishlisted it' },
         { id: '4', name: 'Tokyo, Japan', desc: 'For sights like Trevi Fountain' },
         { id: '5', name: 'Rome, Italy', desc: 'For sights like Trevi Fountain' },
+        { id: '6', name: 'London, United Kingdom', desc: 'For sights like Trevi Fountain' },
     ]
 
     const handleSelect = (destinationName) => {
         const cityOnly = destinationName.split(',')[0].trim()
 
-        setSearchTerm(destinationName) 
-        dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: cityOnly } }) 
+        setSearchTerm(destinationName)
+        dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: cityOnly } })
         setIsEditingWhere(false)
     }
 
+    function closeAllModals() {
+        setIsEditingWhere(false)
+        setIsEditingWhen(false)
+        setIsEditingWho(false)
+    }
+
     return (
-        <section className='stay-filter'>
-            <div className='selection'>
-                <section
-                    className={`select-where ${isEditingWhere ? 'active' : ''}`}
-                    onClick={(ev) => {
-                        ev.stopPropagation()
-                        setIsEditingWhere(!isEditingWhere)
-                        setIsEditingWhen(false)
-                        setIsEditingWho(false)
-                    }}
-                >
-                    <section className='sec first-sec'>
-                        <p>Where</p>
-                        {isEditingWhere && (
-                            <div className="suggestions-modal" onClick={(e) => e.stopPropagation()}>
-                                <p>Suggested destinations</p>
-                                <ul style={{ listStyle: 'none', padding: 0 }}>
-                                    {destinations.map((dest) => (
-                                        <li
-                                            key={dest.id}
-                                            onClick={() => handleSelect(dest.name)}
-                                            className="suggestion-item"
-                                        >
-                                            <h4>{dest.name}</h4>
-                                            <span>{dest.desc}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+        <>
+            {isAnyActive && (
+                <div
+                    className="filter-backdrop"
+                    onClick={closeAllModals}
+                ></div>
+            )}
+            <section className='stay-filter'>
+                <div className='selection'>
+                    <section
+                        className={`select-where ${isEditingWhere ? 'active' : ''}`}
+                        onClick={(ev) => {
+                            ev.stopPropagation()
+                            setIsEditingWhere(!isEditingWhere)
+                            setIsEditingWhen(false)
+                            setIsEditingWho(false)
+                        }}
+                    >
+                        <section className='sec first-sec'>
+                            <p>Where</p>
+                            {isEditingWhere && (
+                                <div className="suggestions-modal" onClick={(e) => e.stopPropagation()}>
+                                    <p>Suggested destinations</p>
+                                    <ul style={{ listStyle: 'none', padding: 0 }}>
+                                        {destinations.map((dest) => (
+                                            <li
+                                                key={dest.id}
+                                                onClick={() => handleSelect(dest.name)}
+                                                className="suggestion-item"
+                                            >
+                                                <h4>{dest.name}</h4>
+                                                <span>{dest.desc}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {isEditingWhere ? (
+                                <input
+                                    type="search"
+                                    autoFocus
+                                    placeholder="Search destinations"
+                                    value={searchTerm || filterBy.txt || ''}
+                                    onChange={(ev) => {
+                                        setSearchTerm(ev.target.value)
+                                        dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: ev.target.value } })
+                                    }}
+                                />
+                            ) : (
+                                <span>{filterBy.txt || 'Search destinations'}</span>
+                            )}
+                        </section>
+                        <div className="v-line"></div>
+                    </section>
+
+                    <section
+                        className={`select-when ${isEditingWhen ? 'active' : ''}`}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsEditingWhen(!isEditingWhen)
+                            setIsEditingWhere(false)
+                            setIsEditingWho(false)
+                        }}
+                    >
+                        <section className='sec'>
+                            <p>When</p>
+                            <span>
+                                {filterBy.from ?
+                                    `${new Date(filterBy.from).toLocaleDateString()} - ${filterBy.to ? new Date(filterBy.to).toLocaleDateString() : ''}`
+                                    : 'Add dates'}
+                            </span>
+                        </section>
+                        {isEditingWhen && (
+                            <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
+                                <Calendar range={rangeForCalendar} setRange={onSetRange} />
                             </div>
                         )}
+                        <div className="v-line"></div>
+                    </section>
 
-                        {isEditingWhere ? (
-                            <input
-                                type="search"
-                                autoFocus
-                                placeholder="Search destinations"
-                                value={searchTerm || filterBy.txt || ''}
-                                onChange={(ev) => {
-                                    setSearchTerm(ev.target.value)
-                                    dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: ev.target.value } })
-                                }}
-                            />
-                        ) : (
-                            <span>{filterBy.txt || 'Search destinations'}</span>
+                    <section
+                        className={`select-who ${isEditingWho ? 'active' : ''}`}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setIsEditingWhere(false)
+                            setIsEditingWhen(false)
+                            setIsEditingWho(!isEditingWho)
+                        }}
+                    >
+                        <section className='sec'>
+                            <p>Who</p>
+                            <span>{getGuestLabel()}</span>
+                        </section>
+                        {isEditingWho && (
+                            <GuestPicker guests={guests} onUpdateGuests={onUpdateGuests} />
                         )}
                     </section>
-                    <div className="v-line"></div>
-                </section>
 
-                <section
-                    className={`select-when ${isEditingWhen ? 'active' : ''}`}
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        setIsEditingWhen(!isEditingWhen)
-                        setIsEditingWhere(false)
-                        setIsEditingWho(false)
-                    }}
-                >
-                    <section className='sec'>
-                        <p>When</p>
-                        <span>
-                            {filterBy.from ?
-                                `${new Date(filterBy.from).toLocaleDateString()} - ${filterBy.to ? new Date(filterBy.to).toLocaleDateString() : ''}`
-                                : 'Add dates'}
-                        </span>
+                    <section className={`sec-search ${isAnyActive ? 'expanded' : ''}`} onClick={onSearch}>
+                        <IoSearch />
+                        {isAnyActive && <span className="search-text">Search</span>}
                     </section>
-                    {isEditingWhen && (
-                        <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
-                            <Calendar range={rangeForCalendar} setRange={onSetRange} />
-                        </div>
-                    )}
-                    <div className="v-line"></div>
-                </section>
-
-                <section
-                    className={`select-who ${isEditingWho ? 'active' : ''}`}
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        setIsEditingWhere(false)
-                        setIsEditingWhen(false)
-                        setIsEditingWho(!isEditingWho)
-                    }}
-                >
-                    <section className='sec'>
-                        <p>Who</p>
-                        <span>{getGuestLabel()}</span>
-                    </section>
-                    {isEditingWho && (
-                        <GuestPicker guests={guests} onUpdateGuests={onUpdateGuests} />
-                    )}
-                </section>
-
-                <section className={`sec-search ${isAnyActive ? 'expanded' : ''}`} onClick={onSearch}>
-                    <IoSearch />
-                    {isAnyActive && <span className="search-text">Search</span>}
-                </section>
-            </div>
-        </section>
+                </div>
+            </section>
+        </>
     )
 }

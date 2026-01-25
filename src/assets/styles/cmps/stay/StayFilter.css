@@ -1,7 +1,21 @@
+.filter-backdrop {
+    position: fixed;
+    top: 199px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 80px);
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 20;
+    transition: opacity 0.3s ease;
+}
+
 .stay-filter {
     width: 100%;
     max-width: 850px;
+    min-width: 550px;
+
     margin-inline: auto;
+    z-index: 25;
 
     .selection {
         display: flex;
@@ -10,7 +24,7 @@
         padding: 0;
 
         position: relative;
-        z-index: 30;
+        z-index: 25;
 
         border-radius: 50px;
         box-shadow: 0px 7px 24px 0px var(--gray-light-hover);
@@ -100,14 +114,15 @@
 
             .suggestions-modal {
                 position: absolute;
-                top: 75px;
+                top: 60px;
                 left: 0;
                 width: 150%;
 
                 background-color: var(--white);
                 border-radius: 30px;
                 padding: 20px 20px 0px;
-                box-shadow: 0px 7px 24px 0px var(--gray-light-hover);
+                /* box-shadow: 0px 4px 24px 0px var(--gray); */
+                box-shadow: 0px 5px 32px rgba(0, 0, 0, 0.15);
                 cursor: auto;
 
                 ul {
@@ -142,7 +157,7 @@
 
                 span {
                     color: var(--gray);
-                    font-size: .87rem;
+                    font-size: .815rem;
                     font-weight: 300;
                 }
             }
