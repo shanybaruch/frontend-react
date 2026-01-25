@@ -2,18 +2,17 @@ import { Link, NavLink } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { logout } from '../store/actions/user.actions'
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { FiMenu } from "react-icons/fi";
-import { IoSearch } from "react-icons/io5";
-import { CgProfile } from "react-icons/cg";
-
-import { FaRegHeart } from "react-icons/fa";
+import { FiMenu } from "react-icons/fi"
+import { IoSearch } from "react-icons/io5"
+import { CgProfile } from "react-icons/cg"
+import { FaRegHeart } from "react-icons/fa"
 
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { LoginModal } from './LoginModal'
 import { StayFilter } from './StayFilter'
-import { UserImg } from './UserImg';
+import { UserImg } from './UserImg'
 
 export function AppHeader({ isAtTop }) {
     const user = useSelector(storeState => storeState.userModule.user)
@@ -147,6 +146,8 @@ export function AppHeader({ isAtTop }) {
                     </div>
                 </section>
             </nav>
+
+           
 
             {!shouldHideFilter &&
                 <StayFilter

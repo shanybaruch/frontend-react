@@ -18,6 +18,11 @@ export function StayDetailsHeader({ photosRef, amenitiesRef, reviewsRef, hidden 
                 <li onClick={() => scrollTo(amenitiesRef)}>Amenities</li>
                 <li onClick={() => scrollTo(reviewsRef)}>Reviews</li>
             </ul>
+
+            {/* <section className="header-order hidden">
+                <OrderCard />
+            </section> */}
         </nav>
+        
     )
 }

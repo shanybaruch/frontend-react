@@ -46,7 +46,7 @@
     .sides {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        gap: 80px;
+        gap: 50px;
 
         .big-side {
             .description {
@@ -331,56 +331,117 @@
     }
 }
 
-@media (max-width: 1120px) {
-
+@media (max-width: 1024px) {
     .stay-details,
     .reviews,
-    .info-bar:not(.gallery) {
-        padding: 0 40px;
+    .info-bar-list {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .stay-details .sides {
+        gap: 40px;
+    }
+
+    .gallery {
+        height: 320px;
+    }
+
+    .gallery-side,
+    .left-img {
+        height: 320px;
     }
 }
 
-@media (max-width: 740px) {
-    .third-page {
-        width: 100%;
+@media (max-width: 768px) {
+    .stay-details,
+    .reviews,
+    .info-bar-list {
+        padding-left: 24px;
+        padding-right: 24px;
     }
 
-    html,
-    body {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-}
-
-
-@media (max-width: 740px) {
     .gallery {
         grid-template-columns: 1fr;
+        height: 280px;
+        border-radius: 0;
     }
 
     .left-img {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
+        height: 280px;
+        border-radius: 0;
     }
 
     .gallery-side {
         display: none;
     }
 
-    .heading {
+    .stay-details .heading {
         display: none;
     }
+
+    .stay-details .sides {
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+    }
+
 }
 
-@media (max-width: 600px) {
+
+@media (max-width: 425px) {
+    .stay-details,
+    .reviews,
+    .info-bar-list {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .stay-details {
+        padding-bottom: 90px;
+    }
+
+    .gallery {
+        height: 240px;
+    }
+
+    .left-img {
+        height: 240px;
+    }
+
     .stay-details .sides {
         grid-template-columns: 1fr;
         gap: 24px;
     }
-}
 
-@media (max-width: 420px) {
-    .stay-details {
-        padding-bottom: 90px;
+    .stay-details .description h2,
+    .stay-details .title-place-offers {
+        font-size: 1.1rem;
+    }
+
+    .btn-photos {
+        bottom: 12px;
+        right: 12px;
+        padding: 6px 12px;
+    }
+
+    .info-bar-list {
+        flex-direction: row;
+        padding: 16px;
+        gap: 16px;
+
+        .info-bar-item {
+            flex: 1 1 100%;
+            border-left: 1px solid var(--gray-light);
+            padding: 5px 10px 5px;
+        }
+    }
+
+    .stay-details .share,
+    .stay-details .save {
+        font-size: 0.85rem;
+
+        svg {
+            width: 16px;
+        }
     }
 }

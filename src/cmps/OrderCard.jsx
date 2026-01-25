@@ -57,7 +57,8 @@ export function OrderCard() {
     const totalPrice = staysPrice + serviceFee
 
     return (
-        <section className="order-card">
+    <section className="order-card">
+        <div className="order-top">
             <div className="order-header">
                 <p className="price">
                     {nights > 0 ? (
@@ -112,9 +113,11 @@ export function OrderCard() {
                     </div>
                 </div>
             )} */}
-
+        </div>
+        <div className="order-bottom">
             <button className="reserve-btn" onClick={onReserve}> Reserve </button>
             <p className="order-note"> You won’t be charged yet </p>
-        </section>
+        </div>
+    </section>
     )
 }

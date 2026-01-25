@@ -75,3 +75,10 @@
     }
 }
 
+
+
+@media (max-width: 425px) {
+    .app-footer{
+        margin-bottom: 125px;
+    }
+}
