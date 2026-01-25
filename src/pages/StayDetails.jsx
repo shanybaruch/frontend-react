@@ -51,6 +51,7 @@ export function StayDetails() {
   const [, forceRender] = useState(0)
   const [isShareOpen, setIsShareOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+  const [savedIds, setSavedIds] = useState([])
 
   const rangeForCalendar = {
     from: filterBy.from ? new Date(filterBy.from) : undefined,
@@ -92,6 +93,11 @@ export function StayDetails() {
     }
   }, [stayId])
 
+  useEffect(() => {
+    setSavedIds(loggedInUser?.saved || [])
+  }, [loggedInUser])
+
+
   async function onAddStayMsg(stayId) {
     try {
       await addStayMsg(stayId, 'bla bla ' + parseInt(Math.random() * 10))
@@ -115,31 +121,29 @@ export function StayDetails() {
   const user = userService.getLoggedinUser()
 
   async function onSaveHeart(stayId) {
-
-    console.log(user);
-
-    if (!user) {
+    if (!loggedInUser) {
       showErrorMsg('Please log in to save')
       return
     }
 
-    const saved = Array.isArray(user.saved) ? user.saved : []
-    const isSaved = saved.includes(stayId)
+    const newSavedIds = savedIds.includes(stayId)
+      ? savedIds.filter(id => id !== stayId)
+      : [...savedIds, stayId]
 
-    const userToUpdate = {
-      ...user,
-      saved: isSaved
-        ? saved.filter(id => id !== stayId)
-        : [...saved, stayId]
-    }
-    console.log(userToUpdate);
+    setSavedIds(newSavedIds)
 
     try {
-      await updateUser(userToUpdate)
+      await updateUser({
+        ...loggedInUser,
+        saved: newSavedIds
+      })
     } catch (err) {
-      showErrorMsg('Could not save stay to favorites')
+      showErrorMsg('Could not save stay')
+      setSavedIds(loggedInUser?.saved || [])
     }
   }
+
+
 
   //calendar
   const nightsCount = (filterBy.from && filterBy.to)
@@ -178,11 +182,8 @@ export function StayDetails() {
                   />
                 )}
 
-                <button
-                  className="save"
-                  onClick={() => onSaveHeart(stay._id)}
-                >
-                  {user?.saved?.includes(stay._id)
+                <button className="save" onClick={() => onSaveHeart(stay._id)}>
+                  {savedIds.includes(stay._id)
                     ? <FaHeart style={{ color: '#ff385c' }} />
                     : <FaRegHeart />}
                   <span>Save</span>
