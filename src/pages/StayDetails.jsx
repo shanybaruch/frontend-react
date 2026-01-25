@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { ShareModal } from './ShareModal.jsx'
 import { updateUser } from '../store/actions/user.actions'
+import { userService } from "../services/user";
+
 
 import { StayDetailsHeader } from './StayDetailsHeader.jsx'
 import { Amenities } from "./Amenities.jsx";
@@ -189,10 +191,10 @@ export function StayDetails() {
               </div>
 
               <div className="gallery-side">
-                <div><img src={stay.imgUrl} alt={stay.name} /></div>
-                <div><img src={stay.imgUrl} alt={stay.name} className="top-right" /></div>
-                <div><img src={stay.imgUrl} alt={stay.name} /></div>
-                <div><img src={stay.imgUrl} alt={stay.name} className="bottom-right" /></div>
+                <div><img src={stay.imgUrls[1]} alt={stay.name} /></div>
+                <div><img src={stay.imgUrls[2]} alt={stay.name} className="top-right" /></div>
+                <div><img src={stay.imgUrls[3]} alt={stay.name} /></div>
+                <div><img src={stay.imgUrls[4]} alt={stay.name} className="bottom-right" /></div>
               </div>
             </section>
 
@@ -204,7 +206,7 @@ export function StayDetails() {
                   <div className="meta-item">
                     <RiStarFill size={10} />
                     <span className='rate'>{stay.rate} · </span>
-                    <span className='reviews-txt'>{stay.reviews.length} reviews</span>
+                    <span className='reviews-txt'>{stay.reviews?.length} reviews</span>
                   </div>
                 </div>
 
@@ -265,7 +267,7 @@ export function StayDetails() {
       </div>
       <InfoBar className='info-bar' />
       <section className='reviews' ref={reviewsRef}>
-        {stay.reviews && (
+        {stay.reviews?.length > 0 && (
           <Reviews
             reviews={stay.reviews}
           />
