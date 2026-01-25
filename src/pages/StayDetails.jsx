@@ -50,6 +50,7 @@ export function StayDetails() {
   const loggedInUser = useSelector(storeState => storeState.userModule.user)
   const [, forceRender] = useState(0)
   const [isShareOpen, setIsShareOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const rangeForCalendar = {
     from: filterBy.from ? new Date(filterBy.from) : undefined,
@@ -213,13 +214,22 @@ export function StayDetails() {
                   <div className="meta-item">
                     <RiStarFill size={10} />
                     <span className='rate'>{stay.rate} · </span>
-                    <span className='reviews-txt'>{stay.reviews?.length} reviews</span>
+                    <span className='reviews-txt'>{stay.reviews?.length} review {stay.reviews?.length > 1 ? 's' : ''}</span>
                   </div>
                 </div>
 
                 <div className="">
                   <div className="divider"></div>
-                  <p className="description-p">{stay.description}</p>
+                  <p className={`description-p ${isExpanded ? 'expanded' : ''}`}>
+                    {stay.description}
+                  </p>
+
+                  <button
+                    className="btn-description-more"
+                    onClick={() => setIsExpanded(prev => !prev)}
+                  >
+                    {isExpanded ? 'Show less' : 'Show more'}
+                  </button>
                 </div>
 
                 <section ref={amenitiesRef}>
