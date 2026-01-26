@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router"
 import { userService } from "../services/user"
-import { signup } from "../store/actions/user.actions"
+import { login, signup } from "../store/actions/user.actions"
 
-export function SignupModal({ credentials, setCredentials, onBack, onClose }) {
+export function SignupModal({ credentials, setCredentials, onBack, onClose, isSignup }) {
     const navigate = useNavigate()
 
     function clearState() {
@@ -34,14 +34,51 @@ export function SignupModal({ credentials, setCredentials, onBack, onClose }) {
         }
     }
 
-    const maxDate = new Date()
-    maxDate.setFullYear(maxDate.getFullYear() - 18)
-    const maxDateString = maxDate.toISOString().split("T")[0]
+    async function handleSubmit(ev) {
+        ev.preventDefault()
+        try {
+            if (isSignup) {
+                if (!credentials.email || !credentials.firstName || !credentials.lastName) {
+                    console.error('Missing required fields')
+                    return
+                }
+                await signup(credentials)
+            } else {
+                await login(credentials)
+            }
+            onClose()
+            navigate('/')
+        } catch (err) {
+            console.error('Action failed:', err)
+        }
+    }
+    if (!isSignup) {
+        return (
+            <section className="signup-modal">
+                <main className="modal-body">
+                    <h2>Welcome back, {credentials.email || credentials.phone}</h2>
+                    <form className="signup-form" onSubmit={handleSubmit}>
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            onChange={handleChange}
+                            required
+                        />
+                        <button className="btn-continue">Log in</button>
+                    </form>
+                </main>
+            </section>
+        )
+    }
+
+    const maxDateString = new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split("T")[0]
 
     return (
         <section className="signup-modal">
             <main className="modal-body">
-                <form className="signup-form" onSubmit={onSignup}>
+                <form className="signup-form" onSubmit={handleSubmit}>
                     <label>Legal name</label>
                     <section className="sec-name">
                         <input
@@ -66,7 +103,7 @@ export function SignupModal({ credentials, setCredentials, onBack, onClose }) {
                     <section>
                         <label>Date of birth</label>
                         <input
-                            name="birthday"
+                            name="birthDate"
                             max={maxDateString}
                             value={credentials.birthDate || ''}
                             type="date"
@@ -89,6 +126,16 @@ export function SignupModal({ credentials, setCredentials, onBack, onClose }) {
                         required
                     />
                     <p>We'll email you trip confirmations and receipts.</p>
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create a password"
+                        onChange={handleChange}
+                        required
+
+                    />
                     <button className="btn-continue">Agree and continue</button>
                 </form>
                 <div className="divider"></div>

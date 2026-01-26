@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Loader } from '../cmps/Loader.jsx'
 import { SET_ORDER } from '../store/reducers/stay.reducer'
-import { orderService } from '../services/order.service.js'
+import { orderService } from '../services/order/order.service.remote.js'
 import { updateUser } from '../store/actions/user.actions.js'
 
 import { FaArrowLeft } from "react-icons/fa6";
@@ -98,18 +98,30 @@ export function OrderPage() {
     async function onConfirm(e) {
         e.preventDefault()
 
+        const fullname = user?.fullname || (user?.firstName ? `${user.firstName} ${user.lastName}` : 'Guest')
+
         const buyer = user ? {
             _id: user._id,
-            fullname: user.fullname,
-            imgUrl: user.imgUrl
+            fullname: fullname,
+            imgUrl: user.imgUrl || ''
         } : { _id: 'guest', fullname: 'Guest' }
 
         const orderToSave = {
             ...order,
             buyer,
             totalPrice,
+            startDate: filterBy.from,
+            endDate: filterBy.to,
+            guests: filterBy.guests,
+            stay: {
+                _id: stay._id,
+                name: stay.name,
+                price: stay.price
+            },
+            hostId: stay.host?._id || stay.hostId,
             paymentDetails: { cardNum: cardNumber },
-            status: 'pending'
+            status: 'pending',
+            createdAt: Date.now()
         }
 
         try {

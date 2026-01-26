@@ -397,6 +397,12 @@
     }
 }
 
+@media (max-width: 743px) {
+    .app-header.details-page {
+        display: none;
+    }
+}
+
 @media (max-width: 575px) {
     .app-header {
 

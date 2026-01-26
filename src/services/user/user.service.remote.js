@@ -12,6 +12,7 @@ export const userService = {
 	update,
     getLoggedinUser,
     saveLoggedinUser,
+	checkUserExists,
 }
 
 function getUsers() {
@@ -27,14 +28,15 @@ function remove(userId) {
 	return httpService.delete(`user/${userId}`)
 }
 
-async function update({ _id, score }) {
-	const user = await httpService.put(`user/${_id}`, { _id, score })
+async function update(user) {
+    const updatedUser = await httpService.put(`user/${user._id}`, user)
 
-	// When admin updates other user's details, do not update loggedinUser
-    const loggedinUser = getLoggedinUser() // Might not work because its defined in the main service???
-    if (loggedinUser._id === user._id) saveLoggedinUser(user)
+    const loggedinUser = getLoggedinUser()
+    if (loggedinUser && loggedinUser._id === updatedUser._id) {
+        saveLoggedinUser(updatedUser)
+    }
 
-	return user
+    return updatedUser
 }
 
 async function login(userCred) {
@@ -69,4 +71,14 @@ function saveLoggedinUser(user) {
     }
 	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user
+}
+
+async function checkUserExists(identifier) {
+    try {
+        const res = await httpService.get(`auth/check?identifier=${identifier}`)
+        return { exists: res.exists } 
+    } catch (err) {
+        console.error('Error in checkUserExists:', err)
+        return { exists: false }
+    }
 }

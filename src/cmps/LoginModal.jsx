@@ -15,30 +15,54 @@ export function LoginModal({ onClose }) {
     const [isNextStep, setIsNextStep] = useState(false)
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
     const [isLoading, setIsLoading] = useState(false)
+    const [isSignup, setIsSignup] = useState(false)
 
     function handleChange({ target }) {
         const { name, value } = target
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
+    //local storage
+    // async function onContinue(ev) {
+    //     ev.preventDefault()
+    //     setIsLoading(true)
+    //     try {
+    //         const users = await storageService.query('user')
+    //         const user = users.find(u =>
+    //             (credentials.email && u.email === credentials.email) ||
+    //             (credentials.phone && u.phone === credentials.phone)
+    //         )
+    //         if (user) {
+    //             console.log('User exists, logging in...', user)
+    //             await login(user)
+    //             onClose()
+    //         } else {
+    //             setIsNextStep(true)
+    //         }
+    //     } catch (err) {
+    //         console.error('Had issues checking user', err)
+    //     } finally {
+    //         setIsLoading(false)
+    //     }
+    // }
+
     async function onContinue(ev) {
         ev.preventDefault()
         setIsLoading(true)
+        const identifier = isPhoneOption ? credentials.phone : credentials.email
         try {
-            const users = await storageService.query('user')
-            const user = users.find(u =>
-                (credentials.email && u.email === credentials.email) ||
-                (credentials.phone && u.phone === credentials.phone)
-            )
-            if (user) {
-                console.log('User exists, logging in...', user)
-                await login(user)
-                onClose()
+            const res = await userService.checkUserExists(identifier)
+            const exists = res && res.exists
+            if (exists) {
+                console.log('User exists - moving to login')
+                setIsSignup(false)
             } else {
-                setIsNextStep(true)
+                console.log('User not found - moving to signup')
+                setIsSignup(true)
             }
+            setIsNextStep(true)
         } catch (err) {
-            console.error('Had issues checking user', err)
+            console.error('Error in checking user', err)
         } finally {
             setIsLoading(false)
         }
@@ -69,6 +93,7 @@ export function LoginModal({ onClose }) {
                     <SignupModal
                         credentials={credentials}
                         setCredentials={setCredentials}
+                        isSignup={isSignup}
                         onBack={onBack}
                         onClose={onClose}
                     /> :

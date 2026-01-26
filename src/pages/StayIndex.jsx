@@ -8,6 +8,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { stayService } from '../services/stay'
 
 import { StayList } from '../cmps/StayList'
+import { Loader } from '../cmps/Loader'
 
 export function StayIndex() {
     const dispatch = useDispatch()
@@ -72,6 +73,8 @@ export function StayIndex() {
             showErrorMsg('Cannot update stay')
         }
     }
+
+    if (!stays) return <Loader />
 
     return (
         <section className="stay-index">

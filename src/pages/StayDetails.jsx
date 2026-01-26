@@ -200,10 +200,10 @@ export function StayDetails() {
               </div>
 
               <div className="gallery-side">
-                <div><img src={stay.imgUrls[1]} alt={stay.name} /></div>
-                <div><img src={stay.imgUrls[2]} alt={stay.name} className="top-right" /></div>
-                <div><img src={stay.imgUrls[3]} alt={stay.name} /></div>
-                <div><img src={stay.imgUrls[4]} alt={stay.name} className="bottom-right" /></div>
+                <div><img src={stay.imgUrls?.[1]} alt={stay.name} /></div>
+                <div><img src={stay.imgUrls?.[2]} alt={stay.name} className="top-right" /></div>
+                <div><img src={stay.imgUrls?.[3]} alt={stay.name} /></div>
+                <div><img src={stay.imgUrls?.[4]} alt={stay.name} className="bottom-right" /></div>
               </div>
             </section>
 
