@@ -354,12 +354,6 @@
 }
 
 @media (max-width: 743px) {
-    section.sides {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
     .stay-details,
     .reviews,
     .info-bar-list {
