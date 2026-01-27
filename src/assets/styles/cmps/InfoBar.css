@@ -72,3 +72,9 @@
     font-weight: 400;
     font-size: 0.6rem;
 }
+
+@media (max-width: 743px){
+    .info-bar-list {
+        display: none;
+    }
+}

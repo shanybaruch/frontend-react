@@ -115,29 +115,6 @@ export function StayDetails() {
 
   const user = userService.getLoggedinUser()
 
-  // async function onSaveHeart(stayId) {
-  //   if (!loggedInUser) {
-  //     showErrorMsg('Please log in to save')
-  //     return
-  //   }
-
-  //   const newSavedIds = savedIds.includes(stayId)
-  //     ? savedIds.filter(id => id !== stayId)
-  //     : [...savedIds, stayId]
-
-  //   setSavedIds(newSavedIds)
-
-  //   try {
-  //     await updateUser({
-  //       ...loggedInUser,
-  //       saved: newSavedIds
-  //     })
-  //   } catch (err) {
-  //     showErrorMsg('Could not save stay')
-  //     setSavedIds(loggedInUser?.saved || [])
-  //   }
-  // }
-
   async function onSaveHeart(stayId) {
     if (!loggedInUser) return showErrorMsg('Please log in to save')
 
@@ -180,7 +157,7 @@ export function StayDetails() {
                   className='share'
                   onClick={() => setIsShareOpen(true)}>
                   <FiShare />
-                  <span>Share</span>
+                  <span className='btn-responsive'>Share</span>
                 </button>
 
                 {isShareOpen && (
@@ -194,19 +171,19 @@ export function StayDetails() {
                   {isSaved
                     ? <FaHeart style={{ color: '#ff385c' }} />
                     : <FaRegHeart />}
-                  <span>Save</span>
+                  <span className='btn-responsive'>Save</span>
                 </button>
               </div>
             </div>
-
             <section ref={photosInViewRef} className="gallery">
               <button className="btn-photos" onClick={OnStayDetailsPhotos}>
                 <CgMenuGridO size={16} /> Show all photos
               </button>
-              <div className="gallery-main">
-                <img src={stay?.imgUrl} alt={stay?.name} className="left-img" />
-              </div>
 
+              <div className="gallery-main">
+                <img src={stay?.imgUrl} alt={stay?.name} className="left-img" onClick={OnStayDetailsPhotos}/>
+              </div>
+    
               <div className="gallery-side">
                 <div><img src={stay?.imgUrls?.[1]} alt={stay?.name} /></div>
                 <div><img src={stay?.imgUrls?.[2]} alt={stay?.name} className="top-right" /></div>
