@@ -253,9 +253,9 @@ export function StayDetails() {
                         : 'Add dates'
                     }
                   </p>
-                  {/* <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
+                  <div className="calendar-dropdown" onClick={(e) => e.stopPropagation()}>
                     <Calendar months={1} range={rangeForCalendar} setRange={onSetRange} />
-                  </div> */}
+                  </div>
                 </section>
               </section>
 
