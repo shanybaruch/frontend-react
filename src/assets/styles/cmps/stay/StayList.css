@@ -5,6 +5,8 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 80px 1fr;
+        padding-inline: 29px;
+
     }
 
     .stays-grid {
@@ -12,17 +14,25 @@
 
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(var(--min-column-size), 1fr));
-        grid-template-rows: 1fr;
+        justify-content: start;
+
         gap: .8rem;
         margin-top: 0;
-        padding-inline: 29px;
+
+        overflow-x: auto;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     .location-title {
         font-weight: 500;
         align-self: end;
         font-size: 1.2rem;
-        margin: 24px 30px 0;
+        margin: 24px 0 0;
         padding-bottom: 20px;
     }
 
