@@ -20,6 +20,8 @@ export function StayFilter(
     const guests = filterBy.guests || { adults: 0, children: 0, infants: 0, pets: 0 }
     const [searchTerm, setSearchTerm] = useState('')
     const [searchParams, setSearchParams] = useSearchParams()
+    const [isMini, setIsMini] = useState(true)
+    const [miniSelectionOpen, setMiniSelectionOpen] = useState(false)
 
     function onUpdateGuests(type, diff) {
         const newVal = Math.max(0, guests[type] + diff)
@@ -78,7 +80,6 @@ export function StayFilter(
 
     const handleSelect = (destinationName) => {
         const cityOnly = destinationName.split(',')[0].trim()
-
         setSearchTerm(destinationName)
         dispatch({ type: SET_FILTER_BY, filterBy: { ...filterBy, txt: cityOnly } })
         setIsEditingWhere(false)
@@ -88,18 +89,28 @@ export function StayFilter(
         setIsEditingWhere(false)
         setIsEditingWhen(false)
         setIsEditingWho(false)
+        setIsMini(true)
     }
 
     return (
         <>
             {isAnyActive && (
-                <div
-                    className="filter-backdrop"
-                    onClick={closeAllModals}
-                ></div>
+                <div className="filter-backdrop" onClick={closeAllModals}></div>
             )}
-            <section className='stay-filter'>
+            <section className={`stay-filter ${!isMini ? 'mini-selection' : ''}`}>
+
+                <div className="mini-selection"
+                    onClick={() => {
+                        setIsMini(false)
+                        setIsEditingWhere(true)
+                        setMiniSelectionOpen(true)
+                    }}>
+                    <IoSearch />
+                    <span>Search for homes</span>
+                </div>
+
                 <div className='selection'>
+                    <button className="mobile-close-btn" onClick={closeAllModals}>✕</button>
                     <section
                         className={`select-where ${isEditingWhere ? 'active' : ''}`}
                         onClick={(ev) => {
@@ -195,6 +206,8 @@ export function StayFilter(
                         {isAnyActive && <span className="search-text">Search</span>}
                     </section>
                 </div>
+
+
             </section>
         </>
     )

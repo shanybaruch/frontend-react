@@ -12,7 +12,7 @@
     max-width: 1480px;
 
     background-color: var(--white);
-    padding: .3rem 0 1.9rem;
+    padding: .3rem 18px 1.9rem;
     border-bottom: 1px solid var(--gray-light);
     transition: min-height 0.2s cubic-bezier(0.2, 0, 0, 1), padding 0.4s ease;
 
@@ -44,7 +44,7 @@
         justify-content: space-between;
 
         width: 100%;
-        padding-inline: 18px;
+        padding-inline: 0;
         max-width: 1440px;
         margin: 0 auto;
         color: var(--gray);
@@ -193,6 +193,7 @@
                     background-color: var(--white-gray);
                     transition: .2s;
                     display: flex;
+                    margin: 0;
                     align-items: center;
                     justify-content: center;
 
@@ -367,39 +368,63 @@
     pointer-events: none;
 }
 
-@media(min-width: 1280px) {
-
-    .app-header {
-        /* grid-column: 1 / -1; */
-    }
-}
-
-@media(max-width: 1000px) {
+@media(max-width: 950px) {
     .app-header {
         display: flex;
 
         .header-nav {
-            gap: 0;
+            .logo span {
+                display: none;
+            }
         }
     }
 }
 
-@media (max-width: 743px) {
+@media (max-width: 744px) {
     .app-header.details-page {
         display: none;
+    }
+
+    .app-header {
+        flex-direction: column-reverse;
+        padding-bottom: 0;
+        padding-top: 10px;
+
+        .header-nav {
+            justify-content: center;
+
+            .logo {
+                display: none;
+            }
+
+            .nav-links-wrapper a.active {
+                flex-direction: column;
+                gap: 2px;
+                padding-bottom: 12px;
+
+                img {
+                    width: 40px;
+                    height: auto;
+                }
+            }
+
+            .nav-end {
+                .menu-wrapper {
+                    display: none;
+                }
+            }
+        }
     }
 }
 
 @media (max-width: 575px) {
     .app-header {
-        padding-bottom: 10px;
 
         &.compact {
             padding: 0;
         }
 
         .header-nav {
-            gap: 5px;
 
             .logo {
                 display: none;
@@ -434,7 +459,6 @@
 
             .nav-links-wrapper a.active {
                 gap: 2px;
-                padding-block: 1em;
 
                 img {
                     width: 40px;
@@ -452,34 +476,33 @@
 
             .calendar {
                 padding: 10px;
-             
+
                 .rdp-nav {
                     button {
                         display: none;
                     }
                 }
-    
+
                 .rdp-months {
                     width: 100%;
                     overflow-y: auto;
                     gap: 8px;
                 }
-    
+
                 .rdp-month {
                     width: 100%;
-    
+
                     button {
                         padding: 10px;
                     }
                 }
-    
+
                 .rdp-month_caption {
                     justify-content: center;
                 }
             }
 
         }
-
     }
 }
 
