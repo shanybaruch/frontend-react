@@ -76,7 +76,7 @@ export function AppHeader({ isAtTop }) {
 
             <nav className='header-nav'>
                 <NavLink to="/stay" className="logo">
-                    <img src="/img/logo-ays.png" alt="logo" />
+                    <img src="/img/logo-rbg.png" alt="logo" />
                     <span>AYS Nest</span>
                 </NavLink>
 
