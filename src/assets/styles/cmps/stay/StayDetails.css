@@ -1,8 +1,10 @@
 .all-stay-details {
     max-width: 100%;
+
     .divider {
         border-bottom: 0.8px solid var(--gray-light);
         margin: 5px 0;
+        margin-bottom: 20px;
     }
 
 }
@@ -86,7 +88,7 @@
 
             .amenities {
                 list-style: none;
-                margin-bottom: 48px;
+                /* margin-bottom: 48px; */
 
                 .amenity-item {
                     display: flex;
@@ -260,13 +262,24 @@
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 743px) {
+    .all-stay-details{
+        width: 100vw;
+    }
 
+    .stay-details-padding{
+        padding: 24px;
+    }
+
+    .description{
+        padding-top: 10px !important;
+    }
     .stay-details,
     .reviews,
     .info-bar-list {
         padding-left: 24px;
         padding-right: 24px;
+
         .title {
             display: none;
         }
@@ -281,6 +294,9 @@
         display: none !important;
     }
 
+    .order-card {
+        display: none;
+    }
 
     .stay-details .sides {
         max-width: 500;
@@ -359,6 +375,7 @@
     .stay-details .save svg {
         width: 16px;
     }
+
     .stay-details .calendar-dropdown {
         .rdp-months {
             button {

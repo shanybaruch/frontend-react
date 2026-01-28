@@ -128,7 +128,7 @@
 
 @media (max-width: 1120px) {
     .gallery {
-        height: 499px;
+        /* height: 499px; */
         aspect-ratio: 2 / 1;
         /* width: 100%; */
     }
