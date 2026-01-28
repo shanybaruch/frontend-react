@@ -181,9 +181,9 @@ export function StayDetails() {
               </button>
 
               <div className="gallery-main">
-                <img src={stay?.imgUrl} alt={stay?.name} className="left-img" onClick={OnStayDetailsPhotos}/>
+                <img src={stay?.imgUrl} alt={stay?.name} className="left-img" onClick={OnStayDetailsPhotos} />
               </div>
-    
+
               <div className="gallery-side">
                 <div><img src={stay?.imgUrls?.[1]} alt={stay?.name} /></div>
                 <div><img src={stay?.imgUrls?.[2]} alt={stay?.name} className="top-right" /></div>
@@ -204,7 +204,7 @@ export function StayDetails() {
                   </div>
                 </div>
 
-                <div className="">
+                <div className="stay-details-padding">
                   <div className="divider"></div>
                   <p className={`description-p ${isExpanded ? 'expanded' : ''}`}>
                     {stay?.description}
@@ -219,7 +219,7 @@ export function StayDetails() {
                 </div>
 
                 <section ref={amenitiesRef}>
-                  <div className="amenities">
+                  <div className="amenities stay-details-padding">
                     <div className="divider"></div>
                     <h2 className="title-place-offers">What this place offers</h2>
 
@@ -228,8 +228,9 @@ export function StayDetails() {
                         amenities={stay.amenities}
                       />
                     )}
+                    <div className='divider'></div>
                   </div>
-                  <div className='divider'></div>
+
                 </section>
                 <section className="booking-section">
                   <h3>
@@ -271,6 +272,7 @@ export function StayDetails() {
       </div>
       <InfoBar className='info-bar' />
       <section className='reviews' ref={reviewsRef}>
+        <div className="divider"></div>
         {stay?.reviews?.length > 0 && (
           <Reviews
             reviews={stay.reviews}
