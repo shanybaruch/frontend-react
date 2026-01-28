@@ -279,7 +279,7 @@
 
             .divider {
                 width: 80%;
-                border-top: 1px solid var(--gray-light-hover);
+                border-top: 1px solid var(--gray-light);
                 margin: 7px 0 12px;
             }
 

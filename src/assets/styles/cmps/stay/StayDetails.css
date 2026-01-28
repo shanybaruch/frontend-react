@@ -213,7 +213,7 @@
     }
 
     .divider {
-        border-bottom: 0.8px solid var(--gray2);
+        border-bottom: 0.8px solid var(--gray-light);
         margin: 5px 0;
     }
 }
