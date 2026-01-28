@@ -13,7 +13,7 @@
         min-width: 200px;
 
         .order-summary {
-            border: 1px solid var(--gray-light-hover); 
+            border: 1px solid var(--gray-light-hover);
         }
 
         .order-header {
@@ -63,9 +63,13 @@
             grid-template-columns: 1fr 1fr;
 
             .date-box {
-                padding: 5px;
+                padding-inline-start: 15px;
                 border-right: 1px solid var(--gray2);
                 min-height: 56px;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
 
             .date-box:last-child {
@@ -75,7 +79,8 @@
 
         .order-guests {
             border-top: 1px solid var(--gray2);
-            padding: 10px;
+            padding-inline: 15px;
+            padding-block: 12px;
         }
 
         .label {
@@ -150,23 +155,23 @@
 }
 
 @media (max-width: 425px) {
-    .small-side{
+    .small-side {
         /* display: flex;
         justify-content: center; */
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        
+
         padding: 12px 16px;
         margin: 0;
-        
+
         background-color: var(--white);
         border-top: 1px solid var(--gray-light);
         z-index: 999;
         /* gap: 10px; */
 
-        .order-card{
+        .order-card {
             width: 20%;
             padding: 0px;
             display: flex;
@@ -176,27 +181,28 @@
             box-shadow: none;
             max-width: none;
             gap: 16px;
-            
-            .order-top{
+
+            .order-top {
                 flex: 1;
                 display: flex;
                 flex-direction: column;
                 gap: 2px;
 
-                .order-header{
-                    .price{
+                .order-header {
+                    .price {
                         margin: 0px;
                         display: flex;
                         align-items: baseline;
                         gap: 6px;
 
-                        .span1{
+                        .span1 {
                             font-size: 1.188rem;
                         }
-                        .span2{
+
+                        .span2 {
                             font-size: 0;
 
-                            &::after{
+                            &::after {
                                 content: "total";
                                 font-size: 0.875rem;
                             }
@@ -206,45 +212,46 @@
                 }
             }
 
-            .order-summary{
+            .order-summary {
                 border: none;
                 margin: 0;
                 padding: 0;
                 flex: 0 0 auto;
 
-                .order-dates{
+                .order-dates {
                     display: flex;
                     gap: 4px;
                     font-size: 0.875rem;
 
-                    .date-box{
+                    .date-box {
                         display: inline;
                         border-right: 0px;
 
-                        .label{
+                        .label {
                             display: none;
                         }
 
-                        .value{
+                        .value {
                             font-size: 1.063rem;
                         }
                     }
-                    .date-box:first-child::after{
+
+                    .date-box:first-child::after {
                         content: " - ";
                     }
                 }
 
-                .order-guests{
+                .order-guests {
                     display: none;
                 }
             }
-            
-            .order-bottom{
+
+            .order-bottom {
                 flex: 0 0 auto;
                 display: flex;
                 flex-direction: column;
 
-                .reserve-btn{
+                .reserve-btn {
                     min-width: 120px;
                     padding: 18px 36px;
                     margin: 0;
@@ -252,8 +259,8 @@
                     border-radius: 2rem;
                     white-space: nowrap;
                 }
-                
-                .order-note{
+
+                .order-note {
                     display: none;
                 }
             }
