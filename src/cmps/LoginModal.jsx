@@ -16,6 +16,8 @@ export function LoginModal({ onClose }) {
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
     const [isLoading, setIsLoading] = useState(false)
     const [isSignup, setIsSignup] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
+    const [password, setPassword] = useState('')
 
     function handleChange({ target }) {
         const { name, value } = target
@@ -52,13 +54,12 @@ export function LoginModal({ onClose }) {
         const identifier = isPhoneOption ? credentials.phone : credentials.email
         try {
             const res = await userService.checkUserExists(identifier)
-            const exists = res && res.exists
-            if (exists) {
-                console.log('User exists - moving to login')
+            if (res && res.exists) {
+                setIsLogin(true)
                 setIsSignup(false)
             } else {
-                console.log('User not found - moving to signup')
                 setIsSignup(true)
+                setIsLogin(false)
             }
             setIsNextStep(true)
         } catch (err) {
@@ -76,6 +77,17 @@ export function LoginModal({ onClose }) {
     function toggleOption() {
         setIsPhoneOption(prev => !prev)
         setCredentials(prev => ({ ...prev, email: '', phone: '' }))
+    }
+
+    async function onLogin(ev) {
+        ev.preventDefault()
+        try {
+            await login({ ...credentials, password })
+            onClose()
+            showSuccessMsg('Welcome back!')
+        } catch (err) {
+            showErrorMsg('Invalid password, please try again')
+        }
     }
 
     return (
@@ -143,6 +155,36 @@ export function LoginModal({ onClose }) {
                                 We’ll call or text you to confirm your number. Standard message and data rates apply.
                                 <a href="https://www.airbnb.com/help/article/2855">Privacy Policy</a>
                             </p>
+
+                            {isNextStep ? (
+                                isSignup ? (
+                                    <SignupModal
+                                        credentials={credentials}
+                                        setCredentials={setCredentials}
+                                        onBack={onBack}
+                                        onClose={onClose}
+                                    />
+                                ) : (
+                                    <main className="modal-body">
+                                        <form className="login-form" onSubmit={onLogin}>
+                                            <div className="input-box">
+                                                <label>Password</label>
+                                                <input
+                                                    type="password"
+                                                    placeholder="Enter your password"
+                                                    required
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    autoFocus
+                                                />
+                                            </div>
+                                            <button type="submit" className="btn-continue">Log in</button>
+                                        </form>
+                                    </main>
+                                )
+                            ) : (
+                                <main className="modal-body">...</main>
+                            )}
 
                             <button
                                 type="submit"
