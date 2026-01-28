@@ -38,7 +38,7 @@ export function InfoBar({ stay, isPhotosInView, photosRef, amenitiesRef, reviews
           return (
             <li key={idx} className="info-bar-item">
               <span>{item}</span>
-              <span>{randomInt}.0</span>
+              <span className='randomInt-point'>{randomInt}.0</span>
               <SvgIcon iconName={item} />
             </li>
           );

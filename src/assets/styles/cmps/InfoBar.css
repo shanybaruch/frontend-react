@@ -5,11 +5,13 @@
     border-block: 1px solid var(--gray-light);
 
 
-    .info-bar svg {
-        width: 16px !important;
-        height: 16px !important;
-
+    .info-bar-item svg {
+        margin-top: 14px;
         display: block;
+    }
+    .randomInt-point{
+        font-weight:700;
+        font-size: 18px;
     }
 
     .info-bar-item {
@@ -23,9 +25,10 @@
 
         font-weight: 500;
         font-size: 0.8rem;
+
     }
 
-    .info-bar-item-1{
+    .info-bar-item-1 {
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -73,7 +76,7 @@
     font-size: 0.6rem;
 }
 
-@media (max-width: 743px){
+@media (max-width: 743px) {
     .info-bar-list {
         display: none;
     }
