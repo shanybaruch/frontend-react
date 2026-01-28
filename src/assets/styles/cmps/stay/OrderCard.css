@@ -154,8 +154,8 @@
     }
 }
 
-@media (max-width: 425px) {
-    .small-side {
+@media (max-width: 743px) {
+    .small-side{
         /* display: flex;
         justify-content: center; */
         position: fixed;

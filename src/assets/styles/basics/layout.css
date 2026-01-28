@@ -4,7 +4,7 @@
     grid-template-columns: minmax(auto, 1fr) minmax(auto, 1280px) minmax(auto, 1fr);
 
     >* {
-        grid-column: 2;
+        grid-column: 1 / -1;
 
         &.full {
             grid-column: 1 / -1;
